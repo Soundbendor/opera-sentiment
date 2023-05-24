@@ -1,0 +1,27 @@
+emotion: []
+emotion_binary: 1
+files:
+  wav00:
+    file_dir: ch/53/wav00.wav
+    info:
+      bit_rate: 24
+      channel_number: 1
+      duration: 59.562676
+      if_a_cappella: true
+      sample_rate: 44100
+    singer:
+      bio_gender: fem
+      id: fem_06
+      level: professional
+      name: Yu Xiaoyu
+language: ch
+scene:
+  english: ''
+  original: ''
+  phonetic: ''
+song_dir: ch/53/
+song_id: 53
+title:
+  english: ''
+  original: ''
+  phonetic: Zhong qiu yuan yue

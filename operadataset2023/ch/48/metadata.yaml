@@ -1,0 +1,29 @@
+emotion:
+- desperate
+- in trouble
+emotion_binary: 0
+files:
+  wav00:
+    file_dir: ch/48/wav00.wav
+    info:
+      bit_rate: 24
+      channel_number: 1
+      duration: 33.04
+      if_a_cappella: true
+      sample_rate: 44100
+    singer:
+      bio_gender: mal
+      id: mal_02
+      level: professional
+      name: Liu Lei
+language: ch
+scene:
+  english: ''
+  original: ''
+  phonetic: Guo le yi tian you yi tian
+song_dir: ch/48/
+song_id: 48
+title:
+  english: ''
+  original: ''
+  phonetic: Wen zhao guan

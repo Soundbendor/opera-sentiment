@@ -1,0 +1,27 @@
+emotion: []
+emotion_binary: 0
+files:
+  wav00:
+    file_dir: ch/51/wav00.wav
+    info:
+      bit_rate: 24
+      channel_number: 1
+      duration: 68.522676
+      if_a_cappella: true
+      sample_rate: 44100
+    singer:
+      bio_gender: mal
+      id: mal_06
+      level: professional
+      name: Zhang Chi
+language: ch
+scene:
+  english: ''
+  original: ''
+  phonetic: ''
+song_dir: ch/51/
+song_id: 51
+title:
+  english: ''
+  original: ''
+  phonetic: Da xue mang mang

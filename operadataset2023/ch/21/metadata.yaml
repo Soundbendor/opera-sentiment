@@ -1,0 +1,43 @@
+emotion:
+- hatred
+- vengeance
+- grief
+emotion_binary: 0
+files:
+  wav00:
+    file_dir: ch/21/wav00.wav
+    info:
+      bit_rate: 24
+      channel_number: 1
+      duration: 156.0
+      if_a_cappella: false
+      sample_rate: 44100
+    singer:
+      bio_gender: fem
+      id: fem_02
+      level: amateur
+      name: Kathy Hall
+  wav01:
+    file_dir: ch/21/wav01.wav
+    info:
+      bit_rate: 24
+      channel_number: 1
+      duration: 156.0
+      if_a_cappella: true
+      sample_rate: 44100
+    singer:
+      bio_gender: fem
+      id: fem_02
+      level: amateur
+      name: Kathy Hall
+language: ch
+scene:
+  english: ''
+  original: ''
+  phonetic: ''
+song_dir: ch/21/
+song_id: 21
+title:
+  english: ''
+  original: ''
+  phonetic: Duan zheng hao

@@ -1,0 +1,27 @@
+emotion: []
+emotion_binary: 0
+files:
+  wav00:
+    file_dir: ch/52/wav00.wav
+    info:
+      bit_rate: 24
+      channel_number: 1
+      duration: 152.745578
+      if_a_cappella: true
+      sample_rate: 44100
+    singer:
+      bio_gender: fem
+      id: fem_05
+      level: professional
+      name: Wu Suzhen
+language: ch
+scene:
+  english: ''
+  original: ''
+  phonetic: ''
+song_dir: ch/52/
+song_id: 52
+title:
+  english: ''
+  original: ''
+  phonetic: Yi wan lei huan lai yi wan fan

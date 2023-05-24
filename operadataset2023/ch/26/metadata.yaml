@@ -1,0 +1,40 @@
+emotion: []
+emotion_binary: 1
+files:
+  wav00:
+    file_dir: ch/26/wav00.wav
+    info:
+      bit_rate: 16
+      channel_number: 1
+      duration: 52.012698
+      if_a_cappella: true
+      sample_rate: 44100
+    singer:
+      bio_gender: fem
+      id: fem_03
+      level: amateur
+      name: Ping Hua
+  wav01:
+    file_dir: ch/26/wav01.wav
+    info:
+      bit_rate: 16
+      channel_number: 2
+      duration: 51.497914
+      if_a_cappella: false
+      sample_rate: 44100
+    singer:
+      bio_gender: fem
+      id: fem_03
+      level: amateur
+      name: Ping Hua
+language: ch
+scene:
+  english: ''
+  original: ''
+  phonetic: ''
+song_dir: ch/26/
+song_id: 26
+title:
+  english: ''
+  original: ''
+  phonetic: All have a bright heart

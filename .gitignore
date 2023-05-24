@@ -1,3 +1,15 @@
+# MacOS ds file
+.DS_Store
+
+# all the wav files
+*.wav
+# xlsx files
+*.xlsx
+
+# my own test python files or archive folder
+test.py
+tools_archive_DONOT_run_again/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

@@ -1,0 +1,42 @@
+emotion:
+- content
+- intense
+emotion_binary: 1
+files:
+  wav00:
+    file_dir: ch/42/wav00.wav
+    info:
+      bit_rate: 16
+      channel_number: 1
+      duration: 177.134286
+      if_a_cappella: true
+      sample_rate: 44100
+    singer:
+      bio_gender: mal
+      id: mal_01
+      level: amateur
+      name: Wang Xinnong
+  wav01:
+    file_dir: ch/42/wav01.wav
+    info:
+      bit_rate: 24
+      channel_number: 1
+      duration: 192.0
+      if_a_cappella: false
+      sample_rate: 44100
+    singer:
+      bio_gender: mal
+      id: mal_01
+      level: amateur
+      name: Wang Xinnong
+language: ch
+scene:
+  english: ''
+  original: ''
+  phonetic: ''
+song_dir: ch/42/
+song_id: 42
+title:
+  english: ''
+  original: ''
+  phonetic: Wo zheng zai cheng lou guan shan jing

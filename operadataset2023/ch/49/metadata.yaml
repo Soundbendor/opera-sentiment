@@ -1,0 +1,28 @@
+emotion:
+- sad
+emotion_binary: 0
+files:
+  wav00:
+    file_dir: ch/49/wav00.wav
+    info:
+      bit_rate: 24
+      channel_number: 1
+      duration: 63.154762
+      if_a_cappella: true
+      sample_rate: 44100
+    singer:
+      bio_gender: mal
+      id: mal_03
+      level: professional
+      name: Xu Mingyu
+language: ch
+scene:
+  english: ''
+  original: ''
+  phonetic: ''
+song_dir: ch/49/
+song_id: 49
+title:
+  english: ''
+  original: ''
+  phonetic: Ze jian feng yue an xiao mo

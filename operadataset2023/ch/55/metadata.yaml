@@ -1,0 +1,29 @@
+emotion:
+- yearning
+- wistful
+emotion_binary: 1
+files:
+  wav00:
+    file_dir: ch/55/wav00.wav
+    info:
+      bit_rate: 24
+      channel_number: 1
+      duration: 62.572426
+      if_a_cappella: true
+      sample_rate: 44100
+    singer:
+      bio_gender: fem
+      id: fem_08
+      level: professional
+      name: Chang xiao fei
+language: ch
+scene:
+  english: ''
+  original: ''
+  phonetic: ''
+song_dir: ch/55/
+song_id: 55
+title:
+  english: ''
+  original: ''
+  phonetic: Xi ri you ge mu lian seng
