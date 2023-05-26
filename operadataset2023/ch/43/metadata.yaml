@@ -29,13 +29,19 @@ files:
       level: amateur
       name: Wang Xinnong
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/43/
 song_id: 43
 title:
   english: ''
   original: ''
   phonetic: Wei guo jia na he ceng ban ri xian kong
+wiki: ''

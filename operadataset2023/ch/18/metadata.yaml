@@ -70,13 +70,19 @@ files:
       level: professional
       name: Liang Sun
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/18/
 song_id: 18
 title:
   english: ''
   original: ''
   phonetic: Mu gui ying gua shuai
+wiki: ''

@@ -29,13 +29,19 @@ files:
       level: professional
       name: Bidong Guo
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/11/
 song_id: 11
 title:
-  english: ''
-  original: ''
-  phonetic: Hong yang dong
+  english: Hongyang cave
+  original: 洪羊洞
+  phonetic: hong yang dong
+wiki: ''

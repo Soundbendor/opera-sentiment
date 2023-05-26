@@ -17,13 +17,19 @@ files:
       level: professional
       name: Bai jin
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/54/
 song_id: 54
 title:
   english: ''
   original: ''
   phonetic: Qing chen qi wo zhe li ji mang shu xi
+wiki: ''

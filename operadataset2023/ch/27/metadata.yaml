@@ -28,13 +28,19 @@ files:
       level: amateur
       name: Ping Hua
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/27/
 song_id: 27
 title:
   english: ''
   original: ''
   phonetic: Song for my mother
+wiki: ''

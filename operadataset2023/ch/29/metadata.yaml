@@ -28,13 +28,19 @@ files:
       level: amateur
       name: Ping Hua
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/29/
 song_id: 29
 title:
   english: ''
   original: ''
   phonetic: Road to heaven
+wiki: ''

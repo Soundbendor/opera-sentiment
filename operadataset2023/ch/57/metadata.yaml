@@ -15,13 +15,19 @@ files:
       level: amateur
       name: Tony Haogong
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/57/
 song_id: 57
 title:
   english: ''
   original: ''
   phonetic: ba wang bie ji
+wiki: ''

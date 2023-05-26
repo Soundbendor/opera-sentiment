@@ -29,13 +29,19 @@ files:
       level: professional
       name: Tianyang Wang
 language: we
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: we/6/
 song_id: 6
 title:
   english: ''
   original: O del mio dolce ardor
   phonetic: ''
+wiki: ''

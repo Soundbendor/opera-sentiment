@@ -30,13 +30,19 @@ files:
       level: amateur
       name: Wang Xinnong
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/42/
 song_id: 42
 title:
   english: ''
   original: ''
   phonetic: Wo zheng zai cheng lou guan shan jing
+wiki: ''

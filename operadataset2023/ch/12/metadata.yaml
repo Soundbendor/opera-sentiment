@@ -29,13 +29,19 @@ files:
       level: professional
       name: Bidong Guo
 language: ch
-scene:
+lyric:
   english: ''
   original: ''
   phonetic: ''
+scene:
+  english: ''
+  original: ''
+  phonetic: tan yang jia tou song zhu xin xue yong jin
+singing_type: []
 song_dir: ch/12/
 song_id: 12
 title:
-  english: ''
-  original: ''
-  phonetic: Peng bei
+  english: Hongyang cave
+  original: 洪羊洞
+  phonetic: hong yang dong
+wiki: ''

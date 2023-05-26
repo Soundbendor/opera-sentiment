@@ -29,13 +29,19 @@ files:
       level: amateur
       name: Wang Xinnong
 language: ch
-scene:
+lyric:
   english: ''
   original: ''
   phonetic: ''
+scene:
+  english: ''
+  original: 自那日朝罢归身染重病
+  phonetic: zi na ri chao ba gui shen ran zhong bing
+singing_type: []
 song_dir: ch/45/
 song_id: 45
 title:
-  english: ''
-  original: ''
-  phonetic: Zi na ri chao ba gui shen ran zhong bing
+  english: Hongyang cave
+  original: 洪羊洞
+  phonetic: hong yang dong
+wiki: ''

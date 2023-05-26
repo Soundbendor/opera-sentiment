@@ -30,13 +30,19 @@ files:
       level: amateur
       name: Juntong Pan
 language: we
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: we/3/
 song_id: 3
 title:
   english: ''
   original: Bella siccome un angelo
   phonetic: ''
+wiki: ''

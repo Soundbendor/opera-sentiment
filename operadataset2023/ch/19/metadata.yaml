@@ -69,13 +69,19 @@ files:
       level: professional
       name: Tianfeng Gu
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/19/
 song_id: 19
 title:
   english: ''
   original: ''
   phonetic: Hong niang
+wiki: ''

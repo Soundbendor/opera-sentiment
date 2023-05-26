@@ -17,13 +17,19 @@ files:
       level: professional
       name: Liu Lei
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: Guo le yi tian you yi tian
+singing_type: []
 song_dir: ch/48/
 song_id: 48
 title:
   english: ''
   original: ''
   phonetic: Wen zhao guan
+wiki: ''

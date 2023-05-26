@@ -29,13 +29,20 @@ files:
       level: professional
       name: Tianyang Wang
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type:
+- modern chinese song
 song_dir: ch/7/
 song_id: 7
 title:
   english: You are such man
-  original: 你是这样的人
+  original: "\u4F60\u662F\u8FD9\u6837\u7684\u4EBA"
   phonetic: ni shi zhe yang de ren
+wiki: ''

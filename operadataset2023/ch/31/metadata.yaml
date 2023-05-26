@@ -28,13 +28,19 @@ files:
       level: professional
       name: Zhang Shuo
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/31/
 song_id: 31
 title:
   english: ''
   original: ''
   phonetic: Bi yun tian
+wiki: ''

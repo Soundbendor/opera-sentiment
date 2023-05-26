@@ -56,13 +56,19 @@ files:
       level: professional
       name: Liang Sun
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/17/
 song_id: 17
 title:
   english: ''
   original: ''
   phonetic: Gui fei zui jiu
+wiki: ''

@@ -29,13 +29,19 @@ files:
       level: professional
       name: Wenqing Huang
 language: we
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: we/66/
 song_id: 66
 title:
   english: ''
   original: La Serenata
   phonetic: ''
+wiki: ''

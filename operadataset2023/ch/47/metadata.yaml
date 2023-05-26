@@ -30,13 +30,19 @@ files:
       level: amateur
       name: Zeng
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/47/
 song_id: 47
 title:
   english: ''
   original: ''
   phonetic: Yi lun ming yue zhao chuang qian
+wiki: ''

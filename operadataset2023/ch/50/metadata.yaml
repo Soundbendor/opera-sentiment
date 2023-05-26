@@ -15,13 +15,19 @@ files:
       level: professional
       name: Lu Jin Shuai
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/50/
 song_id: 50
 title:
   english: ''
   original: ''
   phonetic: Zi cong ni men xie xin
+wiki: ''

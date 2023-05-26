@@ -29,13 +29,19 @@ files:
       level: professional
       name: Jiatong Wu
 language: we
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: we/68/
 song_id: 68
 title:
   english: ''
   original: Grasslands in July
   phonetic: ''
+wiki: ''

@@ -29,13 +29,19 @@ files:
       level: amateur
       name: Wang Xinnong
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: Tan yang jia tou song zhu xin xue yong jin
+singing_type: []
 song_dir: ch/44/
 song_id: 44
 title:
   english: ''
   original: ''
   phonetic: Hong yang dong
+wiki: ''

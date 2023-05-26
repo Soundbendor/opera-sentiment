@@ -28,13 +28,19 @@ files:
       level: amateur
       name: Ping Hua
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/26/
 song_id: 26
 title:
   english: ''
   original: ''
   phonetic: All have a bright heart
+wiki: ''

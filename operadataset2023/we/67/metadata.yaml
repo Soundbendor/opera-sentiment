@@ -30,13 +30,19 @@ files:
       level: professional
       name: Jiatong Wu
 language: we
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: we/67/
 song_id: 67
 title:
   english: ''
   original: Le violette
   phonetic: ''
+wiki: ''

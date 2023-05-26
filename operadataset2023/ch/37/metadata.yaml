@@ -29,13 +29,19 @@ files:
       level: amateur
       name: Wang Xinnong
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/37/
 song_id: 37
 title:
   english: ''
   original: ''
   phonetic: Xi ri you ge san da xian
+wiki: ''

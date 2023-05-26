@@ -30,13 +30,19 @@ files:
       level: amateur
       name: Kathy Hall
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/23/
 song_id: 23
 title:
   english: ''
   original: ''
   phonetic: Suo nan zhi
+wiki: ''

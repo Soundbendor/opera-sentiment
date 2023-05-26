@@ -15,13 +15,19 @@ files:
       level: amateur
       name: Tony Haogong
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/59/
 song_id: 59
 title:
   english: ''
   original: ''
   phonetic: He hou ma dian
+wiki: ''

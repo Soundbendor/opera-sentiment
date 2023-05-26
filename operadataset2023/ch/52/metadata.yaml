@@ -15,13 +15,19 @@ files:
       level: professional
       name: Wu Suzhen
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/52/
 song_id: 52
 title:
   english: ''
   original: ''
   phonetic: Yi wan lei huan lai yi wan fan
+wiki: ''

@@ -29,13 +29,19 @@ files:
       level: amateur
       name: Juntong Pan
 language: we
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: we/4/
 song_id: 4
 title:
   english: ''
   original: Se vuol ballare
   phonetic: ''
+wiki: ''

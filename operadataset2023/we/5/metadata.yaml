@@ -29,13 +29,19 @@ files:
       level: amateur
       name: Kaiyu Xie
 language: we
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: we/5/
 song_id: 5
 title:
   english: ''
   original: Caro mio ben
   phonetic: ''
+wiki: ''

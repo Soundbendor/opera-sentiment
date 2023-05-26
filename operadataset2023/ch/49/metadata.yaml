@@ -16,13 +16,19 @@ files:
       level: professional
       name: Xu Mingyu
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/49/
 song_id: 49
 title:
   english: ''
   original: ''
   phonetic: Ze jian feng yue an xiao mo
+wiki: ''

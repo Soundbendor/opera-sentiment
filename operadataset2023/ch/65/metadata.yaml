@@ -30,13 +30,19 @@ files:
       level: professional
       name: Wenqing Huang
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/65/
 song_id: 65
 title:
   english: ''
   original: ''
   phonetic: Song of picking lotus
+wiki: ''

@@ -30,13 +30,19 @@ files:
       level: amateur
       name: Kathy Hall
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/22/
 song_id: 22
 title:
   english: ''
   original: ''
   phonetic: Jiang er shui
+wiki: ''

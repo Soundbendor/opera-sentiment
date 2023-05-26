@@ -57,13 +57,20 @@ files:
       level: professional
       name: Bidong Guo
 language: ch
-scene:
+lyric:
   english: ''
   original: ''
   phonetic: ''
+scene:
+  english: ''
+  original: 将身儿来至在大街口
+  phonetic: jiang shen er lai zhi zai da jie kou
+singing_type:
+- jingju
 song_dir: ch/9/
 song_id: 9
 title:
   english: A small remote inn
-  original: 三家店
+  original: "\u4E09\u5BB6\u5E97"
   phonetic: san jia dian
+wiki: ''

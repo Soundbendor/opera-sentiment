@@ -29,13 +29,19 @@ files:
       level: amateur
       name: Wang Xinnong
 language: ch
-scene:
+lyric:
   english: ''
   original: ''
   phonetic: ''
+scene:
+  english: ''
+  original: 我本是一穷儒太烈性
+  phonetic: wo ben shi yi qiong ru tai lie xing
+singing_type: []
 song_dir: ch/46/
 song_id: 46
 title:
   english: ''
-  original: ''
-  phonetic: Wo ben shi yi qiong ru tai lie xing
+  original: 琼林宴
+  phonetic: qiong lin yan
+wiki: ''

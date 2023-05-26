@@ -28,13 +28,19 @@ files:
       level: professional
       name: Zhang Shuo
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/35/
 song_id: 35
 title:
   english: ''
   original: ''
   phonetic: Meng ting de
+wiki: ''

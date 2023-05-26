@@ -28,13 +28,19 @@ files:
       level: professional
       name: Zhang Shuo
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/34/
 song_id: 34
 title:
   english: ''
   original: ''
   phonetic: Jiao zhang sheng
+wiki: ''

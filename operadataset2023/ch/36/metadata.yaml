@@ -28,13 +28,19 @@ files:
       level: professional
       name: Zhang Shuo
 language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type: []
 song_dir: ch/36/
 song_id: 36
 title:
   english: ''
   original: ''
   phonetic: Zhe cai shi
+wiki: ''
