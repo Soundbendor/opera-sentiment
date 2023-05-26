@@ -1,5 +1,5 @@
 emotion: []
-emotion_binary: 1
+emotion_binary: 0
 files:
   wav00:
     file_dir: ch/33/wav00.wav
@@ -34,13 +34,13 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: ''
-  phonetic: ''
+  original: 春秋亭外风雨暴
+  phonetic: chun qiu ting wai feng yu bao
 singing_type: []
 song_dir: ch/33/
 song_id: 33
 title:
   english: ''
-  original: ''
-  phonetic: Bei jiu chan
+  original: 锁麟囊
+  phonetic: suo lin nang
 wiki: ''
