@@ -1,0 +1,33 @@
+emotion: []
+emotion_binary: -1 #represent unknown
+files:
+  wav00:
+    file_dir: ch/correct1/wav00.wav
+    info:
+      bit_rate: 32
+      channel_number: 1
+      duration: 36.959048
+      if_a_cappella: true
+      sample_rate: 44100
+    singer:
+      bio_gender: fem
+      id: fem_11
+      level: professional
+      name: Tianfeng Gu
+language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
+scene:
+  english: ''
+  original: 我红娘将说是一声请
+  phonetic: wo hong niang jiang shuo shi yi sheng qing
+singing_type: []
+song_dir: ch/correct1/
+song_id: correct1
+title:
+  english: ''
+  original: 红娘-悔婚
+  phonetic: hong niang-hui hun
+wiki: ''

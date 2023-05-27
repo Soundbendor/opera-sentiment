@@ -1,12 +1,12 @@
 emotion: []
-emotion_binary: 0
+emotion_binary: -1 #represent unknown or not sure
 files:
   wav00:
     file_dir: ch/31/wav00.wav
     info:
       bit_rate: 16
       channel_number: 1
-      duration: 36.808503
+      duration: 71.170816
       if_a_cappella: true
       sample_rate: 44100
     singer:
@@ -19,14 +19,14 @@ files:
     info:
       bit_rate: 16
       channel_number: 1
-      duration: 51.014671
+      duration: 70.200249
       if_a_cappella: true
       sample_rate: 44100
     singer:
       bio_gender: fem
       id: fem_01
       level: professional
-      name: Zhang Shuo
+      name: Zhang Shuo  
 language: ch
 lyric:
   english: ''
@@ -34,13 +34,13 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: ''
-  phonetic: ''
+  original: 碧云天黄花地西风紧
+  phonetic: bi yun tian huang hua di xi feng jin
 singing_type: []
 song_dir: ch/31/
 song_id: 31
 title:
   english: ''
-  original: ''
-  phonetic: Bi yun tian
+  original: 西厢记
+  phonetic: xi xiang ji
 wiki: ''

@@ -11,7 +11,9 @@ This data set is a combination of this two following datasets:
   - Add new audios from this dataset.
     - 2 new laosheng songs (one audio for each)
     - 6 new audios for exsiting laosheng songs
-    - for dan, TODO
+    - 4 new dan songs (one audio for each)
+    - 2 new audio for exsiting dan songs
+    - todo: there is five dan songs not found, they exist in the latter dataset which are mentioned that they are from the former dataset, but I can't find them in the former dataset. Maybe they are missclassifyed to the western folder.
   - > Rong Gong, Rafael Caro Repetto, & Yile Yang. (2017). Jingju a cappella singing dataset [Data set]. Zenodo. http://doi.org/10.5281/zenodo.344932
 
 ## explanation of the yaml meta data
