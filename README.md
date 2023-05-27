@@ -1,5 +1,19 @@
 # Opera singing dataset 2023
-## All the .wav files are ignored
+All the .wav files are ignored due to the size, to download the whole dataset, please go to this link: TODO
+
+## Where does this dataset come from?
+This data set is a combination of this two following datasets:
+- Singing Voice Audio Dataset
+  - Main source of this dataset.
+  - > D. A. A. Black, M. Li, and M. Tian, “Automatic Identification of Emotional Cues in Chinese Opera Singing,” in 13th Int. Conf. on Music Perception and Cognition (ICMPC-2014), 2014, pp. 250–255.
+- Jingju (Beijing opera) Phoneme Annotation
+  - Use the csv of this dataset to correct some annotaion errors in the former one.
+  - Add new audios from this dataset.
+    - 2 new laosheng songs (one audio for each)
+    - 6 new audios for exsiting laosheng songs
+    - for dan, TODO
+  - > Rong Gong, Rafael Caro Repetto, & Yile Yang. (2017). Jingju a cappella singing dataset [Data set]. Zenodo. http://doi.org/10.5281/zenodo.344932
+
 ## explanation of the yaml meta data
 ```yaml
 emotion:
