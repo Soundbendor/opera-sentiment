@@ -1,20 +1,29 @@
 # Opera singing dataset 2023
+
+## A multi-label dataset for opera singing
+
 All the .wav files are ignored due to the size, to download the whole dataset, please go to this link: TODO
 
 ## Where does this dataset come from?
-This data set is a combination of this two following datasets:
-- Singing Voice Audio Dataset
-  - Main source of this dataset.
-  - > D. A. A. Black, M. Li, and M. Tian, “Automatic Identification of Emotional Cues in Chinese Opera Singing,” in 13th Int. Conf. on Music Perception and Cognition (ICMPC-2014), 2014, pp. 250–255.
-- Jingju (Beijing opera) Phoneme Annotation
-  - Use the csv of this dataset to correct some annotaion errors in the former one.
+This data set is a combination of these intelligence contributions:
+- Singing Voice Audio Dataset<sup>[1]</sup>
+  - Most audio source and label annotation are from this dataset.
+- Jingju (Beijing opera) Phoneme Annotation<sup>[2]</sup>
+  - Use the csv file of this dataset to correct some annotaion errors in the former one.
   - Add new audios from this dataset.
     - 2 new laosheng songs (one audio for each)
     - 6 new audios for exsiting laosheng songs
     - 4 new dan songs (one audio for each)
     - 2 new audio for exsiting dan songs
     - todo: there is five dan songs not found, they exist in the latter dataset which are mentioned that they are from the former dataset, but I can't find them in the former dataset. Maybe they are missclassifyed to the western folder.
-  - > Rong Gong, Rafael Caro Repetto, & Yile Yang. (2017). Jingju a cappella singing dataset [Data set]. Zenodo. http://doi.org/10.5281/zenodo.344932
+- Label corrections
+  - Label corrected by Shengxuan Wang ([shawn120](https://github.com/shawn120))
+  - Correction rely on the knowledge from Shengxuan Wang, Rong Gong et al. <sup>[2]</sup>, and online searching.
+- TODO: Add in more western opera to balance out the language inbalance.
+
+> [1] D. A. A. Black, M. Li, and M. Tian, “Automatic Identification of Emotional Cues in Chinese Opera Singing,” in 13th Int. Conf. on Music Perception and Cognition (ICMPC-2014), 2014, pp. 250–255. 
+> 
+> [2] Rong Gong, Rafael Caro Repetto, & Yile Yang. (2017). Jingju a cappella singing dataset [Data set]. Zenodo. http://doi.org/10.5281/zenodo.344932
 
 ## explanation of the yaml meta data
 ```yaml
@@ -22,7 +31,7 @@ emotion:
 - emotion_1
 - emotion_2
 - emotion_3
-emotion_binary: 1 or 0 (positive or negative)
+emotion_binary: 1 or 0 (positive or negative), -1 represents to-be-labeled
 files:
   wav00:
     file_dir: dir to this wav file
@@ -46,6 +55,7 @@ scene:
   phonetic: only for chinese songs, so it will be pinyin for it
 song_dir: dir to this song
 song_id: id for this song
+song_size: how many audio in this one single song
 title:
   english: english translation for the song title
   original: original song title
