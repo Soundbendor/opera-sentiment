@@ -22,7 +22,6 @@ This data set is a combination of these intelligence contributions:
 - TODO: Add in more western opera to balance out the language inbalance.
 
 > [1] D. A. A. Black, M. Li, and M. Tian, “Automatic Identification of Emotional Cues in Chinese Opera Singing,” in 13th Int. Conf. on Music Perception and Cognition (ICMPC-2014), 2014, pp. 250–255. 
-> 
 > [2] Rong Gong, Rafael Caro Repetto, & Yile Yang. (2017). Jingju a cappella singing dataset [Data set]. Zenodo. http://doi.org/10.5281/zenodo.344932
 
 ## explanation of the yaml meta data
