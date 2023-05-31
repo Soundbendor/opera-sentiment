@@ -49,18 +49,19 @@ files:
   wav01:
     # ... ...
 language: ch or we (chinese or western language)
+role_gender: the gender of the character in this song/scene
 scene:
   english: english translation for the scene title
-  original: original scene title
+  original: original scene title (for chinese hanzi, will shown as unicode)
   phonetic: only for chinese songs, so it will be pinyin for it
 singing_type:
-- singing_type (jingju, modern chinese song, western opera)
-- role_type (if there is) (laosheng or dan)
+  singing: jingju/yuju/modern song/...
+  role: only for jingju, laosheng, dan, ...
 song_dir: dir to this song
 song_id: id for this song
 song_size: how many audio in this one single song
 title:
   english: english translation for the song title
-  original: original song title
+  original: original song title (for chinese hanzi, will shown as unicode)
   phonetic: only for chinese songs, so it will be pinyin for it
 ```
