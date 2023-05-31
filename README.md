@@ -53,6 +53,9 @@ scene:
   english: english translation for the scene title
   original: original scene title
   phonetic: only for chinese songs, so it will be pinyin for it
+singing_type:
+- singing_type (jingju, modern chinese song, western opera)
+- role_type(if there is) (laosheng or dan)
 song_dir: dir to this song
 song_id: id for this song
 song_size: how many audio in this one single song
