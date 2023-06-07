@@ -15,7 +15,7 @@ This data set is a combination of these intelligence contributions:
     - 6 new audios for exsiting laosheng songs
     - 4 new dan songs (one audio for each)
     - 2 new audio for exsiting dan songs
-    - todo: there is five dan songs not found, they exist in the latter dataset which are mentioned that they are from the former dataset, but I can't find them in the former dataset. Maybe they are missclassifyed to the western folder.
+    - correct few mis-classified songs
 - Label corrections
   - Label corrected by Shengxuan Wang ([shawn120](https://github.com/shawn120))
   - Correction rely on the knowledge from Shengxuan Wang, Rong Gong et al. <sup>[2]</sup>, and online searching.
