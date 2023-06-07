@@ -19,7 +19,7 @@ This data set is a combination of these intelligence contributions:
 - Label corrections
   - Label corrected by Shengxuan Wang ([shawn120](https://github.com/shawn120))
   - Correction rely on the knowledge from Shengxuan Wang, Rong Gong et al. <sup>[2]</sup>, and online searching.
-- TODO: Add in more western opera to balance out the language inbalance.
+- Future TODO: Add in more western opera to balance out the language inbalance.
 
 > [1] D. A. A. Black, M. Li, and M. Tian, “Automatic Identification of Emotional Cues in Chinese Opera Singing,” in 13th Int. Conf. on Music Perception and Cognition (ICMPC-2014), 2014, pp. 250–255. 
 > [2] Rong Gong, Rafael Caro Repetto, & Yile Yang. (2017). Jingju a cappella singing dataset [Data set]. Zenodo. http://doi.org/10.5281/zenodo.344932
@@ -54,8 +54,8 @@ scene:
   original: original scene title (for chinese hanzi, will shown as unicode)
   phonetic: only for chinese songs, so it will be pinyin for it
 singing_type:
-  singing: jingju/yuju/modern song/...
-  role: only for jingju, laosheng, dan, ...
+  role: only for jingju, laosheng, dan, ... or TBD
+  singing: jingju/yuju/chinese singing/... or TBD
 song_dir: dir to this song
 song_id: id for this song
 song_size: how many audio in this one single song
