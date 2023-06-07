@@ -102,13 +102,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 猛听得金鼓响画角声震
+  original: "\u731B\u542C\u5F97\u91D1\u9F13\u54CD\u753B\u89D2\u58F0\u9707"
   phonetic: meng ting de jin gu xiang hua jiao sheng zhen
-singing_type: []
+singing_type:
+  role: dan
+  singing: jingju
 song_dir: ch/18/
 song_id: 18
 title:
   english: ''
-  original: 穆桂英挂帅
+  original: "\u7A46\u6842\u82F1\u6302\u5E05"
   phonetic: mu gui ying gua shuai
 wiki: ''

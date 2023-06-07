@@ -39,11 +39,12 @@ scene:
   english: ''
   original: ''
   phonetic: ''
-singing_type: []
+singing_type:
+  singing: TBD_ch
 song_dir: ch/24/
 song_id: 24
 title:
   english: ''
-  original: ''
+  original: "\u5FD2\u5FD2\u4EE4"
   phonetic: Te te ling
 wiki: ''

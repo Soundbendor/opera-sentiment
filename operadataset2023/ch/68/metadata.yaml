@@ -37,11 +37,12 @@ scene:
   english: ''
   original: ''
   phonetic: ''
-singing_type: []
+singing_type:
+  singing: traditional chinese singing
 song_dir: we/68/
 song_id: 68
 title:
   english: Prairies in July
-  original: 七月的草原
+  original: "\u4E03\u6708\u7684\u8349\u539F"
   phonetic: qi yue de cao yuan
 wiki: ''

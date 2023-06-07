@@ -1,8 +1,8 @@
 emotion: []
-emotion_binary: -1 #represent unknown
+emotion_binary: -1
 files:
   wav00:
-    file_dir: ch/correct1/wav00.wav
+    file_dir: ch/71/wav00.wav
     info:
       bit_rate: 32
       channel_number: 1
@@ -21,13 +21,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 我红娘将说是一声请
+  original: "\u6211\u7EA2\u5A18\u5C06\u8BF4\u662F\u4E00\u58F0\u8BF7"
   phonetic: wo hong niang jiang shuo shi yi sheng qing
-singing_type: []
-song_dir: ch/correct1/
-song_id: correct1
+singing_type:
+  role: dan
+  singing: jingju
+song_dir: ch/71/
+song_id: 71
 title:
   english: ''
-  original: 红娘-悔婚
+  original: "\u7EA2\u5A18-\u6094\u5A5A"
   phonetic: hong niang-hui hun
 wiki: ''

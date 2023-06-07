@@ -34,13 +34,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 这才是今生难预料
+  original: "\u8FD9\u624D\u662F\u4ECA\u751F\u96BE\u9884\u6599"
   phonetic: zhe cai shi jin sheng nan yu liao
-singing_type: []
+singing_type:
+  role: dan
+  singing: jingju
 song_dir: ch/36/
 song_id: 36
 title:
   english: ''
-  original: 锁麟囊
+  original: "\u9501\u9E9F\u56CA"
   phonetic: suo lin nang
 wiki: ''

@@ -23,13 +23,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 昔日有个目莲僧
+  original: "\u6614\u65E5\u6709\u4E2A\u76EE\u83B2\u50E7"
   phonetic: xi ri you ge mu lian seng
-singing_type: []
+singing_type:
+  role: dan
+  singing: jingju
 song_dir: ch/55/
 song_id: 55
 title:
   english: ''
-  original: 孽海记-思凡
+  original: "\u5B7D\u6D77\u8BB0-\u601D\u51E1"
   phonetic: nie hai ji-si fan
 wiki: ''

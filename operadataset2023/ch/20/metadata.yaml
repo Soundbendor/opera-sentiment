@@ -48,13 +48,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 行行走走行行
+  original: "\u884C\u884C\u8D70\u8D70\u884C\u884C"
   phonetic: xing xing zou zou xing xing
-singing_type: []
+singing_type:
+  role: dan
+  singing: jingju
 song_dir: ch/20/
 song_id: 20
 title:
   english: ''
-  original: 卖水
+  original: "\u5356\u6C34"
   phonetic: mai shui
 wiki: ''

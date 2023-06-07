@@ -35,13 +35,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 淮南王他把令传下
+  original: "\u6DEE\u5357\u738B\u4ED6\u628A\u4EE4\u4F20\u4E0B"
   phonetic: huai nan wang ta ba ling chuan xia
-singing_type: []
+singing_type:
+  role: sheng
+  singing: jingju
 song_dir: ch/13/
 song_id: 13
 title:
   english: ''
-  original: 淮河营
+  original: "\u6DEE\u6CB3\u8425"
   phonetic: huai he ying
 wiki: ''

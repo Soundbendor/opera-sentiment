@@ -35,13 +35,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 我本是卧龙岗散淡的人
+  original: "\u6211\u672C\u662F\u5367\u9F99\u5C97\u6563\u6DE1\u7684\u4EBA"
   phonetic: wo ben shi wo long gang san dan de ren
-singing_type: []
+singing_type:
+  role: sheng
+  singing: jingju
 song_dir: ch/41/
 song_id: 41
 title:
   english: The stratagem of the empty city
-  original: 空城计
+  original: "\u7A7A\u57CE\u8BA1"
   phonetic: kong cheng ji
 wiki: ''

@@ -34,13 +34,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 平生志气运未通
+  original: "\u5E73\u751F\u5FD7\u6C14\u8FD0\u672A\u901A"
   phonetic: ping sheng zhi qi yun wei tong
-singing_type: []
+singing_type:
+  role: sheng
+  singing: jingju
 song_dir: ch/70/
 song_id: 70
 title:
   english: ''
-  original: 击鼓骂曹
+  original: "\u51FB\u9F13\u9A82\u66F9"
   phonetic: ji gu ma cao
 wiki: ''

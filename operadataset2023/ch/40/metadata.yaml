@@ -35,13 +35,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 师爷说话言太差
+  original: "\u5E08\u7237\u8BF4\u8BDD\u8A00\u592A\u5DEE"
   phonetic: shi ye shuo hua yan cha tai
-singing_type: []
+singing_type:
+  role: sheng
+  singing: jingju
 song_dir: ch/40/
 song_id: 40
 title:
   english: ''
-  original: 定军山
+  original: "\u5B9A\u519B\u5C71"
   phonetic: ding jun shan
 wiki: ''

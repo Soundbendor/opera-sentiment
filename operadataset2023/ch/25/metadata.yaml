@@ -36,11 +36,12 @@ scene:
   english: ''
   original: ''
   phonetic: ''
-singing_type: []
+singing_type:
+  singing: TBD_ch
 song_dir: ch/25/
 song_id: 25
 title:
-  english: ''
+  english: Home from Anyuan
   original: ''
-  phonetic: Home from Anyuan
+  phonetic: ''
 wiki: ''

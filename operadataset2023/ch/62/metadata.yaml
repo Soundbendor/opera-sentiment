@@ -47,13 +47,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 被纠缠陡想起婚时情景
+  original: "\u88AB\u7EA0\u7F20\u9661\u60F3\u8D77\u5A5A\u65F6\u60C5\u666F"
   phonetic: bei jiu chan tu xiang qi hun shi qing jing
-singing_type: []
+singing_type:
+  role: dan
+  singing: jingju
 song_dir: ch/62/
 song_id: 62
 title:
   english: ''
-  original: 春闺梦
+  original: "\u6625\u95FA\u68A6"
   phonetic: chun gui Meng
 wiki: ''

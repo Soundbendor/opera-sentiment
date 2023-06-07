@@ -24,11 +24,13 @@ scene:
   english: ''
   original: ''
   phonetic: ''
-singing_type: []
+singing_type:
+  role: TBD_
+  singing: jingju
 song_dir: ch/49/
 song_id: 49
 title:
   english: ''
-  original: ''
+  original: "\u5219\u89C1\u98CE\u6708\u6697\u6D88\u78E8"
   phonetic: Ze jian feng yue an xiao mo
 wiki: ''

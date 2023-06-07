@@ -21,13 +21,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 昔日梁鸿配孟光
+  original: "\u6614\u65E5\u6881\u9E3F\u914D\u5B5F\u5149"
   phonetic: xi ri liang hong pei meng guang
-singing_type: []
+singing_type:
+  role: dan
+  singing: jingju
 song_dir: ch/63/
 song_id: 63
 title:
   english: ''
-  original: 龙凤呈祥
+  original: "\u9F99\u51E4\u5448\u7965"
   phonetic: long feng cheng xiang
 wiki: ''

@@ -62,15 +62,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 叹杨家投宋主心血用尽
+  original: "\u53F9\u6768\u5BB6\u6295\u5B8B\u4E3B\u5FC3\u8840\u7528\u5C3D"
   phonetic: tan yang jia tou song zhu xin xue yong jin
 singing_type:
+  role: sheng
   singing: jingju
-  role: laosheng
 song_dir: ch/44/
 song_id: 44
 title:
   english: Hongyang cave
-  original: 洪羊洞
+  original: "\u6D2A\u7F8A\u6D1E"
   phonetic: hong yang dong
 wiki: ''

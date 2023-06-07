@@ -38,7 +38,8 @@ scene:
   english: ''
   original: ''
   phonetic: ''
-singing_type: []
+singing_type:
+  singing: TBD_ch
 song_dir: ch/65/
 song_id: 65
 title:

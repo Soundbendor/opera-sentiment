@@ -35,13 +35,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 深宫无处不飞花
+  original: "\u6DF1\u5BAB\u65E0\u5904\u4E0D\u98DE\u82B1"
   phonetic: shen gong wu chu bu fei hua
-singing_type: []
+singing_type:
+  role: sheng
+  singing: jingju
 song_dir: ch/38/
 song_id: 38
 title:
   english: ''
-  original: 甘露寺
+  original: "\u7518\u9732\u5BFA"
   phonetic: gan lu si
 wiki: ''

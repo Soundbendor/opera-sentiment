@@ -1,5 +1,6 @@
 emotion:
 - loving
+- enthusiatic
 emotion_binary: 1
 files:
   wav00:
@@ -28,6 +29,32 @@ files:
       id: mal_10
       level: professional
       name: Tianyang Wang
+  wav02:
+    file_dir: ch/7/wav02.wav
+    info:
+      bit_rate: 24
+      channel_number: 1
+      duration: 103.268141
+      if_a_cappella: true
+      sample_rate: 44100
+    singer:
+      bio_gender: mal
+      id: mal_08
+      level: amateur
+      name: Juntong Pan
+  wav03:
+    file_dir: ch/7/wav03.wav
+    info:
+      bit_rate: 24
+      channel_number: 1
+      duration: 111.173333
+      if_a_cappella: true
+      sample_rate: 44100
+    singer:
+      bio_gender: mal
+      id: mal_08
+      level: amateur
+      name: Juntong Pan
 language: ch
 lyric:
   english: ''
@@ -38,7 +65,7 @@ scene:
   original: ''
   phonetic: ''
 singing_type:
-- modern chinese song
+  singing: traditional chinese singing
 song_dir: ch/7/
 song_id: 7
 title:

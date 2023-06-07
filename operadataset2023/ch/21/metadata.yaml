@@ -39,7 +39,9 @@ scene:
   english: ''
   original: ''
   phonetic: ''
-singing_type: []
+singing_type:
+  role: TBD_
+  singing: MB_jingju
 song_dir: ch/21/
 song_id: 21
 title:

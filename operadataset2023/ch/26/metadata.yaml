@@ -36,7 +36,9 @@ scene:
   english: ''
   original: ''
   phonetic: ''
-singing_type: []
+singing_type:
+  role: TBD_
+  singing: jingju
 song_dir: ch/26/
 song_id: 26
 title:

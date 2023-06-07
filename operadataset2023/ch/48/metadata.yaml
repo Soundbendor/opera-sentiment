@@ -23,13 +23,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 过了一天又一天
+  original: "\u8FC7\u4E86\u4E00\u5929\u53C8\u4E00\u5929"
   phonetic: guo le yi tian you yi tian
-singing_type: []
+singing_type:
+  role: sheng
+  singing: jingju
 song_dir: ch/48/
 song_id: 48
 title:
   english: ''
-  original: 文昭关
+  original: "\u6587\u662D\u5173"
   phonetic: wen zhao guan
 wiki: ''

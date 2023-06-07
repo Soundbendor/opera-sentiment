@@ -1,5 +1,5 @@
 emotion: []
-emotion_binary: -1 #represent unknown or not sure
+emotion_binary: -1
 files:
   wav00:
     file_dir: ch/31/wav00.wav
@@ -26,7 +26,7 @@ files:
       bio_gender: fem
       id: fem_01
       level: professional
-      name: Zhang Shuo  
+      name: Zhang Shuo
 language: ch
 lyric:
   english: ''
@@ -34,13 +34,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 碧云天黄花地西风紧
+  original: "\u78A7\u4E91\u5929\u9EC4\u82B1\u5730\u897F\u98CE\u7D27"
   phonetic: bi yun tian huang hua di xi feng jin
-singing_type: []
+singing_type:
+  role: dan
+  singing: jingju
 song_dir: ch/31/
 song_id: 31
 title:
   english: ''
-  original: 西厢记
+  original: "\u897F\u53A2\u8BB0"
   phonetic: xi xiang ji
 wiki: ''

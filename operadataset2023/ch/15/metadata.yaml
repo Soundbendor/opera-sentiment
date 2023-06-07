@@ -37,7 +37,9 @@ scene:
   english: ''
   original: ''
   phonetic: ''
-singing_type: []
+singing_type:
+  role: TBD_
+  singing: jingju
 song_dir: ch/15/
 song_id: 15
 title:

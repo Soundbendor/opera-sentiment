@@ -35,13 +35,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 昔日有个三大贤
+  original: "\u6614\u65E5\u6709\u4E2A\u4E09\u5927\u8D24"
   phonetic: xi ri you ge san da xian
-singing_type: []
+singing_type:
+  role: sheng
+  singing: jingju
 song_dir: ch/37/
 song_id: 37
 title:
   english: ''
-  original: 珠帘寨
+  original: "\u73E0\u5E18\u5BE8"
   phonetic: zhu lian zhai
 wiki: ''

@@ -38,11 +38,12 @@ scene:
   english: ''
   original: ''
   phonetic: ''
-singing_type: []
+singing_type:
+  singing: TBD_ch
 song_dir: ch/22/
 song_id: 22
 title:
   english: ''
-  original: ''
+  original: "\u6C5F\u513F\u6C34"
   phonetic: Jiang er shui
 wiki: ''

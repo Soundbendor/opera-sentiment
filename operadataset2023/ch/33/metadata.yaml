@@ -47,13 +47,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 春秋亭外风雨暴
+  original: "\u6625\u79CB\u4EAD\u5916\u98CE\u96E8\u66B4"
   phonetic: chun qiu ting wai feng yu bao
-singing_type: []
+singing_type:
+  role: dan
+  singing: jingju
 song_dir: ch/33/
 song_id: 33
 title:
   english: ''
-  original: 锁麟囊
+  original: "\u9501\u9E9F\u56CA"
   phonetic: suo lin nang
 wiki: ''

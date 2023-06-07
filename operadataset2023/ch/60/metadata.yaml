@@ -21,13 +21,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 别院中起笙歌因风送听
+  original: "\u522B\u9662\u4E2D\u8D77\u7B19\u6B4C\u56E0\u98CE\u9001\u542C"
   phonetic: bie yuan zhong qi sheng ge yin feng song ting
-singing_type: []
+singing_type:
+  role: dan
+  singing: jingju
 song_dir: ch/60/
 song_id: 60
 title:
   english: ''
-  original: 梅妃
+  original: "\u6885\u5983"
   phonetic: mei fei
 wiki: ''

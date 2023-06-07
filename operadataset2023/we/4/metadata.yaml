@@ -37,7 +37,8 @@ scene:
   english: ''
   original: ''
   phonetic: ''
-singing_type: []
+singing_type:
+  singing: TBD_we
 song_dir: we/4/
 song_id: 4
 title:

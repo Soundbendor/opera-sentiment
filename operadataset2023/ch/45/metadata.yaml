@@ -35,13 +35,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 自那日朝罢归身染重病
+  original: "\u81EA\u90A3\u65E5\u671D\u7F62\u5F52\u8EAB\u67D3\u91CD\u75C5"
   phonetic: zi na ri chao ba gui shen ran zhong bing
-singing_type: []
+singing_type:
+  role: sheng
+  singing: jingju
 song_dir: ch/45/
 song_id: 45
 title:
   english: Hongyang cave
-  original: 洪羊洞
+  original: "\u6D2A\u7F8A\u6D1E"
   phonetic: hong yang dong
 wiki: ''

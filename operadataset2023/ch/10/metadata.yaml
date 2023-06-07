@@ -90,7 +90,9 @@ scene:
   english: ''
   original: "\u6211\u6B63\u5728\u57CE\u697C\u89C2\u5C71\u666F"
   phonetic: wo zheng zai cheng lou guan shan jing
-singing_type: []
+singing_type:
+  role: sheng
+  singing: jingju
 song_dir: ch/10/
 song_id: 10
 title:

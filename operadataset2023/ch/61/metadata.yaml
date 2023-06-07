@@ -21,13 +21,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 一霎时把七情俱已昧尽
+  original: "\u4E00\u970E\u65F6\u628A\u4E03\u60C5\u4FF1\u5DF2\u6627\u5C3D"
   phonetic: yi sha shi ba qi qing ju yi mei jin
-singing_type: []
+singing_type:
+  role: dan
+  singing: jingju
 song_dir: ch/61/
 song_id: 61
 title:
   english: ''
-  original: 锁麟囊
+  original: "\u9501\u9E9F\u56CA"
   phonetic: suo lin nang
 wiki: ''

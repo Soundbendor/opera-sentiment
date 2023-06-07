@@ -63,10 +63,11 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 将身儿来至在大街口
+  original: "\u5C06\u8EAB\u513F\u6765\u81F3\u5728\u5927\u8857\u53E3"
   phonetic: jiang shen er lai zhi zai da jie kou
 singing_type:
-- jingju
+  role: sheng
+  singing: jingju
 song_dir: ch/9/
 song_id: 9
 title:

@@ -21,13 +21,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 没来由遭刑宪受此大难
+  original: "\u6CA1\u6765\u7531\u906D\u5211\u5BAA\u53D7\u6B64\u5927\u96BE"
   phonetic: mei lai you zao xing xian shou ci da nan
-singing_type: []
+singing_type:
+  role: dan
+  singing: jingju
 song_dir: ch/58/
 song_id: 58
 title:
   english: ''
-  original: 六月雪
+  original: "\u516D\u6708\u96EA"
   phonetic: liu yue xue
 wiki: ''

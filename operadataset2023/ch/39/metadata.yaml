@@ -35,13 +35,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 劝千岁杀字休出口
+  original: "\u529D\u5343\u5C81\u6740\u5B57\u4F11\u51FA\u53E3"
   phonetic: quan qian sui sha zi xiu chu kou
-singing_type: []
+singing_type:
+  role: sheng
+  singing: jingju
 song_dir: ch/39/
 song_id: 39
 title:
   english: ''
-  original: 甘露寺
+  original: "\u7518\u9732\u5BFA"
   phonetic: gan lu si
 wiki: ''

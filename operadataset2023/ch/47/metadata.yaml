@@ -36,13 +36,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 一轮明月照窗前
+  original: "\u4E00\u8F6E\u660E\u6708\u7167\u7A97\u524D"
   phonetic: yi lun ming yue zhao chuang qian
-singing_type: []
+singing_type:
+  role: sheng
+  singing: jingju
 song_dir: ch/47/
 song_id: 47
 title:
   english: ''
-  original: 文昭关
+  original: "\u6587\u662D\u5173"
   phonetic: wen zhao guan
 wiki: ''

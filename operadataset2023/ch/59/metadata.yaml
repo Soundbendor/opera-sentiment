@@ -21,13 +21,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 有贺后在金殿一声高骂
+  original: "\u6709\u8D3A\u540E\u5728\u91D1\u6BBF\u4E00\u58F0\u9AD8\u9A82"
   phonetic: you he hou zai jin dian yi sheng gao ma
-singing_type: []
+singing_type:
+  role: dan
+  singing: jingju
 song_dir: ch/59/
 song_id: 59
 title:
   english: ''
-  original: 贺后骂殿
+  original: "\u8D3A\u540E\u9A82\u6BBF"
   phonetic: he hou ma dian
 wiki: ''

@@ -35,13 +35,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 我本是一穷儒太烈性
+  original: "\u6211\u672C\u662F\u4E00\u7A77\u5112\u592A\u70C8\u6027"
   phonetic: wo ben shi yi qiong ru tai lie xing
-singing_type: []
+singing_type:
+  role: sheng
+  singing: jingju
 song_dir: ch/46/
 song_id: 46
 title:
   english: ''
-  original: 琼林宴
+  original: "\u743C\u6797\u5BB4"
   phonetic: qiong lin yan
 wiki: ''

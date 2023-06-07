@@ -62,13 +62,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 海岛冰轮初转腾
+  original: "\u6D77\u5C9B\u51B0\u8F6E\u521D\u8F6C\u817E"
   phonetic: hai dao bing lun chu zhuan teng
-singing_type: []
+singing_type:
+  role: dan
+  singing: jingju
 song_dir: ch/17/
 song_id: 17
 title:
   english: ''
-  original: 贵妃醉酒
+  original: "\u8D35\u5983\u9189\u9152"
   phonetic: gui fei zui jiu
 wiki: ''

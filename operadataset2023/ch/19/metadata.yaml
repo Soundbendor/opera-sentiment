@@ -101,13 +101,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 叫张生隐藏在棋盘之下
+  original: "\u53EB\u5F20\u751F\u9690\u85CF\u5728\u68CB\u76D8\u4E4B\u4E0B"
   phonetic: jiao zhang sheng yin cang zai qi pan zhi xia
-singing_type: []
+singing_type:
+  role: dan
+  singing: jingju
 song_dir: ch/19/
 song_id: 19
 title:
   english: ''
-  original: 红娘-逾墙
+  original: "\u7EA2\u5A18-\u903E\u5899"
   phonetic: hong niang-yu qiang
 wiki: ''

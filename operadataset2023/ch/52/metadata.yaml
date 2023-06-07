@@ -23,11 +23,12 @@ scene:
   english: ''
   original: ''
   phonetic: ''
-singing_type: []
+singing_type:
+  singing: TBD_ch
 song_dir: ch/52/
 song_id: 52
 title:
   english: ''
-  original: ''
+  original: "\u4E00\u7897\u6CEA\u6362\u6765\u4E00\u7897\u996D"
   phonetic: Yi wan lei huan lai yi wan fan
 wiki: ''

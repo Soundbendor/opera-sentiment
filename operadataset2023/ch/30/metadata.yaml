@@ -47,13 +47,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 看大王在帐中和衣睡稳
+  original: "\u770B\u5927\u738B\u5728\u5E10\u4E2D\u548C\u8863\u7761\u7A33"
   phonetic: kan dai wang zai zhang zhong he yi shui wen
-singing_type: []
+singing_type:
+  role: dan
+  singing: jingju
 song_dir: ch/30/
 song_id: 30
 title:
   english: ''
-  original: 霸王别姬
+  original: "\u9738\u738B\u522B\u59EC"
   phonetic: ba wang bie ji
 wiki: ''

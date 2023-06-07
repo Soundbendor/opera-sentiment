@@ -23,13 +23,15 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 清早起我这里急忙梳洗
+  original: "\u6E05\u65E9\u8D77\u6211\u8FD9\u91CC\u6025\u5FD9\u68B3\u6D17"
   phonetic: qing zao qi wo zhe li ji mang shu xi
-singing_type: []
+singing_type:
+  role: dan
+  singing: jingju
 song_dir: ch/54/
 song_id: 54
 title:
   english: ''
-  original: 拾玉镯
+  original: "\u62FE\u7389\u956F"
   phonetic: shi yu zhuo
 wiki: ''
