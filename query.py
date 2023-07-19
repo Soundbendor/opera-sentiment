@@ -1,3 +1,4 @@
+# run this script to retrieve information from yaml metadata files
 import os
 import yaml
 

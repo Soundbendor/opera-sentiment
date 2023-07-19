@@ -19,6 +19,7 @@ This data set is a combination of these intelligence contributions:
 - Label corrections
   - Label corrected by Shengxuan Wang ([shawn120](https://github.com/shawn120))
   - Correction rely on the knowledge from Shengxuan Wang, Rong Gong et al. <sup>[2]</sup>, and online searching.
+- Only keep opera data, removed all the non-opera data from previous dataset (e.g. modern songs). 
 - Future TODO: Add in more western opera to balance out the language inbalance.
 
 > [1] D. A. A. Black, M. Li, and M. Tian, “Automatic Identification of Emotional Cues in Chinese Opera Singing,” in 13th Int. Conf. on Music Perception and Cognition (ICMPC-2014), 2014, pp. 250–255. 
