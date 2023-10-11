@@ -43,21 +43,24 @@ files:
       if_a_cappella: True or False (if it is a-cappella)
       sample_rate: sample_rate
     singer:
-      bio_gender: bio_gender of the person record this audio
+      bio_gender: bio-gender of the person record this audio
       id: singer_id
-      level:  professional or amateur
+      level:  professional/intermediate/amateur
       name: Singer name
   wav01:
     # ... ...
 language: ch or we (chinese or western language)
-role_gender: the gender of the character in this song/scene
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: english translation for the scene title
   original: original scene title (for chinese hanzi, will shown as unicode)
   phonetic: only for chinese songs, so it will be pinyin for it
 singing_type:
   role: only for jingju, laosheng, dan, ... or TBD
-  singing: jingju/yuju/chinese singing/... or TBD
+  singing: jingju/yuju/... or TBD
 song_dir: dir to this song
 song_id: id for this song
 song_size: how many audio in this one single song
@@ -65,4 +68,14 @@ title:
   english: english translation for the song title
   original: original song title (for chinese hanzi, will shown as unicode)
   phonetic: only for chinese songs, so it will be pinyin for it
+wiki: notes or wiki for this song
+```
+## Create yaml template
+If you need to add more data, you might want to create a new yaml for it. You can use the following code to create a yaml template for it. 
+
+Argument:
+
+AMOUNT_OF_WAV_FILES (optional): the amount of the wav files (the song_size entry) you want to initilize the yaml template with, default is 1.
+```bash
+python create_yaml_template.py AMOUNT_OF_WAV_FILES
 ```

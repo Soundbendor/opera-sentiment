@@ -6,6 +6,9 @@
 # xlsx files
 *.xlsx
 
+# trash files (contains some non-opera data)
+/TRASH
+
 # my own test python files or archive folder
 test.py
 tools_archive_DONOT_run_again/
