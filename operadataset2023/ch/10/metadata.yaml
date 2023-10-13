@@ -81,6 +81,19 @@ files:
       id: mal_01
       level: amateur
       name: Wang Xinnong
+  wav06:
+    file_dir: ch/10/wav05.wav
+    info:
+      bit_rate: 24
+      channel_number: 1
+      duration: 192.0
+      if_a_cappella: true
+      sample_rate: 44100
+    singer:
+      bio_gender: mal
+      id: mal_x
+      level: mixed
+      name: mixed level group
 language: ch
 lyric:
   english: ''
@@ -95,6 +108,7 @@ singing_type:
   singing: jingju
 song_dir: ch/10/
 song_id: 10
+song_size: 7
 title:
   english: The stratagem of the empty city
   original: "\u7A7A\u57CE\u8BA1"
