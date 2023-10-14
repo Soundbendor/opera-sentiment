@@ -2,6 +2,10 @@
 
 ## A multi-label dataset for opera singing
 
+Comprehensive lebeled including title, scene name, role type, lyrics (ToDo), and so on.
+
+With provided scripts, you can easily add more song to this dataset, or merge recording into existed song easily.
+
 All the .wav files are ignored due to the size, to download the whole dataset, please go to this link: TODO
 
 ## Where does this dataset come from?
@@ -11,14 +15,14 @@ This data set is a combination of these intelligence contributions:
 - Jingju (Beijing opera) Phoneme Annotation<sup>[2]</sup>
   - Use the csv file of this dataset to correct some annotaion errors in the former one.
   - Add new audios from this dataset.
-    - 2 new laosheng songs (one audio for each)
-    - 6 new audios for exsiting laosheng songs
-    - 4 new dan songs (one audio for each)
-    - 2 new audio for exsiting dan songs
-    - correct few mis-classified songs
+    - about 2 new laosheng songs (one audio for each)
+    - about 6 new audios for exsiting laosheng songs
+    - about 4 new dan songs (one audio for each)
+    - about 2 new audio for exsiting dan songs
 - Label corrections
   - Label corrected by Shengxuan Wang ([shawn120](https://github.com/shawn120))
   - Correction rely on the knowledge from Shengxuan Wang, Rong Gong et al. <sup>[2]</sup>, and online searching.
+  - Lyrics labeled by __TODO__
 - Only keep opera data, removed all the non-opera data from previous dataset (e.g. modern songs). 
 - Future TODO: Add in more western opera to balance out the language inbalance.
 
