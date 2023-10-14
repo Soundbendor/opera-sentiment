@@ -14,13 +14,17 @@ if_a_cappella = True
 
 # Finally run update_song_size.py to update the song size
 
-song_id = sys.argv[1]
-
-song_PATH = "ch/{}".format(song_id)
+song_PATH = sys.argv[1] # eg: ch/9
 
 Data_PATH = "operadataset2023"
 PATH = os.path.join(Data_PATH, song_PATH)
 meta_file = os.path.join(PATH, "metadata.yaml")
+
+# check if meta file exists
+if not os.path.exists(meta_file):
+    print("meta file doesn't exist, check your input")
+    exit()
+
 with open(meta_file,"r") as f:
     meta = yaml.safe_load(f)
     files = meta["files"]
