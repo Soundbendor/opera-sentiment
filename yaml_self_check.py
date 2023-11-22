@@ -29,6 +29,22 @@ for root, dirs, files in os.walk(Data_PATH):
                 if meta["song_size"] != len(meta["files"]):
                     flag = False
                     print("ERROR: {} has wrong song_size".format(yaml_path))
+                # check if meta["files"][key] == meta["files"][key][file_dir].split("/")[-1].split(".")[0]
+                # also check if all the file_dir are unique
+                # also check if all the file_dir exist
+                file_dir_set = set()
+                for wav in meta["files"]:
+                    if meta["files"][wav]["file_dir"] in file_dir_set:
+                        flag = False
+                        print("ERROR: {} has duplicate file_dir".format(yaml_path))
+                    else:
+                        file_dir_set.add(meta["files"][wav]["file_dir"])
+                    if not os.path.exists(os.path.join(Data_PATH,meta["files"][wav]["file_dir"])):
+                        flag = False
+                        print("ERROR: {} has non-existing file_dir".format(yaml_path))
+                    if meta["files"][wav]["file_dir"].split("/")[-1].split(".")[0] != wav:
+                        flag = False
+                        print("ERROR: {} has wrong file_dir".format(yaml_path))
 
             if flag:
                 print("{} is good".format(yaml_path))
