@@ -82,7 +82,7 @@ files:
       level: amateur
       name: Wang Xinnong
   wav06:
-    file_dir: ch/10/wav05.wav
+    file_dir: ch/10/wav06.wav
     info:
       bit_rate: 24
       channel_number: 1
