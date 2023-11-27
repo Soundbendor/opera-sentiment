@@ -4,7 +4,7 @@ import os
 import yaml
 from PATH import Data_PATH
 
-yaml_answer_path = "metadata_answer.yaml"
+yaml_answer_path = "metadata_template.yaml"
 
 with open(yaml_answer_path,"r") as f:
     yaml_answer = yaml.safe_load(f)
