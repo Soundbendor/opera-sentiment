@@ -1,6 +1,6 @@
 import os
 import yaml
-from PATH import Data_PATH
+from ENV import Data_PATH
 
 wav_info = {
     "ch": {},

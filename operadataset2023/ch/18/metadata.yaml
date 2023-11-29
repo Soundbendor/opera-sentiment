@@ -95,6 +95,19 @@ files:
       id: fem_01
       level: professional
       name: Zhang Shuo
+  wav07:
+    file_dir: ch/18/wav07.wav
+    info:
+      bit_rate: 16
+      channel_number: 1
+      duration: 68.5539
+      if_a_cappella: true
+      sample_rate: 44100
+    singer:
+      bio_gender: fem
+      id: fem_x
+      level: mixed
+      name: mixed level group
 language: ch
 lyric:
   english: ''
@@ -109,6 +122,7 @@ singing_type:
   singing: jingju
 song_dir: ch/18/
 song_id: 18
+song_size: 8
 title:
   english: ''
   original: "\u7A46\u6842\u82F1\u6302\u5E05"

@@ -2,7 +2,7 @@
 
 import os
 import yaml
-from PATH import Data_PATH
+from ENV import Data_PATH
 
 yaml_answer_path = "metadata_template.yaml"
 

@@ -27,7 +27,7 @@ files:
       id: fem_01
       level: professional
       name: Zhang Shuo
-  wav03:
+  wav02:
     file_dir: ch/30/wav02.wav
     info:
       bit_rate: 16
@@ -54,6 +54,7 @@ singing_type:
   singing: jingju
 song_dir: ch/30/
 song_id: 30
+song_size: 3
 title:
   english: ''
   original: "\u9738\u738B\u522B\u59EC"
