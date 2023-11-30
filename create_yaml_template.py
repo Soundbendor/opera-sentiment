@@ -1,7 +1,14 @@
 import yaml
 import sys
-
+import os
 yaml_name = "metadata_template.yaml"
+# if exist, add a number to the end
+if os.path.exists(yaml_name):
+    i = 1
+    while os.path.exists(yaml_name[:-5]+"_"+str(i)+yaml_name[-5:]):
+        i += 1
+    yaml_name = yaml_name[:-5]+"_"+str(i)+yaml_name[-5:]
+
 # take an argument for how many files there are， otherwise 1
 
 try: how_many_files = int(sys.argv[1])
