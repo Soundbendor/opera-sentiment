@@ -3,6 +3,11 @@
 
 # all the wav files
 *.wav
+
+# processed data
+unified/
+trimmed_*/
+
 # xlsx files
 *.xlsx
 
