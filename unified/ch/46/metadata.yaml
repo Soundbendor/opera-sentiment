@@ -1,0 +1,50 @@
+emotion:
+- sad
+emotion_binary: 0
+files:
+  wav00:
+    file_dir: ch/46/wav00.wav
+    info:
+      bit_rate: 16
+      channel_number: 1
+      duration: 147.620499
+      if_a_cappella: true
+      sample_rate: 16000
+    singer:
+      bio_gender: mal
+      id: mal_01
+      level: amateur
+      name: Wang Xinnong
+  wav01:
+    file_dir: ch/46/wav01.wav
+    info:
+      bit_rate: 16
+      channel_number: 1
+      duration: 162.0
+      if_a_cappella: false
+      sample_rate: 16000
+    singer:
+      bio_gender: mal
+      id: mal_01
+      level: amateur
+      name: Wang Xinnong
+language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
+scene:
+  english: ''
+  original: "\u6211\u672C\u662F\u4E00\u7A77\u5112\u592A\u70C8\u6027"
+  phonetic: wo ben shi yi qiong ru tai lie xing
+singing_type:
+  role: sheng
+  singing: jingju
+song_dir: ch/46/
+song_id: 46
+song_size: 2
+title:
+  english: ''
+  original: "\u743C\u6797\u5BB4"
+  phonetic: qiong lin yan
+wiki: ''

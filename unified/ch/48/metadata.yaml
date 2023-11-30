@@ -1,0 +1,51 @@
+emotion:
+- desperate
+- in trouble
+emotion_binary: 0
+files:
+  wav00:
+    file_dir: ch/48/wav00.wav
+    info:
+      bit_rate: 16
+      channel_number: 1
+      duration: 33.04
+      if_a_cappella: true
+      sample_rate: 16000
+    singer:
+      bio_gender: mal
+      id: mal_02
+      level: professional
+      name: Liu Lei
+  wav01:
+    file_dir: ch/48/wav01.wav
+    info:
+      bit_rate: 16
+      channel_number: 1
+      duration: 32.076553
+      if_a_cappella: true
+      sample_rate: 16000
+    singer:
+      bio_gender: mal
+      id: mal_x
+      level: mixed
+      name: mixed level group
+language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
+scene:
+  english: ''
+  original: "\u8FC7\u4E86\u4E00\u5929\u53C8\u4E00\u5929"
+  phonetic: guo le yi tian you yi tian
+singing_type:
+  role: sheng
+  singing: jingju
+song_dir: ch/48/
+song_id: 48
+song_size: 2
+title:
+  english: ''
+  original: "\u6587\u662D\u5173"
+  phonetic: wen zhao guan
+wiki: ''

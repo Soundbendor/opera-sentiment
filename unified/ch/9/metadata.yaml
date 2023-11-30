@@ -1,0 +1,104 @@
+emotion:
+- worried
+- missing
+- frustrated
+emotion_binary: 0
+files:
+  wav00:
+    file_dir: ch/9/wav00.wav
+    info:
+      bit_rate: 16
+      channel_number: 1
+      duration: 103.00101
+      if_a_cappella: true
+      sample_rate: 16000
+    singer:
+      bio_gender: mal
+      id: mal_12
+      level: professional
+      name: Bidong Guo
+  wav01:
+    file_dir: ch/9/wav01.wav
+    info:
+      bit_rate: 16
+      channel_number: 1
+      duration: 91.616077
+      if_a_cappella: false
+      sample_rate: 16000
+    singer:
+      bio_gender: mal
+      id: mal_12
+      level: professional
+      name: Bidong Guo
+  wav02:
+    file_dir: ch/9/wav02.wav
+    info:
+      bit_rate: 16
+      channel_number: 1
+      duration: 103.602063
+      if_a_cappella: true
+      sample_rate: 16000
+    singer:
+      bio_gender: mal
+      id: mal_12
+      level: professional
+      name: Bidong Guo
+  wav03:
+    file_dir: ch/9/wav03.wav
+    info:
+      bit_rate: 16
+      channel_number: 1
+      duration: 91.617687
+      if_a_cappella: false
+      sample_rate: 16000
+    singer:
+      bio_gender: mal
+      id: mal_12
+      level: professional
+      name: Bidong Guo
+  wav04:
+    file_dir: ch/9/wav04.wav
+    info:
+      bit_rate: 16
+      channel_number: 1
+      duration: 62.5
+      if_a_cappella: true
+      sample_rate: 16000
+    singer:
+      bio_gender: mal
+      id: mal_x
+      level: mixed
+      name: mixed level group
+  wav05:
+    file_dir: ch/9/wav05.wav
+    info:
+      bit_rate: 16
+      channel_number: 1
+      duration: 62.960363
+      if_a_cappella: true
+      sample_rate: 16000
+    singer:
+      bio_gender: mal
+      id: mal_x
+      level: mixed
+      name: mixed level group
+language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
+scene:
+  english: ''
+  original: "\u5C06\u8EAB\u513F\u6765\u81F3\u5728\u5927\u8857\u53E3"
+  phonetic: jiang shen er lai zhi zai da jie kou
+singing_type:
+  role: sheng
+  singing: jingju
+song_dir: ch/9/
+song_id: 9
+song_size: 6
+title:
+  english: A small remote inn
+  original: "\u4E09\u5BB6\u5E97"
+  phonetic: san jia dian
+wiki: ''

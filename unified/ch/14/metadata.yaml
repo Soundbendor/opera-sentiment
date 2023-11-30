@@ -1,0 +1,51 @@
+emotion:
+- relieved
+emotion_binary: 1
+files:
+  wav00:
+    file_dir: ch/14/wav00.wav
+    info:
+      bit_rate: 16
+      channel_number: 1
+      duration: 99.679252
+      if_a_cappella: true
+      sample_rate: 16000
+    singer:
+      bio_gender: mal
+      id: mal_13
+      level: professional
+      name: Tiingfeng Zhang
+  wav01:
+    file_dir: ch/14/wav01.wav
+    info:
+      bit_rate: 16
+      channel_number: 1
+      duration: 95.416009
+      if_a_cappella: true
+      sample_rate: 16000
+    singer:
+      bio_gender: mal
+      id: mal_13
+      level: professional
+      name: Tiingfeng Zhang
+language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
+scene:
+  english: ''
+  original: "\u5343\u62DC\u4E07\u62DC\u4E5F\u662F\u6298\u4E0D\u8FC7\u513F\u7684\u7F6A\
+    \u6765"
+  phonetic: ''
+singing_type:
+  role: sheng
+  singing: jingju
+song_dir: ch/14/
+song_id: 14
+song_size: 2
+title:
+  english: ''
+  original: "\u56DB\u90CE\u63A2\u6BCD-\u89C1\u5A18"
+  phonetic: si lang tan mu-jian niang
+wiki: ''

@@ -61,18 +61,18 @@ if __name__ == '__main__':
 
     create_unified_directory(src_directory, dest_directory)
 
-    # # get profile in order to get wave info
-    # source_profile = Profiler(src_directory)
+    # get profile in order to get wave info
+    source_profile = Profiler(src_directory)
     
-    # # unify chinese opera
-    # for sub_wav in source_profile.wav_info['ch']:
-    #     wav = os.path.join(src_directory, sub_wav)
-    #     unify(wav)
-    # # unify western opera
-    # for sub_wav in source_profile.wav_info['we']:
-    #     wav = os.path.join(src_directory, sub_wav)
-    #     unify(wav)
+    # unify chinese opera
+    for sub_wav in source_profile.wav_info['ch']:
+        wav = os.path.join(src_directory, sub_wav)
+        unify(wav)
+    # unify western opera
+    for sub_wav in source_profile.wav_info['we']:
+        wav = os.path.join(src_directory, sub_wav)
+        unify(wav)
     
-    # # new profile
-    # unified_profile = Profiler(dest_directory)
-    # unified_profile.full_profile(if_print_profile=True)
+    # check the new profile
+    unified_profile = Profiler(dest_directory)
+    unified_profile.full_profile(if_print_profile=True)
