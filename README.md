@@ -1,5 +1,13 @@
 # Opera singing dataset 2023
 
+content:
+- [Opera singing dataset 2023](#opera-singing-dataset-2023)
+  - [A multi-label dataset for opera singing](#a-multi-label-dataset-for-opera-singing)
+  - [Where does this dataset come from?](#where-does-this-dataset-come-from)
+  - [explanation of the yaml meta data](#explanation-of-the-yaml-meta-data)
+  - [Utilities](#utilities)
+  - [Machine Learning Workflow/Pipeline](#machine-learning-workflowpipeline)
+
 ## A multi-label dataset for opera singing
 
 Comprehensive lebeled including title, scene name, role type, lyrics (ToDo), and so on.
@@ -74,7 +82,11 @@ title:
   phonetic: only for chinese songs, so it will be pinyin for it
 wiki: notes or wiki for this song
 ```
-## Create yaml template
+
+## Utilities
+
+1. Create yaml template
+
 If you need to add more data, you might want to create a new yaml for it. You can use the following code to create a yaml template for it. 
 
 Argument:
@@ -83,3 +95,11 @@ AMOUNT_OF_WAV_FILES (optional): the amount of the wav files (the song_size entry
 ```bash
 python create_yaml_template.py AMOUNT_OF_WAV_FILES
 ```
+
+2. add new recording
+
+3. update song size
+
+4. search information from yaml
+
+## Machine Learning Workflow/Pipeline
