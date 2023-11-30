@@ -35,6 +35,8 @@ if __name__ == "__main__":
     search_for = ["emotion_binary"]
     value = -1
     res = search_song_info(search_for, value)
+    if len(res) == 0:
+        print("no result found")
     for id in res:
         yaml_path = os.path.join(Data_PATH, "ch", str(id), "metadata.yaml")
         meta = safe_read_yaml(yaml_path)
