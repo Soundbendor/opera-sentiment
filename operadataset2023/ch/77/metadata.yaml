@@ -21,7 +21,7 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 观世音满月面珠开妙相
+  original: "\u89C2\u4E16\u97F3\u6EE1\u6708\u9762\u73E0\u5F00\u5999\u76F8"
   phonetic: guan shi yin man yue mian zhu kai miao xiang
 singing_type:
   role: dan
@@ -31,6 +31,6 @@ song_id: 77
 song_size: 1
 title:
   english: ''
-  original: 天女散花
+  original: "\u5929\u5973\u6563\u82B1"
   phonetic: tian nv san hua
 wiki: ''

@@ -21,7 +21,7 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 杨玉环在殿前深深拜定
+  original: "\u6768\u7389\u73AF\u5728\u6BBF\u524D\u6DF1\u6DF1\u62DC\u5B9A"
   phonetic: yang yu huan zai dian qian shen shen bai ding
 singing_type:
   role: dan
@@ -31,6 +31,6 @@ song_id: 74
 song_size: 1
 title:
   english: ''
-  original: 太真外传
+  original: "\u592A\u771F\u5916\u4F20"
   phonetic: tai zhen wai zhuan
 wiki: ''

@@ -21,7 +21,7 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 风萧萧雾漫漫星光惨淡
+  original: "\u98CE\u8427\u8427\u96FE\u6F2B\u6F2B\u661F\u5149\u60E8\u6DE1"
   phonetic: feng xiao xiao wu man man xing guang cai dan
 singing_type:
   role: dan
@@ -31,6 +31,6 @@ song_id: 75
 song_size: 1
 title:
   english: ''
-  original: 杨门女将
+  original: "\u6768\u95E8\u5973\u5C06"
   phonetic: yang men nv jiang
 wiki: ''

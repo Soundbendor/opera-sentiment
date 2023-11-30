@@ -21,7 +21,7 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 朝霞映在阳澄湖上
+  original: "\u671D\u971E\u6620\u5728\u9633\u6F84\u6E56\u4E0A"
   phonetic: zhao xia ying zai yang cheng hu shang
 singing_type:
   role: sheng
@@ -31,6 +31,6 @@ song_id: 73
 song_size: 1
 title:
   english: ''
-  original: 沙家浜
+  original: "\u6C99\u5BB6\u6D5C"
   phonetic: sha jia bin
 wiki: ''

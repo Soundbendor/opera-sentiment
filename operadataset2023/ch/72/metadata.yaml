@@ -21,7 +21,7 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: 杨四郎心中似刀裁
+  original: "\u6768\u56DB\u90CE\u5FC3\u4E2D\u4F3C\u5200\u88C1"
   phonetic: yang si lang xin zhong si dao cai
 singing_type:
   role: sheng
@@ -31,6 +31,6 @@ song_id: 72
 song_size: 1
 title:
   english: ''
-  original: 四郎探母-哭堂
+  original: "\u56DB\u90CE\u63A2\u6BCD-\u54ED\u5802"
   phonetic: si lang tan mu-ku tang
 wiki: ''
