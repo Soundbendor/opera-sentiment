@@ -103,3 +103,9 @@ python create_yaml_template.py AMOUNT_OF_WAV_FILES
 4. search information from yaml
 
 ## Machine Learning Workflow/Pipeline
+
+1. unify the data
+2. trim the data
+3. generate tf record (for the whole dataset)
+4. combine folds for cross validation
+5. load folds, train model, and evaluate
