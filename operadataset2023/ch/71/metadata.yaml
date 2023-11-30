@@ -1,5 +1,7 @@
-emotion: []
-emotion_binary: -1
+emotion:
+- confronting
+- brave
+emotion_binary: 1
 files:
   wav00:
     file_dir: ch/71/wav00.wav

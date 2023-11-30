@@ -1,5 +1,6 @@
-emotion: []
-emotion_binary: -1
+emotion: 
+  - unwilling
+emotion_binary: 0
 files:
   wav00:
     file_dir: ch/31/wav00.wav
