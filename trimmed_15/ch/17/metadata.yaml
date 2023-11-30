@@ -1,0 +1,90 @@
+emotion:
+- excited
+- happy
+emotion_binary: 1
+files:
+  wav00:
+    file_dir: ch/17/wav00.wav
+    info:
+      bit_rate: 16
+      channel_number: 1
+      duration: 159.928481
+      if_a_cappella: true
+      sample_rate: 16000
+    singer:
+      bio_gender: fem
+      id: fem_10
+      level: professional
+      name: Liang Sun
+  wav01:
+    file_dir: ch/17/wav01.wav
+    info:
+      bit_rate: 16
+      channel_number: 1
+      duration: 159.496984
+      if_a_cappella: false
+      sample_rate: 16000
+    singer:
+      bio_gender: fem
+      id: fem_10
+      level: professional
+      name: Liang Sun
+  wav02:
+    file_dir: ch/17/wav02.wav
+    info:
+      bit_rate: 16
+      channel_number: 1
+      duration: 159.975533
+      if_a_cappella: true
+      sample_rate: 16000
+    singer:
+      bio_gender: fem
+      id: fem_10
+      level: professional
+      name: Liang Sun
+  wav03:
+    file_dir: ch/17/wav03.wav
+    info:
+      bit_rate: 16
+      channel_number: 1
+      duration: 159.843356
+      if_a_cappella: false
+      sample_rate: 16000
+    singer:
+      bio_gender: fem
+      id: fem_10
+      level: professional
+      name: Liang Sun
+  wav04:
+    file_dir: ch/17/wav04.wav
+    info:
+      bit_rate: 16
+      channel_number: 1
+      duration: 104.922653
+      if_a_cappella: true
+      sample_rate: 16000
+    singer:
+      bio_gender: fem
+      id: fem_x
+      level: mixed
+      name: mixed level group
+language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
+scene:
+  english: ''
+  original: "\u6D77\u5C9B\u51B0\u8F6E\u521D\u8F6C\u817E"
+  phonetic: hai dao bing lun chu zhuan teng
+singing_type:
+  role: dan
+  singing: jingju
+song_dir: ch/17/
+song_id: 17
+song_size: 5
+title:
+  english: ''
+  original: "\u8D35\u5983\u9189\u9152"
+  phonetic: gui fei zui jiu
+wiki: ''

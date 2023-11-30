@@ -1,0 +1,36 @@
+emotion: []
+emotion_binary: 0
+files:
+  wav00:
+    file_dir: ch/59/wav00.wav
+    info:
+      bit_rate: 16
+      channel_number: 1
+      duration: 70.336122
+      if_a_cappella: true
+      sample_rate: 16000
+    singer:
+      bio_gender: mal
+      id: mal_14
+      level: amateur
+      name: Tony Haogong
+language: ch
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
+scene:
+  english: ''
+  original: "\u6709\u8D3A\u540E\u5728\u91D1\u6BBF\u4E00\u58F0\u9AD8\u9A82"
+  phonetic: you he hou zai jin dian yi sheng gao ma
+singing_type:
+  role: dan
+  singing: jingju
+song_dir: ch/59/
+song_id: 59
+song_size: 1
+title:
+  english: ''
+  original: "\u8D3A\u540E\u9A82\u6BBF"
+  phonetic: he hou ma dian
+wiki: ''
