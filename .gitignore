@@ -1,6 +1,26 @@
 # MacOS ds file
 .DS_Store
 
+# server scripts
+*.sh
+
+# neptune keys
+neptune.ini
+
+# server output
+/output
+*.out
+*.err
+
+# tfrecord files
+*.tfrecord
+
+# checkpoint models
+/models
+
+# result png
+*.png
+
 # all the wav files
 *.wav
 
@@ -14,9 +34,13 @@ trimmed_*/
 # trash files (contains some non-opera data)
 /TRASH
 
+# saved variables
+/variable
+
 # my own test python files or archive folder
 test.py
 tools_archive_DONOT_run_again/
+test/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

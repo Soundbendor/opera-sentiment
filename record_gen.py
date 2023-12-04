@@ -181,15 +181,19 @@ def dataset_record_generate(dataset_path): #recursive generate tf record for the
 if __name__ == "__main__":
     from dataset import SimpleAudioClassificationDataset
     from ENV import Trimmed_PATH
+    
+    # add in forlder for a brand new trimmed data folder
     add_in_folder(Trimmed_PATH)
-    profiler = Profiler(Trimmed_PATH)
-    profiler.full_profile()
-    # print(len(profiler.wav_list['ch'])+len(profiler.wav_list['we']))
+    
+    # move all wav files into "in" folder
     move_to_in(Trimmed_PATH)
     
-    # generate_csv_and_index(Trimmed_PATH)
+    # generate/regenerate csv and index files (dataset and dataset.txt), and clear old tf records
+    generate_csv_and_index(Trimmed_PATH)
 
+    # # clear old tf records only
     # clear_records_only(Trimmed_PATH)
     
+    # generate tf records for the whole dataset
     dataset_record_generate(Trimmed_PATH)
 

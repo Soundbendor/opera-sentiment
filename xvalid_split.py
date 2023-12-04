@@ -213,9 +213,9 @@ if __name__ == "__main__":
     # print(find_biggest_diff(folds_to_size))
     # folds, folds_size = balance_piece(folds, folds_to_size, 10, 100, lan, debug=True)
     # print(folds, folds_size)
-    from ENV import fold_count
+    from ENV import fold_count, target_second
     lan = 'ch'
-    balanced_folds = get_balance_folds(fold_count, lan, save_as="ch_folds")
+    balanced_folds = get_balance_folds(fold_count, lan, save_as="ch_folds_"+str(target_second))
     # folds = load_folds("ch_folds_0.npy")
     # print(folds)
     print(balanced_folds)
