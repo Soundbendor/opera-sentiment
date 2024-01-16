@@ -366,15 +366,15 @@ def model_adding(model): # will return the optimizer for keeping all the model s
         ###### try CNN model NO padding done ######
 
     if MODEL == "LSTM":
-
-        model.add(LSTM(units=8, return_sequences=True, input_shape=(16, 1024), activation="tanh"))  # Add LSTM layer with 256 units
-        # model.add(tf.keras.layers.BatchNormalization())
-        model.add(Dropout(hyperparams['dropout']))
-        model.add(LSTM(units=6, activation="tanh"))
-        # model.add(tf.keras.layers.BatchNormalization())
-        # model.add(Dropout(hyperparams['dropout']))
-        model.add(Dense(units=1, activation='sigmoid'))  # Add a dense output layer with sigmoid activation for binary classification
-        optim = 'adam'
+        if method == "default":
+            model.add(LSTM(units=8, return_sequences=True, input_shape=(16, 1024), activation="tanh"))  # Add LSTM layer with 256 units
+            # model.add(tf.keras.layers.BatchNormalization())
+            model.add(Dropout(hyperparams['dropout']))
+            model.add(LSTM(units=6, activation="tanh"))
+            # model.add(tf.keras.layers.BatchNormalization())
+            model.add(Dropout(hyperparams['dropout']))
+            model.add(Dense(units=1, activation='sigmoid'))  # Add a dense output layer with sigmoid activation for binary classification
+            optim = 'adam'
 
     if MODEL == "Bi_LSTM":
         
