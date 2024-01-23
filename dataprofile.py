@@ -75,8 +75,8 @@ class Profiler:
 
                         self.wav_info[lan][file_name]["info"] = meta["files"][wav]["info"]
                         self.wav_info[lan][file_name]["singer"] = meta["files"][wav]["singer"]
-
-    def full_profile(self, if_print_profile=False):
+    
+    def full_profile_recording_level(self, if_print_profile=False):
         self.recording_size = {
             "ch": 0,
             "we": 0
@@ -206,6 +206,72 @@ class Profiler:
         
         if if_print_profile == True:
             print_profile()
+
+    def full_profile_segment_level(self, if_print_profile=False):
+        self.segment_count = {
+            "ch": 0,
+            "we": 0
+        }
+        self.segment_a_cappellas_count = {
+            "ch": {
+                "true": 0,
+                "false": 0
+            },
+            "we": {
+                "true": 0,
+                "false": 0
+            }
+        }
+        self.segment_singer_levels = {
+            "ch": {},
+            "we": {}
+        }
+        self.segment_singer_gender = {      
+            "ch": {},
+            "we": {}
+        }
+        for lan in self.wav_info:
+            for wav_path in self.wav_info[lan]:
+                # trasfer wav path in to folder path
+                segment_folder = wav_path.replace(".wav", "/in")
+                # make full path
+                segment_folder = os.path.join(self.USING_PATH, segment_folder)
+                # count how many wav files under this "segment_folder"
+                current_segment = 0
+                for root, dirs, files in os.walk(segment_folder):
+                    for file in files:
+                        if file.endswith(".wav"):
+                            self.segment_count[lan]+=1
+                            current_segment+=1
+                
+                if self.wav_info[lan][wav_path]["info"]["if_a_cappella"] == True:
+                    self.segment_a_cappellas_count[lan]["true"] += current_segment
+                elif self.wav_info[lan][wav_path]["info"]["if_a_cappella"] == False:
+                    self.segment_a_cappellas_count[lan]["false"] += current_segment
+
+                self.segment_singer_levels[lan][self.wav_info[lan][wav_path]["singer"]["level"]] \
+                    = self.segment_singer_levels[lan].get(self.wav_info[lan][wav_path]["singer"]["level"], 0) \
+                        + current_segment
+
+                self.segment_singer_gender[lan][self.wav_info[lan][wav_path]["singer"]["bio_gender"]] \
+                    = self.segment_singer_gender[lan].get(self.wav_info[lan][wav_path]["singer"]["bio_gender"], 0) \
+                        + current_segment
+
+        def print_profile():
+            print("to get song level/recording level profile, use unified or original data set to profile")
+            print("segment_count: {}".format(self.segment_count))
+            print("a_cappellas_count in segment: {}".format(self.segment_a_cappellas_count))
+            print("singer_levels in segment: {}".format(self.segment_singer_levels))
+            print("singer_gender in segment: {}".format(self.segment_singer_gender))
+        
+        if if_print_profile == True:
+            print_profile()
+    
+    def full_profile(self, if_print_profile=False):
+        if "trimmed" in self.USING_PATH:
+            self.full_profile_segment_level(if_print_profile)
+        else:
+            self.full_profile_recording_level(if_print_profile)
 
 if __name__ == '__main__':
     from ENV import Data_PATH, Trimmed_PATH
