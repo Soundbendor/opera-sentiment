@@ -21,5 +21,5 @@ def pre_trim(src_dir):
                 single_pre_trim(src, dest)
 
 if __name__ == '__main__':
-    src_dir = 'unified_demo'
+    from ENV import Unified_PATH as src_dir
     pre_trim(src_dir)
