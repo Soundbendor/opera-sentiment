@@ -1,7 +1,7 @@
 # get basic info for this dataset:
 
 import os
-from ENV import target_second, Unified_PATH, Trimmed_PATH
+from ENV import Trimmed_PATH
 
 # get how many pieces in each song
 song_id_to_trimed_count = {
