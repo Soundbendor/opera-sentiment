@@ -1,4 +1,5 @@
-# get basic info for this dataset:
+# get a dictionary for song_id : how many pieces in this song
+# don't need to run, it will be imported when it is needed
 
 import os
 from ENV import Trimmed_PATH
