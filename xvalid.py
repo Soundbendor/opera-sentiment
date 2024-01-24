@@ -44,6 +44,8 @@ import sys
 MODEL = sys.argv[1]
 method = sys.argv[2]
 hyperparams['epochs'] = int(sys.argv[3])
+from ENV import evaluation_method, segment_method
+
 
 # # if manually set
 # MODEL = "Bi_LSTM"
@@ -85,9 +87,13 @@ if NEPTUNE_SWITCH == 1:
     runtime, neptune_cbk = init_neptune('./neptune.ini')
     # upload parameters to neptune
     runtime['parameters'] = hyperparams
-    runtime["sys/tags"].add([str(piece_size)+"s", str(hyperparams['epochs'])+"epochs", MODEL, str(method)])
+    
+    runtime["sys/tags"].add([str(hyperparams['epochs'])+"epochs", MODEL, str(method)])
+    runtime["sys/tags"].add(str(piece_size)+"s_"+segment_method)
+    runtime["sys/tags"].add(str(hyperparams["batch_size"])+"batch_size")
+    runtime["sys/tags"].add(evaluation_method)
+    
     runtime["info/folds_to_size"] = folds_size
-    # runtime["info/batch_size"] = hyperparams["batch_size"]
     runtime["info/method"] = method
     ###### for Neptune end ######
 

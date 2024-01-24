@@ -1,5 +1,5 @@
 import os
-from ENV import Unified_PATH, target_second, Trimmed_PATH
+from ENV import Unified_PATH, target_second, Trimmed_PATH, segment_method
 
 import shutil
 import subprocess
@@ -71,6 +71,51 @@ def drop_partial(trim_list, size=target_second): # drop partial audio and silenc
             print("finishing "+str(int(trim_list.index(name)/len(trim_list)*100))+'%')
     print("finished, drop "+str(count_partial)+" partial audios and "+str(count_silence)+" silence audios")
 
+def pad_partial(trim_list, size=target_second):
+    # still need to remove all the silence audio
+    count_partial = 0
+    count_silence = 0
+    for name in trim_list:
+        real_name = os.path.join(Trimmed_PATH, name)
+        if sox.file_info.duration(real_name) < size:
+            count_partial += 1
+            head_pad(real_name)
+            print("finishing "+str(int(trim_list.index(name)/len(trim_list)*100))+'%')
+        elif sox.file_info.silent(real_name, threshold=0.0001) == True:
+            count_silence += 1
+            os.remove(real_name)
+            print("finishing "+str(int(trim_list.index(name)/len(trim_list)*100))+'%')
+    print("finished, pad "+str(count_partial)+" partial audios and "+str(count_silence)+" silence audios")
+
+def head_pad(real_name, size=target_second):
+    def find_first_segment(src):
+        # src -> first_segment: the first segment of the current song
+        # eg: src = trimmed_30_Padding/ch/37/wav00/wav00_007.wav (the last segment of the current song)
+        # first_segment = trimmed_30_Padding/ch/37/wav00/wav00_001.wav (the first segment of the current song)
+        src_list = src.split("/")
+        song_name = src_list[-1].split("_")[0]
+        song_folder = "/".join(src_list[:-1]) + "/" + song_name
+        i = 1
+        first_segment = song_folder + "_00"+str(i)+".wav"
+        while not os.path.exists(first_segment):
+            i += 1
+            first_segment = song_folder + "_00"+str(i)+".wav"
+        
+        return first_segment
+    first_segment = find_first_segment(real_name)
+    # pad real_name with first_segment, then get the first 'size' seconds
+    pad_name = real_name.split(".")[0] + "_pad.wav"
+    pad = sox.Transformer()
+    pad.pad(start_duration=0, end_duration=0, pad_duration=size)
+    pad.build(first_segment, pad_name)
+    # trim the pad_name to get the first 'size' seconds
+    trim_name = real_name.split(".")[0] + "_trim.wav"
+    trim(pad_name, trim_name, size)
+    # remove the pad_name
+    os.remove(pad_name)
+    # rename the trim_name to real_name
+    os.rename(trim_name, real_name)
+
 if __name__ == '__main__':
     # set time size in ENV
     # always only work on the unified data for triming
@@ -87,9 +132,18 @@ if __name__ == '__main__':
     # get the trimmed list
     trimed_profile = Profiler(Trimmed_PATH)
 
-    # drop the partial audio
-    trimed_list_ch = trimed_profile.wav_list["ch"]
-    drop_partial(trimed_list_ch)
+    if segment_method == "Dropping":
+        # drop the partial audio
+        trimed_list_ch = trimed_profile.wav_list["ch"]
+        # drop_partial(trimed_list_ch)
 
-    trimed_list_we = trimed_profile.wav_list["we"]
-    drop_partial(trimed_list_we)
+        trimed_list_we = trimed_profile.wav_list["we"]
+        # drop_partial(trimed_list_we)
+        print(trimed_list_we)
+    
+    if segment_method == "Padding":
+        trimed_list_ch = trimed_profile.wav_list["ch"]
+        pad_partial(trimed_list_ch)
+
+        trimed_list_we = trimed_profile.wav_list["we"]
+        pad_partial(trimed_list_we)
