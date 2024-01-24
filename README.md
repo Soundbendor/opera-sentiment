@@ -105,7 +105,8 @@ python create_yaml_template.py AMOUNT_OF_WAV_FILES
 ## Machine Learning Workflow/Pipeline
 
 1. unify the data
-2. trim the data
-3. generate tf record (for the whole dataset)
-4. combine folds for cross validation
-5. load folds, train model, and evaluate
+2. pre-trim the data (clear all the silence in the begining or end)
+3. trim the data
+4. generate tf record (for the whole dataset)
+5. combine folds for cross validation
+6. load folds, train model, and evaluate
