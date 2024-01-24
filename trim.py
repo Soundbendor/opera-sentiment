@@ -87,7 +87,7 @@ def pad_partial(trim_list, size=target_second):
             print("finishing "+str(int(trim_list.index(name)/len(trim_list)*100))+'%')
     print("finished, pad "+str(count_partial)+" partial audios and "+str(count_silence)+" silence audios")
 
-def head_pad(real_name, size=target_second):
+def head_pad(real_name, size=target_second): # pad the head of the audio to the end
     def find_first_segment(src):
         # src -> first_segment: the first segment of the current song
         # eg: src = trimmed_30_Padding/ch/37/wav00/wav00_007.wav (the last segment of the current song)
@@ -135,11 +135,10 @@ if __name__ == '__main__':
     if segment_method == "Dropping":
         # drop the partial audio
         trimed_list_ch = trimed_profile.wav_list["ch"]
-        # drop_partial(trimed_list_ch)
+        drop_partial(trimed_list_ch)
 
         trimed_list_we = trimed_profile.wav_list["we"]
-        # drop_partial(trimed_list_we)
-        print(trimed_list_we)
+        drop_partial(trimed_list_we)
     
     if segment_method == "Padding":
         trimed_list_ch = trimed_profile.wav_list["ch"]
