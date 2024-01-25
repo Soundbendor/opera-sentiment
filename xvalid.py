@@ -371,8 +371,9 @@ def model_adding(model): # will return the optimizer for keeping all the model s
             model.add(Dense(1, activation='sigmoid'))
             optim = 'adam'
             ###### try CNN model NO padding done ######
-        
-        if method == "padding":
+
+    if MODEL == "CNNpadding":
+        if method == "drop0.3":
             ###### try CNN model WITH padding ######
             model.add(Conv1D(filters=8, kernel_size=4, activation='relu', padding='same', input_shape=(16, 1024)))
             model.add(MaxPooling1D(pool_size=2))
