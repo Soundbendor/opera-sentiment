@@ -31,13 +31,21 @@ files:
       level: amateur
       name: Juntong Pan
 language: we
+lyric:
+  english: ''
+  original: ''
+  phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
+singing_type:
+  singing: TBD_we
 song_dir: we/1/
 song_id: 1
+song_size: 2
 title:
   english: ''
   original: Non piu andrai,farfallone amoroso
   phonetic: ''
+wiki: ''
