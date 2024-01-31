@@ -8,8 +8,8 @@ Trimmed_PATH = 'trimmed'
 ### hyperparameters related to Machine Learning
 ### keep them consistent during EVERY workflow steps (from data preprocessing to evaluation)
 target_second = 30
-evaluation_method =  "segment_level_evaluation"
-segment_method = "Padding"
+evaluation_method =  "segment_evaluation" # "segment_evaluation" or "song_evaluation"
+segment_method = "Padding" # "Padding" or "Dropping"
 fold_count = 5
 
 ### !!! MUST NOT Change this part !!!
