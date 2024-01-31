@@ -355,6 +355,20 @@ def model_adding(model): # will return the optimizer for keeping all the model s
         ##### simple model area done ######
     
     if MODEL == "CNN":
+        if method == "none":
+            model.add(tf.keras.Input(shape=(math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])))
+            model.add(tf.keras.layers.Reshape((math.ceil(hyperparams["input_length"]/hyperparams["input_size"])*hyperparams["input_size"],1)))
+            model.add(Conv1D(filters=8, kernel_size=64, activation='relu'))
+            model.add(MaxPooling1D(pool_size=64,strides=8))
+            
+            model.add(Dense(16, activation='sigmoid'))
+            model.add(Conv1D(filters=8, kernel_size=64, activation='relu'))
+            model.add(MaxPooling1D(pool_size=64,strides=8))
+            
+            model.add(Flatten())
+            model.add(Dense(1, activation='sigmoid'))
+            optim = 'adam'
+        
         if method == "drop0.3":
             ###### try CNN model NO padding ###### 
             model.add(tf.keras.Input(shape=(math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])))
@@ -397,6 +411,36 @@ def model_adding(model): # will return the optimizer for keeping all the model s
             model.add(Conv1D(filters=8, kernel_size=64, activation='relu'))
             model.add(MaxPooling1D(pool_size=64,strides=8))
             model.add(Dropout(hyperparams['dropout']))
+            model.add(Flatten())
+            model.add(Dense(1, activation='sigmoid'))
+            optim = 'adam'
+            ###### try CNN model NO padding done ######
+        if method == "none(oneDense)":
+            ###### try CNN model NO padding ###### 
+            model.add(tf.keras.Input(shape=(math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])))
+            model.add(tf.keras.layers.Reshape((math.ceil(hyperparams["input_length"]/hyperparams["input_size"])*hyperparams["input_size"],1)))
+            model.add(Conv1D(filters=8, kernel_size=64, activation='relu'))
+            model.add(MaxPooling1D(pool_size=64,strides=8))
+            # model.add(Dropout(hyperparams['dropout']))
+            # model.add(Dense(16, activation='relu', kernel_regularizer=l2(0.01), bias_regularizer=l2(0.01)))
+            model.add(Conv1D(filters=8, kernel_size=64, activation='relu'))
+            model.add(MaxPooling1D(pool_size=64,strides=8))
+            # model.add(Dropout(hyperparams['dropout']))
+            model.add(Flatten())
+            model.add(Dense(1, activation='sigmoid'))
+            optim = 'adam'
+            ###### try CNN model NO padding done ######
+        if method == "L2e2onCNN1CNN2(oneDense)":
+            ###### try CNN model NO padding ###### 
+            model.add(tf.keras.Input(shape=(math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])))
+            model.add(tf.keras.layers.Reshape((math.ceil(hyperparams["input_length"]/hyperparams["input_size"])*hyperparams["input_size"],1)))
+            model.add(Conv1D(filters=8, kernel_size=64, activation='relu', kernel_regularizer=l2(0.01), bias_regularizer=l2(0.01)))
+            model.add(MaxPooling1D(pool_size=64,strides=8))
+            # model.add(Dropout(hyperparams['dropout']))
+            # model.add(Dense(16, activation='relu', kernel_regularizer=l2(0.01), bias_regularizer=l2(0.01)))
+            model.add(Conv1D(filters=8, kernel_size=64, activation='relu', kernel_regularizer=l2(0.01), bias_regularizer=l2(0.01)))
+            model.add(MaxPooling1D(pool_size=64,strides=8))
+            # model.add(Dropout(hyperparams['dropout']))
             model.add(Flatten())
             model.add(Dense(1, activation='sigmoid'))
             optim = 'adam'

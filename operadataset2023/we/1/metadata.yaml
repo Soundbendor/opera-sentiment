@@ -1,0 +1,43 @@
+emotion:
+- persuading
+- enthusiatic
+- commanding
+emotion_binary: 1
+files:
+  wav00:
+    file_dir: we/1/wav00.wav
+    info:
+      bit_rate: 24
+      channel_number: 1
+      duration: 103.268141
+      if_a_cappella: true
+      sample_rate: 44100
+    singer:
+      bio_gender: mal
+      id: mal_08
+      level: amateur
+      name: Juntong Pan
+  wav01:
+    file_dir: we/1/wav01.wav
+    info:
+      bit_rate: 24
+      channel_number: 1
+      duration: 111.173333
+      if_a_cappella: true
+      sample_rate: 44100
+    singer:
+      bio_gender: mal
+      id: mal_08
+      level: amateur
+      name: Juntong Pan
+language: we
+scene:
+  english: ''
+  original: ''
+  phonetic: ''
+song_dir: we/1/
+song_id: 1
+title:
+  english: ''
+  original: Non piu andrai,farfallone amoroso
+  phonetic: ''

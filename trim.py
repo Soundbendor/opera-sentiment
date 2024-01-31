@@ -85,7 +85,7 @@ def pad_partial(trim_list, size=target_second):
             count_silence += 1
             os.remove(real_name)
             print("finishing "+str(int(trim_list.index(name)/len(trim_list)*100))+'%')
-    print("finished, pad "+str(count_partial)+" partial audios and "+str(count_silence)+" silence audios")
+    print("finished, pad "+str(count_partial)+" partial audios and remove "+str(count_silence)+" silence audios")
 
 def head_pad(real_name, size=target_second): # pad the head of the audio to the end
     def find_first_segment(src):
@@ -103,18 +103,11 @@ def head_pad(real_name, size=target_second): # pad the head of the audio to the 
         
         return first_segment
     first_segment = find_first_segment(real_name)
-    # pad real_name with first_segment, then get the first 'size' seconds
-    pad_name = real_name.split(".")[0] + "_pad.wav"
-    pad = sox.Transformer()
-    pad.pad(start_duration=0, end_duration=0, pad_duration=size)
-    pad.build(first_segment, pad_name)
-    # trim the pad_name to get the first 'size' seconds
-    trim_name = real_name.split(".")[0] + "_trim.wav"
-    trim(pad_name, trim_name, size)
-    # remove the pad_name
-    os.remove(pad_name)
-    # rename the trim_name to real_name
-    os.rename(trim_name, real_name)
+    # print(real_name) # the "tail" segment
+    # print(first_segment) # the "head" segment
+    # contact them together then trim the whole segment into "size"
+    def circular_pad_single():
+        pass
 
 if __name__ == '__main__':
     # set time size in ENV
@@ -122,12 +115,12 @@ if __name__ == '__main__':
     src_directory = Unified_PATH
     dest_directory = Trimmed_PATH
     
-    # created the trimmed directory, if already exist, do nothing
-    create_trimmed_directory(src_directory, dest_directory)
+    # # created the trimmed directory, if already exist, do nothing
+    # create_trimmed_directory(src_directory, dest_directory)
     
-    # trim ch and we in batch
-    trim_batch(src_directory, dest_directory, "ch")
-    trim_batch(src_directory, dest_directory, "we")
+    # # trim ch and we in batch
+    # trim_batch(src_directory, dest_directory, "ch")
+    # trim_batch(src_directory, dest_directory, "we")
 
     # get the trimmed list
     trimed_profile = Profiler(Trimmed_PATH)
