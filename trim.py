@@ -79,7 +79,7 @@ def pad_partial(trim_list, size=target_second):
         real_name = os.path.join(Trimmed_PATH, name)
         if sox.file_info.duration(real_name) < size:
             count_partial += 1
-            head_pad(real_name)
+            padding(real_name)
             print("finishing "+str(int(trim_list.index(name)/len(trim_list)*100))+'%')
         elif sox.file_info.silent(real_name, threshold=0.0001) == True:
             count_silence += 1
@@ -87,7 +87,8 @@ def pad_partial(trim_list, size=target_second):
             print("finishing "+str(int(trim_list.index(name)/len(trim_list)*100))+'%')
     print("finished, pad "+str(count_partial)+" partial audios and remove "+str(count_silence)+" silence audios")
 
-def head_pad(real_name, size=target_second): # pad the head of the audio to the end
+def padding(real_name, size=target_second): # pad the head of the audio to the end
+    # this real_name is the name of the tail segment
     def find_first_segment(src):
         # src -> first_segment: the first segment of the current song
         # eg: src = trimmed_30_Padding/ch/37/wav00/wav00_007.wav (the last segment of the current song)
@@ -106,8 +107,25 @@ def head_pad(real_name, size=target_second): # pad the head of the audio to the 
     # print(real_name) # the "tail" segment
     # print(first_segment) # the "head" segment
     # contact them together then trim the whole segment into "size"
-    def circular_pad_single():
-        pass
+    def circular_pad_single(tail, head):
+        # pad the head of the audio to the end
+        # then trim the whole segment into "size"
+        
+        # 4 steps:
+        # CMD_pad = sox tail head temp.wav
+        CMD_pad = ['sox', tail, head, 'temp.wav']
+        subprocess.run(CMD_pad)
+        # CMD_trim = sox sox temp.wav temp_trimed.wav trim 0 target_second
+        CMD_trim = ['sox', 'temp.wav', 'temp_trimed.wav', 'trim', '0', str(target_second)]
+        subprocess.run(CMD_trim)
+        # CMD_rename = mv temp_trimed.wav tail
+        CMD_rename = ['mv', 'temp_trimed.wav', tail]
+        subprocess.run(CMD_rename)
+        # CMD_remove = rm temp.wav
+        CMD_remove = ['rm', 'temp.wav']
+        subprocess.run(CMD_remove)
+    
+    circular_pad_single(real_name, first_segment)
 
 if __name__ == '__main__':
     # set time size in ENV
@@ -115,13 +133,16 @@ if __name__ == '__main__':
     src_directory = Unified_PATH
     dest_directory = Trimmed_PATH
     
-    # # created the trimmed directory, if already exist, do nothing
-    # create_trimmed_directory(src_directory, dest_directory)
+    '''trimming block'''
+    # created the trimmed directory, if already exist, do nothing
+    create_trimmed_directory(src_directory, dest_directory)
     
-    # # trim ch and we in batch
-    # trim_batch(src_directory, dest_directory, "ch")
-    # trim_batch(src_directory, dest_directory, "we")
+    # trim ch and we in batch
+    trim_batch(src_directory, dest_directory, "ch")
+    trim_batch(src_directory, dest_directory, "we")
+    '''trimming block'''
 
+    '''partial solution block'''
     # get the trimmed list
     trimed_profile = Profiler(Trimmed_PATH)
 
@@ -139,3 +160,4 @@ if __name__ == '__main__':
 
         trimed_list_we = trimed_profile.wav_list["we"]
         pad_partial(trimed_list_we)
+    '''partial solution block'''

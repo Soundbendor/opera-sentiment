@@ -191,7 +191,7 @@ if __name__ == "__main__":
     # generate/regenerate csv and index files (dataset and dataset.txt), and clear old tf records
     generate_csv_and_index(Trimmed_PATH)
 
-    # # clear old tf records only
+    # # clear old tf records ONLY
     # clear_records_only(Trimmed_PATH)
     
     # generate tf records for the whole dataset

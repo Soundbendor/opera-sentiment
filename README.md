@@ -71,7 +71,7 @@ python create_yaml_template.py AMOUNT_OF_WAV_FILES
 4. generate tf record (for the whole dataset) using `record_gen.py`
 5. combine folds for cross validation
   1) use `xvalid_split.py` to split data into folds and save them into local by running it
-  2) change the parameter in  `xvalid_load.py` to choose from load folds from local or generate a new one, then don't run this script.
+  2) change the parameter in  `xvalid_load.py` to choose from load folds from local or generate a new one, but DO NOT run this script.
 6. load folds, train model, and evaluate in `xvalid.py`
 
 
