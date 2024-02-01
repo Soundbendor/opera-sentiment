@@ -7,8 +7,10 @@ import numpy as np
 
 import seaborn as sns
 import matplotlib.pyplot as plt
+from datetime import datetime
 
 import tensorflow as tf
+from tensorflow.keras.callbacks import TensorBoard
 from tensorflow.keras.regularizers import l2
 from tensorflow.keras.layers import LSTM
 from tensorflow.keras.layers import Bidirectional
@@ -61,7 +63,6 @@ print("MODEL: ", MODEL)
 print("epochs: ", hyperparams['epochs'])
 print("method: ", method)
 
-
 if NEPTUNE_SWITCH == 1:
     ###### for Neptune ######
     import configparser
@@ -96,6 +97,26 @@ if NEPTUNE_SWITCH == 1:
     runtime["info/folds_to_size"] = folds_size
     runtime["info/method"] = method
     ###### for Neptune end ######
+
+# Define a custom callback to save model visualization
+class ModelVisualizationCallback(tf.keras.callbacks.Callback):
+    def __init__(self, log_dir):
+        super(ModelVisualizationCallback, self).__init__()
+        self.log_dir = log_dir
+        self.generated_visualization = False
+
+    def on_train_begin(self, logs=None):
+        if not self.generated_visualization:
+            model = self.model  # Get the model
+            to_file=os.path.join(self.log_dir, "model.png")
+            tf.keras.utils.plot_model(model, to_file=to_file, show_shapes=True)
+            if NEPTUNE_SWITCH == 1:
+                runtime["module_vis"].upload(File(to_file))
+            self.generated_visualization = True
+
+# Set up TensorBoard
+log_dir = "logs/" + datetime.now().strftime("%Y%m%d-%H%M%S")
+tensorboard_callback = TensorBoard(log_dir=log_dir, histogram_freq=1)
 
 os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices'
 
@@ -248,7 +269,7 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
 
         print("****** training on folds partern", i,"******")
         if NEPTUNE_SWITCH ==1:
-          model.fit(dataset_train, epochs = hyperparams['epochs'], callbacks=[neptune_cbk])
+          model.fit(dataset_train, epochs = hyperparams['epochs'], callbacks=[neptune_cbk, tensorboard_callback, ModelVisualizationCallback(log_dir)])
         else:
           model.fit(dataset_train, epochs = hyperparams['epochs'])
         

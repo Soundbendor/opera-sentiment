@@ -8,6 +8,9 @@
 neptune.ini
 .neptune/
 
+# tenforflow logs
+logs/
+
 # server output
 /output
 *.out
