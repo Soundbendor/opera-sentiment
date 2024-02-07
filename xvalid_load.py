@@ -93,15 +93,11 @@ for fold_n, paths in path_folds.items():
 # dataset_of_folds_dictionary: {1~5: <*dataset BEFORE being batched*>}
 print(dataset_of_folds_dictionary)
 
-''' try only remain train in the dictionary
-tfdata_of_folds_dictionary = {} # TFData
-for fold_n, paths in path_folds.items():
-    tfdata_first = data_full_dictionary[paths[0]].train # TFData
-    tfdata_of_folds_dictionary[fold_n] = tfdata_first # TFData
-    for i in range(1, len(paths)):
-        tfdata_curr = data_full_dictionary[paths[i]].train # TFData
-        combined_tfdata = tfdata_of_folds_dictionary[fold_n].concatenate(tfdata_curr) # TFData
-        tfdata_of_folds_dictionary[fold_n] = combined_tfdata # TFData
+dataset_of_folds_song_level_dictionary = {} # SACDataset
+'''
+this variable will look like:
+
+
 '''
 
 # testing

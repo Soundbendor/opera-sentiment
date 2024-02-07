@@ -28,6 +28,7 @@ from ENV import target_second as piece_size
 # HOW to get folds? go to "xvalid_load.py" to load or create new ones
 
 from ENV import fold_count
+from ENV import evaluation_method
 
 '''Don't Change Here, if change needed, go back to xvalid_load.py to change these
 hyperparams['input_size'] = 1024
@@ -281,37 +282,56 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
             model.save("models/"+model_name)
 
         print("****** validating on fold", test_index,"******")
-        if NEPTUNE_SWITCH ==1:
-          score = round2(model.evaluate(dataset_test, callbacks=[neptune_cbk])[1])
-        else:
-          score = round2(model.evaluate(dataset_test)[1])
+        if evaluation_method == "segment_evaluation":
+            if NEPTUNE_SWITCH ==1:
+                score = round2(model.evaluate(dataset_test, callbacks=[neptune_cbk])[1])
+            else:
+                score = round2(model.evaluate(dataset_test)[1])
         
-        scores.append(score)
-        
-        '''get whole dataset evaluation'''
-        # we should have a whole y_real_whole and y_predict_whole
-        y_true_fold = []
-        y_pred_fold = []
-        for batch_x, batch_y in dataset_test:
-            # Make predictions on the batch of data
-            batch_y_pred = model.predict(batch_x)
-            # Threshold the predicted probabilities to obtain predicted labels
-            batch_y_pred = (batch_y_pred > 0.5).astype(int)
-            # Append the true and predicted labels to the lists for the current fold
-            y_true_fold.append(batch_y.numpy())
-            y_pred_fold.append(batch_y_pred) #batch_y_pred is already a numpy array
-        
-        # Convert the lists of true and predicted labels for the current fold to numpy arrays
-        y_true_fold = np.concatenate(y_true_fold, axis=0)
-        y_pred_fold = np.concatenate(y_pred_fold, axis=0)
-        
-        scores_manually.append(round2((y_pred_fold == y_true_fold).mean()))
-        
-        # Append the true and predicted labels for the current fold to the overall lists
-        y_true_all.append(y_true_fold)
-        y_pred_all.append(y_pred_fold)
 
-        # break #for testing, only one loop
+
+            scores.append(score)
+            
+            '''get whole dataset evaluation by adding all the fold's prediction and true value together'''
+            # we should have a whole y_real_whole and y_predict_whole for making confusion matrix
+            y_true_fold = []
+            y_pred_fold = []
+            for batch_x, batch_y in dataset_test:
+                # Make predictions on the batch of data
+                batch_y_pred = model.predict(batch_x)
+                # Threshold the predicted probabilities to obtain predicted labels
+                batch_y_pred = (batch_y_pred > 0.5).astype(int)
+                # Append the true and predicted labels to the lists for the current fold
+                y_true_fold.append(batch_y.numpy())
+                y_pred_fold.append(batch_y_pred) #batch_y_pred is already a numpy array
+            
+            # Convert the lists of true and predicted labels for the current fold to numpy arrays
+            y_true_fold = np.concatenate(y_true_fold, axis=0)
+            y_pred_fold = np.concatenate(y_pred_fold, axis=0)
+            
+            scores_manually.append(round2((y_pred_fold == y_true_fold).mean()))
+            
+            # Append the true and predicted labels for the current fold to the overall lists
+            y_true_all.append(y_true_fold)
+            y_pred_all.append(y_pred_fold)
+
+            # break #for testing, only one loop
+        
+        if evaluation_method == "song_evaluation":
+            # need to manually calculate the accuracy
+            y_true_fold = []
+            y_pred_fold = []
+            for batch_x, batch_y in dataset_test:
+                print(batch_x)
+                print(batch_y)
+                break #for testing, only one loop
+                # # Make predictions on the batch of data
+                # batch_y_pred = model.predict(batch_x)
+                # # Threshold the predicted probabilities to obtain predicted labels
+                # batch_y_pred = (batch_y_pred > 0.5).astype(int)
+                # # Append the true and predicted labels to the lists for the current fold
+                # y_true_fold.append(batch_y.numpy())
+                # y_pred_fold.append(batch_y_pred) #batch_y_pred is already a numpy array
     
     # print(y_true_all)
     # print(type(y_true_all))
