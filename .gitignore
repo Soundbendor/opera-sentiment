@@ -13,6 +13,7 @@ logs/
 
 # server output
 /output
+/output_archive
 *.out
 *.err
 

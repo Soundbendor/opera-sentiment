@@ -204,6 +204,21 @@ def get_path_folds(path, lan, folds): # getting the path for each fold: {fold#: 
 
     return fold_to_path
 
+def get_song_id_path_folds(path, lan, folds): # getting the song_id and path for each fold: {fold#: [song1: paths, song2: paths]}
+    # input example : folds: {1: [17, 16, 13, 15], 2: [11, 14, 9], 3: [10]}
+    fold_to_path = {}
+    for fold_id, folds_distri in folds.items():
+        fold_to_path[fold_id] = {}
+        for song_id in folds_distri:
+            fold_to_path[fold_id][song_id] = []
+            mother_path = path+'/'+lan+'/'+str(song_id)+'/'
+            yaml_path = mother_path + 'metadata.yaml'
+            meta_dict = safe_read_yaml(yaml_path)
+            for wav in meta_dict["files"]:
+                fold_to_path[fold_id][song_id].append(mother_path+wav)
+
+    return fold_to_path
+
 if __name__ == "__main__":
     # folds = init_folds(fold_count, lan)
     # print(song_id_to_trimed_count[lan]) if lan != "all" else print(song_id_to_trimed_count)
