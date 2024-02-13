@@ -18,7 +18,7 @@ from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import SimpleRNN, Conv1D, MaxPooling1D, Flatten, Dropout, BatchNormalization
 
 from sklearn.metrics import confusion_matrix, accuracy_score
-from xvalid_load import folds, folds_size, data_full_dictionary, dataset_of_folds_dictionary, hyperparams
+from xvalid_load import folds, folds_size, data_full_dictionary, dataset_of_folds_dictionary, dataset_of_folds_song_level_dictionary, hyperparams
 
 from dataset import SimpleAudioClassificationDataset
 
@@ -145,11 +145,37 @@ def shuffle_and_batch(dataset):
 
 # covert list[numpy.ndarray] into pure one dimensional list
 def super_flat(arrays):
+    if type(arrays[0]) != np.ndarray:
+        return arrays
     flat_array = np.concatenate(arrays, axis=0)
     flat_list = flat_array.tolist()
     # flat the flat_list
     flat_list = [item for sublist in flat_list for item in sublist]
     return flat_list
+
+def super_flat2(nested_list):
+    flattened_list = []
+    for sublist in nested_list:
+        if isinstance(sublist, list):
+            flattened_list.extend(sublist)
+        elif isinstance(sublist, np.ndarray):
+            flattened_list.extend(sublist.tolist())
+    return flattened_list
+
+def voting(prediction_list):
+    positive_votes = 0
+    negative_votes = 0
+    for prediction in prediction_list:
+        if prediction == 1:
+            positive_votes += 1
+        elif prediction == 0:
+            negative_votes += 1
+        else:
+            raise Exception("voting error: prediction is not 0 or 1")
+    if positive_votes > negative_votes:
+        return 1
+    else:
+        return 0
 
 ###### archive functions ######
 # def ybatch2list(batched_data):
@@ -240,7 +266,10 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
         dataset_test = shuffle_and_batch(dataset_test)
         print("after batch and shuffle:")
         print(dataset_train)
-        print(dataset_test)
+        if evaluation_method == "segment_evaluation":
+            print(dataset_test)
+        else:
+            print("test dataset will be generated seperatly later.")
         
         # #####TESTING: check batched data size
         # for batch_x, batch_y in dataset_train:
@@ -288,8 +317,6 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
             else:
                 score = round2(model.evaluate(dataset_test)[1])
         
-
-
             scores.append(score)
             
             '''get whole dataset evaluation by adding all the fold's prediction and true value together'''
@@ -317,30 +344,63 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
 
             # break #for testing, only one loop
         
-        if evaluation_method == "song_evaluation":
-            # need to manually calculate the accuracy
+        if evaluation_method == "song_evaluation":    
+            test_fold = test_index[0]
             y_true_fold = []
             y_pred_fold = []
-            for batch_x, batch_y in dataset_test:
-                print(batch_x)
-                print(batch_y)
-                break #for testing, only one loop
-                # # Make predictions on the batch of data
-                # batch_y_pred = model.predict(batch_x)
-                # # Threshold the predicted probabilities to obtain predicted labels
-                # batch_y_pred = (batch_y_pred > 0.5).astype(int)
-                # # Append the true and predicted labels to the lists for the current fold
-                # y_true_fold.append(batch_y.numpy())
-                # y_pred_fold.append(batch_y_pred) #batch_y_pred is already a numpy array
+            for song_id in dataset_of_folds_song_level_dictionary[test_fold].keys():
+                # all data below belongs to one song
+                this_song_prediction = []
+                for one_recording_data in dataset_of_folds_song_level_dictionary[test_fold][song_id]:
+                    for single_segment_data in one_recording_data.train.take(100):
+                        single_segment_x = single_segment_data[0]
+                        single_segment_y = single_segment_data[1]
+                        single_segment_x = tf.expand_dims(single_segment_x, axis=0)
+                        single_segment_y_pred = model.predict(single_segment_x)
+                        single_segment_y_pred = (single_segment_y_pred > 0.5).astype(int)
+                        
+                        this_song_prediction.append(single_segment_y_pred)
+                song_pred_y = voting(super_flat(this_song_prediction))
+                song_true_y = single_segment_y.numpy()
+                # print(song_pred_y)
+                # print(song_true_y)
+                y_pred_fold.append(song_pred_y)
+                y_true_fold.append(song_true_y)
+            # print(y_pred_fold)
+            # print(y_true_fold)
+            y_true_fold = np.concatenate(y_true_fold, axis=0)
+            y_true_fold = super_flat(y_true_fold)
+            # print(y_true_fold)
+            
+            scores_manually.append(round2((y_pred_fold == y_true_fold).mean()))
+            scores = scores_manually
+            # # Append the true and predicted labels for the current fold to the overall lists
+            y_true_all.append(y_true_fold)
+            y_pred_all.append(y_pred_fold)
     
     # print(y_true_all)
     # print(type(y_true_all))
-    print("Xvalidation scores from evaluate function are:", scores)
+    if evaluation_method == "segment_evaluation":
+        print("Xvalidation scores from evaluate function are:", scores)
+        y_pred_all = super_flat(y_pred_all)
+        y_true_all = super_flat(y_true_all)
+        # only need to flat them if its segment evaluation
+    
     print("the maximum score is:", max(scores))
     print("Xvalidation scores manually calculated are:", scores_manually)
+    print("-----------------")
+    print(y_true_all)
+    print(y_pred_all)
+    print("-----------------")
+    if evaluation_method != "segment_evaluation":
+        y_true_all = super_flat2(y_true_all)
+        y_pred_all = super_flat2(y_pred_all)
     
-    y_pred_all = super_flat(y_pred_all)
-    y_true_all = super_flat(y_true_all)
+    print("-----------------")
+    print(y_true_all)
+    print(y_pred_all)
+    print("-----------------")
+        
     all_accuracy_manually = accuracy_score(y_true_all, y_pred_all)
     print("all accuracy manually", round2(all_accuracy_manually))
 

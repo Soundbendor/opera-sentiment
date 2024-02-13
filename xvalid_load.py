@@ -147,12 +147,12 @@ dataset_of_folds_song_level_dictionary = {} # for evaluation one by one
 for fold_id, folds_distri in folds.items():
     dataset_of_folds_song_level_dictionary[fold_id] = {}
     for song_id in folds_distri:
-        # dataset_of_folds_song_level_dictionary[fold_id][song_id] = []
-        dataset_of_folds_song_level_dictionary[fold_id][song_id] = {}
+        dataset_of_folds_song_level_dictionary[fold_id][song_id] = []
+        # dataset_of_folds_song_level_dictionary[fold_id][song_id] = {}
         current_song_id_path = song_id_path_folds[fold_id][song_id]
         for single_path in current_song_id_path:
-            # dataset_of_folds_song_level_dictionary[fold_id][song_id].append(data_full_dictionary[single_path])
-            dataset_of_folds_song_level_dictionary[fold_id][song_id][single_path] = data_full_dictionary[single_path]
+            dataset_of_folds_song_level_dictionary[fold_id][song_id].append(data_full_dictionary[single_path])
+            # dataset_of_folds_song_level_dictionary[fold_id][song_id][single_path] = data_full_dictionary[single_path]
             
             '''
             # # manually check size
@@ -185,11 +185,11 @@ if __name__ == "__main__":
     #     print(batch[1])
     
     # print("***** ***** *****")
-    # print(dataset_of_folds_song_level_dictionary)
+    print(dataset_of_folds_song_level_dictionary)
     # print(dataset_of_folds_song_level_dictionary[1])
     # print(dataset_of_folds_song_level_dictionary[1][20])
     # print(dataset_of_folds_song_level_dictionary[1][20]['trimmed_30_Padding/ch/20/wav00'].train)
     
-    i = how_many_in_dataset(dataset_of_folds_song_level_dictionary[1][20]['trimmed_30_Padding/ch/20/wav00'])
-    print("there are ", i, " pieces of data in this dataset")
+    # i = how_many_in_dataset(dataset_of_folds_song_level_dictionary[1][20]['trimmed_30_Padding/ch/20/wav00'])
+    # print("there are ", i, " pieces of data in this dataset")
     print("Data loaded successfully!")
