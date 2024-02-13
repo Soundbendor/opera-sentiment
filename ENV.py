@@ -9,7 +9,7 @@ Trimmed_PATH = 'trimmed'
 ### keep them consistent during EVERY workflow steps (from data preprocessing to evaluation)
 target_second = 30
 evaluation_method =  "song_evaluation" # "segment_evaluation" or "song_evaluation"
-segment_method = "Padding" # "Padding" or "Dropping"
+segment_method = "Padding-S" # "Padding-S(ilence)" or "Padding-C(ircular)" or "Dropping"
 fold_count = 5
 
 ### !!! MUST NOT Change this part !!!

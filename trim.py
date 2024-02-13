@@ -125,7 +125,37 @@ def padding(real_name, size=target_second): # pad the head of the audio to the e
         CMD_remove = ['rm', 'temp.wav']
         subprocess.run(CMD_remove)
     
-    circular_pad_single(real_name, first_segment)
+    def silence_pad_single(tail):
+        # pad a silence audio to the end
+        # then trim the whole segment into "size"
+        # so the head is not needed
+        
+        # 5 steps:
+        # create a target_second length silence audio
+        # CMD_silence = sox -n -r 16000 silence.wav trim 0.0 target_second
+        CMD_silence = ['sox', '-n', '-r', '16000', 'silence.wav', 'trim', '0.0', str(target_second)]
+        subprocess.run(CMD_silence)
+        # pad the silence audio to the end
+        # CMD_pad = sox tail silence.wav temp.wav
+        CMD_pad = ['sox', tail, 'silence.wav', 'temp.wav']
+        subprocess.run(CMD_pad)
+        # trim the whole segment into "size"
+        # CMD_trim = sox temp.wav temp_trimed.wav trim 0 target_second
+        CMD_trim = ['sox', 'temp.wav', 'temp_trimed.wav', 'trim', '0', str(target_second)]
+        subprocess.run(CMD_trim)
+        # rename the temp_trimed.wav to tail
+        # CMD_rename = mv temp_trimed.wav tail
+        CMD_rename = ['mv', 'temp_trimed.wav', tail]
+        subprocess.run(CMD_rename)
+        # remove the temp.wav and silence.wav
+        # CMD_remove = rm temp.wav silence.wav
+        CMD_remove = ['rm', 'temp.wav', 'silence.wav']
+        subprocess.run(CMD_remove)
+
+    if segment_method.endswith("C"):
+        circular_pad_single(real_name, first_segment)
+    if segment_method.endswith("S"):
+        silence_pad_single(real_name)
 
 if __name__ == '__main__':
     # set time size in ENV
@@ -154,7 +184,7 @@ if __name__ == '__main__':
         trimed_list_we = trimed_profile.wav_list["we"]
         drop_partial(trimed_list_we)
     
-    if segment_method == "Padding":
+    if segment_method.startswith("Padding"):
         trimed_list_ch = trimed_profile.wav_list["ch"]
         pad_partial(trimed_list_ch)
 
