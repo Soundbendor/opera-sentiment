@@ -24,12 +24,16 @@ class Profiler:
             "we": 0
         }
 
+        self.emotion_types = {
+            "ch": {},
+            "we": {}
+        }
+
         self.singing_types = {
             "ch": {},
             "we": {}
         }
 
-        # jingju only
         self.roles = {
             "ch": {},
             "we": {}
@@ -50,6 +54,9 @@ class Profiler:
                     with open(yaml_path,"r") as f:
                         meta = yaml.safe_load(f)
                     
+                    emotion_type = meta["emotion_binary"]
+                    self.emotion_types[lan][emotion_type] = self.emotion_types[lan].get(emotion_type, 0) + 1
+
                     singing_type = meta["singing_type"]["singing"]
                     self.singing_types[lan][singing_type] = self.singing_types[lan].get(singing_type, 0) + 1
 
@@ -190,6 +197,7 @@ class Profiler:
         }
 
         def print_profile():
+            print("emotion_types: {}".format(self.emotion_types))
             print("singing_types: {}".format(self.singing_types))
             print("roles: {}".format(self.roles))
             print("song_count: {}".format(self.song_count))
