@@ -18,20 +18,20 @@ files:
 language: ch
 lyric:
   english: ''
-  original: ''
+  original: 则见风月暗消磨，画墙西正南侧左。
   phonetic: ''
 scene:
   english: ''
   original: ''
   phonetic: ''
 singing_type:
-  role: TBD_
+  role: sheng
   singing: jingju
 song_dir: ch/49/
 song_id: 49
 song_size: 1
 title:
   english: ''
-  original: "\u5219\u89C1\u98CE\u6708\u6697\u6D88\u78E8"
-  phonetic: Ze jian feng yue an xiao mo
+  original: 牡丹亭-拾画
+  phonetic: Mu dan ting-shi hua
 wiki: ''
