@@ -33,16 +33,17 @@ lyric:
   original: ''
   phonetic: ''
 scene:
-  english: ''
-  original: ''
-  phonetic: ''
+  english: Home from Anyuan
+  original: 家住安源
+  phonetic: Jia zhu an yuan
 singing_type:
-  singing: TBD_ch
+  role: dan
+  singing: jingju
 song_dir: ch/25/
 song_id: 25
 song_size: 2
 title:
-  english: Home from Anyuan
-  original: ''
-  phonetic: ''
+  english: Mountain Dujuan
+  original: 杜鹃山
+  phonetic: Du juan shan
 wiki: ''

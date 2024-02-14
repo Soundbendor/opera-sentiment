@@ -33,19 +33,20 @@ files:
 language: ch
 lyric:
   english: ''
-  original: ''
+  original: 那一答可是湖山石边？这一答是牡丹亭畔。嵌雕栏芍药芽儿浅。一丝丝垂杨线，一丢丢榆荚钱。线儿春甚金钱吊转！
   phonetic: ''
 scene:
   english: ''
-  original: ''
-  phonetic: ''
+  original: "\u5FD2\u5FD2\u4EE4"
+  phonetic: Te te ling
 singing_type:
-  singing: TBD_ch
+  role: dan
+  singing: kunqu
 song_dir: ch/24/
 song_id: 24
 song_size: 2
 title:
   english: ''
-  original: "\u5FD2\u5FD2\u4EE4"
-  phonetic: Te te ling
+  original: 牡丹亭-寻梦
+  phonetic: mu dan ting-xun meng
 wiki: ''

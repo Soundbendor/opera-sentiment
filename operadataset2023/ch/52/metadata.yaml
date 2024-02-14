@@ -24,7 +24,8 @@ scene:
   original: ''
   phonetic: ''
 singing_type:
-  singing: TBD_ch
+  role: dan
+  singing: yuju
 song_dir: ch/52/
 song_id: 52
 song_size: 1

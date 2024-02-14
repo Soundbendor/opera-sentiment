@@ -32,19 +32,20 @@ files:
 language: ch
 lyric:
   english: ''
-  original: ''
+  original: 偶然间心似缱，在梅树边。似这等花花草草由人恋，生生死死随人愿，便酸酸楚楚无人怨。待打并香魂一片，阴雨梅天，阿呀人儿吓，守的个梅根相见！
   phonetic: ''
 scene:
   english: ''
-  original: ''
-  phonetic: ''
+  original: "\u6C5F\u513F\u6C34"
+  phonetic: Jiang er shui
 singing_type:
-  singing: TBD_ch
+  role: dan
+  singing: kunqu
 song_dir: ch/22/
 song_id: 22
 song_size: 2
 title:
   english: ''
-  original: "\u6C5F\u513F\u6C34"
-  phonetic: Jiang er shui
+  original: 牡丹亭-寻梦
+  phonetic: mu dan ting-xun meng
 wiki: ''

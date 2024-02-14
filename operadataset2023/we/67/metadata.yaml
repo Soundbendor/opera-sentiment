@@ -39,6 +39,7 @@ scene:
   original: ''
   phonetic: ''
 singing_type:
+  role: ''
   singing: TBD_we
 song_dir: we/67/
 song_id: 67

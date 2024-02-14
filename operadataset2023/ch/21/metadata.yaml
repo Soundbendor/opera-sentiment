@@ -37,16 +37,16 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: ''
-  phonetic: ''
+  original: 端正好
+  phonetic: duan zheng hao
 singing_type:
-  role: TBD_
-  singing: MB_jingju
+  role: dan
+  singing: kunqu
 song_dir: ch/21/
 song_id: 21
 song_size: 2
 title:
   english: ''
-  original: ''
-  phonetic: Duan zheng hao
+  original: 刺虎
+  phonetic: ci hu
 wiki: ''

@@ -21,15 +21,16 @@ lyric:
   phonetic: ''
 scene:
   english: ''
-  original: ''
-  phonetic: ''
+  original: 自从你们写信
+  phonetic: Zi cong ni men xie xin
 singing_type:
-  singing: TBD_ch
+  role: sheng
+  singing: yuju
 song_dir: ch/50/
 song_id: 50
 song_size: 1
 title:
   english: ''
-  original: ''
-  phonetic: Zi cong ni men xie xin
+  original: 朝阳沟
+  phonetic: Chao yang gou
 wiki: ''

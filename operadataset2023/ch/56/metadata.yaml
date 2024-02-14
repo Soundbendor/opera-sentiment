@@ -24,6 +24,7 @@ scene:
   original: ''
   phonetic: ''
 singing_type:
+  role: 'TBD_'
   singing: yuju
 song_dir: ch/56/
 song_id: 56

@@ -39,12 +39,13 @@ scene:
   original: ''
   phonetic: ''
 singing_type:
-  singing: TBD_ch
+  role: dan
+  singing: kunqu
 song_dir: ch/23/
 song_id: 23
 song_size: 2
 title:
   english: ''
-  original: ''
+  original: 锁南枝
   phonetic: Suo nan zhi
 wiki: ''

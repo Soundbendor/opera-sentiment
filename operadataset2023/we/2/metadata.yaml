@@ -64,6 +64,7 @@ scene:
   original: ''
   phonetic: ''
 singing_type:
+  role: ''
   singing: TBD_we
 song_dir: we/2/
 song_id: 2

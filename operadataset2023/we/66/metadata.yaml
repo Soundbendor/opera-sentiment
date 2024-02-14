@@ -38,6 +38,7 @@ scene:
   original: ''
   phonetic: ''
 singing_type:
+  role: ''
   singing: TBD_we
 song_dir: we/66/
 song_id: 66
