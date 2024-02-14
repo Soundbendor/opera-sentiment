@@ -22,7 +22,7 @@ lan = "ch"
 
 # load a folds shape, remember to change the end number if you want to load a different fold, 
 # default will be the first one: 1
-load_name = "ch_folds_30_Padding_0.npy"
+load_name = "ch_folds_30_Padding-S_0.npy"
 folds = load_folds(load_name)
 
 # if you want to generate a new folds
@@ -185,7 +185,7 @@ if __name__ == "__main__":
     #     print(batch[1])
     
     # print("***** ***** *****")
-    print(dataset_of_folds_song_level_dictionary)
+    # print(dataset_of_folds_song_level_dictionary)
     # print(dataset_of_folds_song_level_dictionary[1])
     # print(dataset_of_folds_song_level_dictionary[1][20])
     # print(dataset_of_folds_song_level_dictionary[1][20]['trimmed_30_Padding/ch/20/wav00'].train)
