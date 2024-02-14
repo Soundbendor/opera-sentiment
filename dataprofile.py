@@ -30,7 +30,10 @@ class Profiler:
         }
 
         # jingju only
-        self.jj_only_roles = {}
+        self.roles = {
+            "ch": {},
+            "we": {}
+        }
 
         # Song Level Traverse
         for root, dirs, files in os.walk(self.USING_PATH):
@@ -50,9 +53,8 @@ class Profiler:
                     singing_type = meta["singing_type"]["singing"]
                     self.singing_types[lan][singing_type] = self.singing_types[lan].get(singing_type, 0) + 1
 
-                    if singing_type == "jingju":
-                        role = meta["singing_type"]["role"]
-                        self.jj_only_roles[role] = self.jj_only_roles.get(role, 0) + 1
+                    role = meta["singing_type"]["role"]
+                    self.roles[lan][role] = self.roles[lan].get(role, 0) + 1
 
                     # get an info dict for each wav file
                     # e.g. "wav00"
@@ -189,7 +191,7 @@ class Profiler:
 
         def print_profile():
             print("singing_types: {}".format(self.singing_types))
-            print("roles in jingju: {}".format(self.jj_only_roles))
+            print("roles: {}".format(self.roles))
             print("song_count: {}".format(self.song_count))
             print("if_a_cappellas: {}".format(self.a_cappellas))
             print("number of recording: {}".format(self.recording_size))
