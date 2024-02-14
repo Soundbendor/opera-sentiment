@@ -37,23 +37,45 @@ def search_song_info(search_for, value, counter_select=False, looking_for_empty 
     res.sort()
     return res
 
-def search_recording_info(): # -> list of song_id: wav name
-    return
-    # TODO: search for e.g. singer info or if_a_cappella
+def check_Fan3Chuan4(): # -> list of song_id: wav name
+    # search for e.g. singer info or if_a_cappella
+    res = []
+    for root, dirs, files in os.walk(Data_PATH):
+        for file in files:
+            if file.endswith(".yaml"):
+                yaml_path = os.path.join(root, file)
+                meta = safe_read_yaml(yaml_path)
+                if meta['singing_type']['role'] == 'sheng':
+                    gender_flag = 'mal'
+                elif meta['singing_type']['role'] == 'dan':
+                    gender_flag = 'fem'
+                else:
+                    print("this file is missing role type: " + yaml_path)
+                    continue
+                if "files" in meta:
+                    for wav in meta["files"]:
+                        if meta["files"][wav]["singer"]["bio_gender"] != gender_flag:
+                            res.append((meta["song_id"], wav))
+    return res
 
 if __name__ == "__main__":
     search_for = ["singing_type", "role"]
     value = "TBD"
 
-    res = search_song_info(search_for, value, counter_select=False)
+    # res = search_song_info(search_for, value, counter_select=False)
+    # if len(res) == 0:
+    #     print("no result found")
+    
+    res = check_Fan3Chuan4()
     if len(res) == 0:
         print("no result found")
+    
     for id in res:
-        file_path = os.path.join(Data_PATH, "ch", str(id), "metadata.yaml")
+        file_path = os.path.join(Data_PATH, "ch", str(id[0]), "metadata.yaml")
         if os.path.exists(file_path):
             yaml_path = file_path
         else:
-            yaml_path = os.path.join(Data_PATH, "we", str(id), "metadata.yaml")
+            yaml_path = os.path.join(Data_PATH, "we", str(id[0]), "metadata.yaml")
         meta = safe_read_yaml(yaml_path)
         print("--id: " + str(id) + "--")
         print(meta["title"]["original"])
