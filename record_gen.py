@@ -1,10 +1,14 @@
 import os
 import shutil
 from dataprofile import Profiler
-from ENV import target_second
+from ENV import target_second, target_class
 from yamlhelp import safe_update_yaml, safe_read_yaml
-
+import sys
 # generate record for the whole dataset, no matter ch or we
+DEBUGMODE = False
+
+if len(sys.argv)>1 and sys.argv[1] == 'debug':
+    DEBUGMODE = True
 
 def add_in_folder(path):
     g = os.walk(path)
@@ -88,8 +92,10 @@ def generate_csv_and_index(path):
                 os.remove(os.path.join(path_curr,item))
         
         # making csv file, but we need creat a txt to write first, so we "pretend" to create a index txt file first, then rename it
-        text = open(index_file, 'w')
-        # print("making csv file: ", csv_file)
+        if not DEBUGMODE:
+            text = open(index_file, 'w')
+        else:
+            print("making csv file: ", csv_file)
         for name in wavelist:
             # eg:
             # name: "trimmed_demo_15/we/2/wav01/in/wav01_003.wav"
@@ -100,34 +106,54 @@ def generate_csv_and_index(path):
 
             song_dir = os.path.dirname(path_curr)
             yaml_path = os.path.join(song_dir, 'metadata.yaml')
-
             pure_name = name.split('/')[-1] # eg: wav06_002.wav
-
-            # get class label from yaml file
-            yaml_dict = safe_read_yaml(yaml_path)
-            label = yaml_dict['emotion_binary']
-            if label != 0 and label != 1:
-                print("wrong label found in yaml file: ", yaml_path)
-                return
-            csv_text = pure_name + ',' + str(label) + '\n'
+            if target_class == 'emotion_binary':
+                # get class label from yaml file
+                yaml_dict = safe_read_yaml(yaml_path)
+                label = yaml_dict['emotion_binary']
+                if label != 0 and label != 1:
+                    print("wrong label found in yaml file: ", yaml_path)
+                    return
+                csv_text = pure_name + ',' + str(label) + '\n'
             
-            text.write(csv_text)
-            # print("writing: ", csv_text)
+            elif target_class == 'bio_gender':
+                wav_id = pure_name.split("_")[0] # eg: wav06
+                yaml_dict = safe_read_yaml(yaml_path)
+                label = yaml_dict['files'][wav_id]['singer']['bio_gender']
+                if label == 'mal':
+                    label = 1
+                elif label == 'fem':
+                    label = 0
+                elif label != 'mal' and label != 'fem':
+                    print("wrong label found in yaml file: ", yaml_path)
+                    return
+                csv_text = pure_name + ',' + str(label) + '\n'
+            
+            if not DEBUGMODE:
+                text.write(csv_text)
+            else:
+                print("writing: ", csv_text)
 
-        text.close()
-        # rename the fake "txt" into no extension "csv"
-        os.rename(index_file, csv_file)
+        if not DEBUGMODE:
+            text.close()
+            # rename the fake "txt" into no extension "csv"
+            os.rename(index_file, csv_file)
 
         size = str(len(wavelist))
         length = str(piece_size)
 
-        # making the real index txt file
-        text = open(index_file, 'w')
+        if not DEBUGMODE:
+            # making the real index txt file
+            text = open(index_file, 'w')
+        else:
+            print("making index file: ", index_file)
         index_text = '{"size": '+size+', "length": '+length+', "sample_rate": 16000, "input_lower": 0, "input_upper": 0, "waves": "a", "mods": "a"}'
         
-        text.write(index_text)
-        # print("writing: ", index_text)
-        text.close()
+        if not DEBUGMODE:
+            text.write(index_text)
+            text.close()
+        else:
+            print("writing: ", index_text)
 
 def clear_records_only(path):
     real_path = []
@@ -156,8 +182,11 @@ def single_record_generate(data_path, data_name): # generate new tf record for a
             os.remove(file)
 
     # generate new ones
-    dataset = SimpleAudioClassificationDataset(data_path, data_name)
-    dataset.generate_records()
+    if not DEBUGMODE:
+        dataset = SimpleAudioClassificationDataset(data_path, data_name)
+        dataset.generate_records()
+    else:
+        print(data_path, data_name, "is going to be generated")
 
 def get_datainfo(dataset_path): # get matching data_path and data_name in the dataset path
     data_info_dict = {} # data_path: data_name
@@ -179,7 +208,11 @@ def dataset_record_generate(dataset_path): #recursive generate tf record for the
     print(i, "songs generated")
 
 if __name__ == "__main__":
-    from dataset import SimpleAudioClassificationDataset
+    if DEBUGMODE:
+        print("DEBUG MODE, no record is being generated, no csv or index will be created. Result will be printed out.")
+    else:
+        from dataset import SimpleAudioClassificationDataset
+    
     from ENV import Trimmed_PATH
     
     # add in forlder for a brand new trimmed data folder
@@ -194,6 +227,6 @@ if __name__ == "__main__":
     # # clear old tf records ONLY
     # clear_records_only(Trimmed_PATH)
     
-    # generate tf records for the whole dataset
-    dataset_record_generate(Trimmed_PATH)
-
+    if not DEBUGMODE:
+        # generate tf records for the whole dataset
+        dataset_record_generate(Trimmed_PATH)
