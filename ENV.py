@@ -17,6 +17,9 @@ target_class_dictionary = {
     "emotion_binary": "Emo",
     "bio_gender": "Gen",
     "level": "Lev",
+    "role": "Rol",
+    "acappella": "Aca",
+    "jingju": "Jin",
 }
 
 target_class_short = target_class_dictionary[target_class]

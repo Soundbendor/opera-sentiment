@@ -47,7 +47,7 @@ import sys
 MODEL = sys.argv[1]
 method = sys.argv[2]
 hyperparams['epochs'] = int(sys.argv[3])
-from ENV import evaluation_method, segment_method
+from ENV import segment_method
 
 
 # # if manually set
@@ -153,14 +153,11 @@ def super_flat(arrays):
     flat_list = [item for sublist in flat_list for item in sublist]
     return flat_list
 
-def super_flat2(nested_list):
-    flattened_list = []
+def flatten_nested_list(nested_list):
+    temp_list = []
     for sublist in nested_list:
-        if isinstance(sublist, list):
-            flattened_list.extend(sublist)
-        elif isinstance(sublist, np.ndarray):
-            flattened_list.extend(sublist.tolist())
-    return flattened_list
+        temp_list.extend(sublist)
+    return temp_list
 
 def voting(prediction_list):
     positive_votes = 0
@@ -213,7 +210,8 @@ def save_conf_matrix(conf_matrix, file_name):
     fig.savefig(file_name)
     plt.clf()
     if NEPTUNE_SWITCH == 1:
-        runtime["cf_matrix"].upload(File(file_name))
+        neptune_name = file_name.split("/")[-1]
+        runtime[neptune_name].upload(File(file_name))
 
 def save_normed_conf_matrix(cm, file_name):
     cmn = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
@@ -230,7 +228,8 @@ def save_normed_conf_matrix(cm, file_name):
     fig.savefig(file_name)
     plt.clf()
     if NEPTUNE_SWITCH == 1:
-        runtime["Normed_cf_matrix"].upload(File(file_name))
+        neptune_name = file_name.split("/")[-1]
+        runtime[neptune_name].upload(File(file_name))
 
 
 '''input explaination:
@@ -243,10 +242,15 @@ folds_pattern:
      4: [[1, 2, 3, 4], [5]]}
 '''
 def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
-    scores = []
-    scores_manually = []
-    y_true_all = []
-    y_pred_all = []
+    scores_segment_list = []
+    scores_recording_list = []
+    scores_song_list = []
+    y_true_all_segment = []
+    y_pred_all_segment = []
+    y_true_all_recording = []
+    y_pred_all_recording = []
+    y_true_all_song = []
+    y_pred_all_song = []
     # each loop is one fold validation
     if test_on in range(1,fold_count+1):
         folds_pattern = {test_on-1: folds_pattern[test_on-1]}
@@ -311,128 +315,122 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
             model.save("models/"+model_name)
 
         print("****** validating on fold", test_index,"******")
-        if evaluation_method == "segment_evaluation":
-            if NEPTUNE_SWITCH ==1:
-                score = round2(model.evaluate(dataset_test, callbacks=[neptune_cbk])[1])
-            else:
-                score = round2(model.evaluate(dataset_test)[1])
         
-            scores.append(score)
-            
-            '''get whole dataset evaluation by adding all the fold's prediction and true value together'''
-            # we should have a whole y_real_whole and y_predict_whole for making confusion matrix
-            y_true_fold = []
-            y_pred_fold = []
-            for batch_x, batch_y in dataset_test:
-                # Make predictions on the batch of data
-                batch_y_pred = model.predict(batch_x)
-                # Threshold the predicted probabilities to obtain predicted labels
-                batch_y_pred = (batch_y_pred > 0.5).astype(int)
-                # Append the true and predicted labels to the lists for the current fold
-                y_true_fold.append(batch_y.numpy())
-                y_pred_fold.append(batch_y_pred) #batch_y_pred is already a numpy array
-            
-            # Convert the lists of true and predicted labels for the current fold to numpy arrays
-            y_true_fold = np.concatenate(y_true_fold, axis=0)
-            y_pred_fold = np.concatenate(y_pred_fold, axis=0)
-            
-            scores_manually.append(round2((y_pred_fold == y_true_fold).mean()))
-            
-            # Append the true and predicted labels for the current fold to the overall lists
-            y_true_all.append(y_true_fold)
-            y_pred_all.append(y_pred_fold)
+        # segment evaluation
+        if NEPTUNE_SWITCH ==1:
+            score_segment = round2(model.evaluate(dataset_test, callbacks=[neptune_cbk])[1])
+        else:
+            score_segment = round2(model.evaluate(dataset_test)[1])
+    
+        scores_segment_list.append(score_segment)
+        
+        '''get whole dataset evaluation by adding all the fold's prediction and true value together'''
+        # we should have a whole y_real_whole and y_predict_whole for making confusion matrix
+        y_true_fold_segment = []
+        y_pred_fold_segment = []
+        for batch_x, batch_y in dataset_test:
+            # Make predictions on the batch of data
+            batch_y_pred = model.predict(batch_x)
+            # Threshold the predicted probabilities to obtain predicted labels
+            batch_y_pred = (batch_y_pred > 0.5).astype(int)
+            # Append the true and predicted labels to the lists for the current fold
+            y_true_fold_segment.append(batch_y.numpy())
+            y_pred_fold_segment.append(batch_y_pred) #batch_y_pred is already a numpy array
+        
+        # Convert the lists of true and predicted labels for the current fold to numpy arrays
+        y_true_fold_segment = np.concatenate(y_true_fold_segment, axis=0)
+        y_pred_fold_segment = np.concatenate(y_pred_fold_segment, axis=0)
 
-            # break #for testing, only one loop
+        y_true_fold_segment = flatten_nested_list(y_true_fold_segment)
+        y_pred_fold_segment = flatten_nested_list(y_pred_fold_segment)
+        # extend the true and predicted labels for the current fold to the overall lists
+        y_true_all_segment.extend(y_true_fold_segment)
+        y_pred_all_segment.extend(y_pred_fold_segment)
+        print(y_true_all_segment)
+        print(y_pred_all_segment)
+        print("******* segment level above ***************")
+        print("******* song level below ***************")
         
-        if evaluation_method == "song_evaluation":    
-            test_fold = test_index[0]
-            y_true_fold = []
-            y_pred_fold = []
-            for song_id in dataset_of_folds_song_level_dictionary[test_fold].keys():
-                # all data below belongs to one song
-                this_song_prediction = []
-                for one_recording_data in dataset_of_folds_song_level_dictionary[test_fold][song_id]:
-                    for single_segment_data in one_recording_data.train.take(100):
-                        single_segment_x = single_segment_data[0]
-                        single_segment_y = single_segment_data[1]
-                        single_segment_x = tf.expand_dims(single_segment_x, axis=0)
-                        single_segment_y_pred = model.predict(single_segment_x)
-                        single_segment_y_pred = (single_segment_y_pred > 0.5).astype(int)
-                        
-                        this_song_prediction.append(single_segment_y_pred)
-                song_pred_y = voting(super_flat(this_song_prediction))
-                song_true_y = single_segment_y.numpy()
-                # print(song_pred_y)
-                # print(song_true_y)
-                y_pred_fold.append(song_pred_y)
-                y_true_fold.append(song_true_y)
-            # print(y_pred_fold)
-            # print(y_true_fold)
-            y_true_fold = np.concatenate(y_true_fold, axis=0)
-            y_true_fold = super_flat(y_true_fold)
-            # print(y_true_fold)
-            
-            scores_manually.append(round2((y_pred_fold == y_true_fold).mean()))
-            scores = scores_manually
-            # # Append the true and predicted labels for the current fold to the overall lists
-            y_true_all.append(y_true_fold)
-            y_pred_all.append(y_pred_fold)
+        ###########################################################
+
+        # song evaluation
+        test_fold = test_index[0]
+        y_true_fold_song = []
+        y_pred_fold_song = []
+        for song_id in dataset_of_folds_song_level_dictionary[test_fold].keys():
+            # all data below belongs to one song
+            this_song_prediction = []
+            for one_recording_data in dataset_of_folds_song_level_dictionary[test_fold][song_id]:
+                for single_segment_data in one_recording_data.train.take(100):
+                    single_segment_x = single_segment_data[0]
+                    single_segment_y = single_segment_data[1]
+                    single_segment_x = tf.expand_dims(single_segment_x, axis=0)
+                    single_segment_y_pred = model.predict(single_segment_x)
+                    single_segment_y_pred = (single_segment_y_pred > 0.5).astype(int)
+                    
+                    this_song_prediction.append(single_segment_y_pred)
+            song_pred_y = voting(super_flat(this_song_prediction))
+            song_true_y = single_segment_y.numpy()
+            y_pred_fold_song.append(song_pred_y)
+            y_true_fold_song.append(song_true_y)
+
+        y_true_fold_song = np.concatenate(y_true_fold_song, axis=0)
+        y_true_fold_song = super_flat(y_true_fold_song)
+       
+        # print(y_true_fold_song)
+        # print(y_pred_fold_song)
+        scores_song_list.append(round2((y_pred_fold_song == y_true_fold_song).mean()))
+        # # extend the true and predicted labels for the current fold to the overall lists
+        # print("**********************") 
+        y_true_all_song.extend(y_true_fold_song)
+        y_pred_all_song.extend(y_pred_fold_song)
+        # print(y_true_all_song)
+        # print(y_pred_all_song)
     
-    # print(y_true_all)
-    # print(type(y_true_all))
-    if evaluation_method == "segment_evaluation":
-        print("Xvalidation scores from evaluate function are:", scores)
-        y_pred_all = super_flat(y_pred_all)
-        y_true_all = super_flat(y_true_all)
-        # only need to flat them if its segment evaluation
+    # print(y_true_all_song)
+    # print(y_pred_all_song)
+    print("Xvalidation scores for segment level are:", scores_segment_list)
     
-    print("the maximum score is:", max(scores))
-    print("Xvalidation scores manually calculated are:", scores_manually)
+    print("Xvalidation scores for song level are:", scores_song_list)
     print("-----------------")
-    print(y_true_all)
-    print(y_pred_all)
-    print("-----------------")
-    if evaluation_method != "segment_evaluation":
-        y_true_all = super_flat2(y_true_all)
-        y_pred_all = super_flat2(y_pred_all)
-    
-    print("-----------------")
-    print(y_true_all)
-    print(y_pred_all)
+    print(y_true_all_segment)
+    print(y_pred_all_segment)
     print("-----------------")
         
-    all_accuracy_manually = accuracy_score(y_true_all, y_pred_all)
-    print("all accuracy manually", round2(all_accuracy_manually))
+    aggregate_accuracy_segment = accuracy_score(y_true_all_segment, y_pred_all_segment)
+    aggregate_accuracy_song = accuracy_score(y_true_all_song, y_pred_all_song)
+    print("aggregate accuracy for segment", round2(aggregate_accuracy_segment))
+    print("aggregate accuracy for song", round2(aggregate_accuracy_song))
 
-    conf_matrix = confusion_matrix(y_true_all, y_pred_all)
-    print(conf_matrix)
-    TN = conf_matrix[0][0]
-    FP = conf_matrix[0][1]
-    FN = conf_matrix[1][0]
-    TP = conf_matrix[1][1]
-    print("TP:",TP, "FP:", FP, "\n", "TN:", TN, "FN:", FN)
+    conf_matrix_segment = confusion_matrix(y_true_all_segment, y_pred_all_segment)
+    
+    conf_matrix_song = confusion_matrix(y_true_all_song, y_pred_all_song)
 
-    accuracy = round2((TP+TN)/(TP+FP+TN+FN))
-    precision = round2(TP/(TP+FP))
-    recall = round2(TP/(TP+FN))
-    F1 = round2(2 * (precision * recall) / (precision + recall))
-    print("*****evaluation from conf_matrix *****")
-    print("accuracy is ", accuracy)
-    print("precision is ", precision)
-    print("recall is", recall)
-    print("F1 socre is", F1)
+    precision_segment, recall_segment, F1_segment = get_metrics(conf_matrix_segment)
+    precision_song, recall_song, F1_song = get_metrics(conf_matrix_song)
+
+    print("precision(segment, song): ", precision_segment, precision_song)
+    print("recall(segment, song): ", recall_segment, recall_song)
+    print("F1(segment, song): ", F1_segment, F1_song)
 
     if NEPTUNE_SWITCH ==1:
-        runtime["info/fold_scores"] = scores
-        runtime["info/max_score"] = max(scores)
-        runtime["info/overall_accuracy"] = accuracy
-        runtime["info/precision"] = precision
-        runtime["info/recall"] = recall
-        runtime["info/F1"] = F1
+        runtime["info/seg/scores"] = scores_segment_list
+        runtime["info/seg/accuracy"] = aggregate_accuracy_segment
+        runtime["info/seg/precision"] = precision_segment
+        runtime["info/seg/recall"] = recall_segment
+        runtime["info/seg/F1"] = F1_segment
+        
+        runtime["info/song/scores"] = scores_song_list
+        runtime["info/song/accuracy"] = aggregate_accuracy_song
+        runtime["info/song/precision"] = precision_song
+        runtime["info/song/recall"] = recall_song
+        runtime["info/song/F1"] = F1_song
 
     # save confusion matrix
-    save_conf_matrix(conf_matrix, './cfMatrix.png')
-    save_normed_conf_matrix(conf_matrix, './cfMatrix_normed.png')
+    save_conf_matrix(conf_matrix_segment, './cfMatrix_seg.png')
+    save_normed_conf_matrix(conf_matrix_segment, './cfMatrix_seg_normed.png')
+    save_conf_matrix(conf_matrix_song, './cfMatrix_song.png')
+    save_normed_conf_matrix(conf_matrix_song, './cfMatrix_song_normed.png')
 
 
 def print_running_information():
@@ -444,13 +442,23 @@ def print_running_information():
         print(i, hyperparams[i])
     print("***** ***** *****")
 
+def get_metrics(confusion_matrix):
+    TN = confusion_matrix[0][0]
+    FP = confusion_matrix[0][1]
+    FN = confusion_matrix[1][0]
+    TP = confusion_matrix[1][1]
+
+    precision = round2(TP/(TP+FP))
+    recall = round2(TP/(TP+FN))
+    F1 = round2(2 * (precision * recall) / (precision + recall))
+    return precision, recall, F1
 
 # change the model structure here
 def model_adding(model): # will return the optimizer for keeping all the model settings in this one function
 
     if MODEL == "dummy":
         ##### simple model area ######
-        model.add(LSTM(units=16, input_shape=(16, 1024)))
+        model.add(LSTM(units=1, input_shape=(16, 1024)))
         model.add(Dense(units=1, activation='sigmoid'))
         optim = 'SGD'
         ##### simple model area done ######
