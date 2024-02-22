@@ -29,6 +29,7 @@ from ENV import target_second as piece_size
 
 from ENV import fold_count
 from ENV import evaluation_method
+from ENV import target_class, target_class_dictionary
 
 '''Don't Change Here, if change needed, go back to xvalid_load.py to change these
 hyperparams['input_size'] = 1024
@@ -94,9 +95,11 @@ if NEPTUNE_SWITCH == 1:
     runtime["sys/tags"].add(str(piece_size)+"s_"+segment_method)
     runtime["sys/tags"].add(str(hyperparams["batch_size"])+"batch_size")
     runtime["sys/tags"].add(evaluation_method)
+    runtime["sys/tags"].add(target_class_dictionary[target_class])
     
-    runtime["info/folds_to_size"] = folds_size
-    runtime["info/method"] = method
+    runtime["info/size of folds"] = folds_size
+    runtime["info/model method"] = method
+    runtime["target class"] = target_class_dictionary[target_class]
     ###### for Neptune end ######
 
 # Define a custom callback to save model visualization
@@ -316,6 +319,8 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
 
         print("****** validating on fold", test_index,"******")
         
+        ############################# ############################# ############################# #############################
+
         # segment evaluation
         if NEPTUNE_SWITCH ==1:
             score_segment = round2(model.evaluate(dataset_test, callbacks=[neptune_cbk])[1])
@@ -351,86 +356,149 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
         print("******* segment level above ***************")
         print("******* song level below ***************")
         
-        ###########################################################
+        ############################# ############################# ############################# #############################
 
-        # song evaluation
+        # song evaluation and recording evaluation (voting in different level)
         test_fold = test_index[0]
         y_true_fold_song = []
         y_pred_fold_song = []
+        y_true_fold_recording = []
+        y_pred_fold_recording = []
         for song_id in dataset_of_folds_song_level_dictionary[test_fold].keys():
             # all data below belongs to one song
             this_song_prediction = []
             for one_recording_data in dataset_of_folds_song_level_dictionary[test_fold][song_id]:
+                this_recording_prediction = []
                 for single_segment_data in one_recording_data.train.take(100):
                     single_segment_x = single_segment_data[0]
                     single_segment_y = single_segment_data[1]
                     single_segment_x = tf.expand_dims(single_segment_x, axis=0)
                     single_segment_y_pred = model.predict(single_segment_x)
                     single_segment_y_pred = (single_segment_y_pred > 0.5).astype(int)
-                    
-                    this_song_prediction.append(single_segment_y_pred)
-            song_pred_y = voting(super_flat(this_song_prediction))
-            song_true_y = single_segment_y.numpy()
+                    single_segment_y_pred = int(single_segment_y_pred[0, 0]) # convert numpy array to int
+                    this_recording_prediction.append(single_segment_y_pred)
+                
+                # one recording prediction is done, so do two things
+                # 1. append the whole recording prediction to the song prediction list
+                this_song_prediction.append(this_recording_prediction)
+                # 2. vote for recording level prediction and create ture value for recording level
+                y_pred_fold_recording.append(voting(this_recording_prediction))
+                y_true_fold_recording.append(int(single_segment_y.numpy()[0]))
+                '''
+                # this_song_prediction is a nested list, each element is a numpy array. If we look into it:
+                # eg: 
+                # [[0, 0], [0, 0], [1, 0, 0, 1, 1], [0, 0, 1, 0, 1], [0, 0, 0]]
+                # There are three level in this nested list:
+                # The very outside represents the whole song (includes multiple recordings)
+                # The next level, inner list, represents the recording
+                # The smallest single element represents the segment
+                # so: after voting for recording level, the result will be:
+                # y_pred_fold_recording = [0, 0, 1, 0, 0]
+                # after voting for song level, the result will be:
+                # 0 (but we will do song voting after evaluate all the recordings in this song)
+                '''
+            # song evaluation, voting on song level, aka the very outsite level, so we need to flatten the list
+            song_pred_y = voting(flatten_nested_list(this_song_prediction))
+            song_true_y = int(single_segment_y.numpy()[0])
             y_pred_fold_song.append(song_pred_y)
             y_true_fold_song.append(song_true_y)
-
-        y_true_fold_song = np.concatenate(y_true_fold_song, axis=0)
-        y_true_fold_song = super_flat(y_true_fold_song)
+            # print("check if song level still works")
+            # print("y_pred_fold_song:", y_pred_fold_song)
+            # print("y_true_fold_song:", y_true_fold_song)
+            # print("check the format for recording level")
+            # print("y_pred_fold_recording:", y_pred_fold_recording)
+            # print("y_true_fold_recording:", y_true_fold_recording)
        
-        # print(y_true_fold_song)
-        # print(y_pred_fold_song)
-        scores_song_list.append(round2((y_pred_fold_song == y_true_fold_song).mean()))
+        print("after the whole evaluation:")
+        print("y_true_fold_song: ", y_true_fold_song)
+        print("y_pred_fold_song: ", y_pred_fold_song)
+        print("y_true_fold_recording: ", y_true_fold_recording)
+        print("y_pred_fold_recording: ", y_pred_fold_recording)
+
+        scores_song_list.append(round2(accuracy_score(y_true_fold_song, y_pred_fold_song)))
+        
+        scores_recording_list.append(round2(accuracy_score(y_true_fold_recording, y_pred_fold_recording)))
         # # extend the true and predicted labels for the current fold to the overall lists
         # print("**********************") 
         y_true_all_song.extend(y_true_fold_song)
         y_pred_all_song.extend(y_pred_fold_song)
+
+        y_true_all_recording.extend(y_true_fold_recording)
+        y_pred_all_recording.extend(y_pred_fold_recording)
         # print(y_true_all_song)
         # print(y_pred_all_song)
+    
+        ############################# ############################# ############################# #############################
+
+        # recording evaluation
+            # is just song level evaluaion with a different voting position
+        
+    y_true_all_segment = [int(i) for i in y_true_all_segment]
+    
+    # print("after the whole xvalidation:")
+    # print("y_true_all_segment: ", y_true_all_segment)
+    # print("y_pred_all_segment: ", y_pred_all_segment)
+    # print("y_true_all_recording: ", y_true_all_recording)
+    # print("y_pred_all_recording: ", y_pred_all_recording)
+    # print("y_true_all_song: ", y_true_all_song)
+    # print("y_pred_all_song: ", y_pred_all_song)
     
     # print(y_true_all_song)
     # print(y_pred_all_song)
     print("Xvalidation scores for segment level are:", scores_segment_list)
     
     print("Xvalidation scores for song level are:", scores_song_list)
-    print("-----------------")
-    print(y_true_all_segment)
-    print(y_pred_all_segment)
-    print("-----------------")
+
+    print("Xvalidation scores for recording level are:", scores_recording_list)
         
-    aggregate_accuracy_segment = accuracy_score(y_true_all_segment, y_pred_all_segment)
-    aggregate_accuracy_song = accuracy_score(y_true_all_song, y_pred_all_song)
-    print("aggregate accuracy for segment", round2(aggregate_accuracy_segment))
-    print("aggregate accuracy for song", round2(aggregate_accuracy_song))
+    aggregate_accuracy_segment = round2(accuracy_score(y_true_all_segment, y_pred_all_segment))
+    aggregate_accuracy_song = round2(accuracy_score(y_true_all_song, y_pred_all_song))
+    aggregate_accuracy_recording = round2(accuracy_score(y_true_all_recording, y_pred_all_recording))
+    
+    print("aggregate accuracy for segment", aggregate_accuracy_segment)
+    print("aggregate accuracy for song", aggregate_accuracy_song)
+    print("aggregate accuracy for recording", aggregate_accuracy_recording)
 
     conf_matrix_segment = confusion_matrix(y_true_all_segment, y_pred_all_segment)
     
     conf_matrix_song = confusion_matrix(y_true_all_song, y_pred_all_song)
 
+    conf_matrix_recording = confusion_matrix(y_true_all_recording, y_pred_all_recording)
+
     precision_segment, recall_segment, F1_segment = get_metrics(conf_matrix_segment)
     precision_song, recall_song, F1_song = get_metrics(conf_matrix_song)
+    precision_recording, recall_recording, F1_recording = get_metrics(conf_matrix_recording)
 
-    print("precision(segment, song): ", precision_segment, precision_song)
-    print("recall(segment, song): ", recall_segment, recall_song)
-    print("F1(segment, song): ", F1_segment, F1_song)
+    print("precision(segment, recording, song): ", precision_segment, precision_recording, precision_song)
+    print("recall(segment, recording, song): ", recall_segment, recall_recording, recall_song)
+    print("F1(segment, recording, song): ", F1_segment, F1_recording, F1_song)
 
     if NEPTUNE_SWITCH ==1:
-        runtime["info/seg/scores"] = scores_segment_list
+        runtime["info/seg/scores per folds"] = str(scores_segment_list)
         runtime["info/seg/accuracy"] = aggregate_accuracy_segment
         runtime["info/seg/precision"] = precision_segment
         runtime["info/seg/recall"] = recall_segment
         runtime["info/seg/F1"] = F1_segment
         
-        runtime["info/song/scores"] = scores_song_list
+        runtime["info/song/scores per folds"] = str(scores_song_list)
         runtime["info/song/accuracy"] = aggregate_accuracy_song
         runtime["info/song/precision"] = precision_song
         runtime["info/song/recall"] = recall_song
         runtime["info/song/F1"] = F1_song
+
+        runtime["info/recor/scores per folds"] = str(scores_recording_list)
+        runtime["info/recor/accuracy"] = aggregate_accuracy_recording
+        runtime["info/recor/precision"] = precision_recording
+        runtime["info/recor/recall"] = recall_recording
+        runtime["info/recor/F1"] = F1_recording
 
     # save confusion matrix
     save_conf_matrix(conf_matrix_segment, './cfMatrix_seg.png')
     save_normed_conf_matrix(conf_matrix_segment, './cfMatrix_seg_normed.png')
     save_conf_matrix(conf_matrix_song, './cfMatrix_song.png')
     save_normed_conf_matrix(conf_matrix_song, './cfMatrix_song_normed.png')
+    save_conf_matrix(conf_matrix_recording, './cfMatrix_recor.png')
+    save_normed_conf_matrix(conf_matrix_recording, './cfMatrix_recor_normed.png')
 
 
 def print_running_information():
