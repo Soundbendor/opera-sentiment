@@ -5,6 +5,7 @@ import shutil
 import subprocess
 from dataprofile import Profiler
 import sox
+from pretrim import pre_trim
 
 # create a new directory for the trimmed data
 def create_trimmed_directory(src, dest):
@@ -163,6 +164,13 @@ if __name__ == '__main__':
     src_directory = Unified_PATH
     dest_directory = Trimmed_PATH
     
+    '''pretrim block'''
+    # pretrim the data
+    print("pretrimming the data ... ... do not interrupt!")
+    pre_trim(src_directory)
+    print("pretrimming done")
+    '''pretrim block'''
+
     '''trimming block'''
     # created the trimmed directory, if already exist, do nothing
     create_trimmed_directory(src_directory, dest_directory)

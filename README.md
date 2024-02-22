@@ -66,13 +66,12 @@ python create_yaml_template.py AMOUNT_OF_WAV_FILES
 ### Workflow/Pipeline
 
 1. unify the data using `unify.py`
-2. pre-trim the data (clear all the silence in the begining or end) using `pretrim.py`
-3. trim the data using `trim.py`
-4. generate tf record (for the whole dataset) using `record_gen.py`
-5. combine folds for cross validation:
+2. trim the data using `trim.py`
+3. generate tf record (for the whole dataset) using `record_gen.py`
+4. combine folds for cross validation:
     1. use `xvalid_split.py` to split data into folds and save them into local by running it
     2. change the parameter in  `xvalid_load.py` to choose from load folds from local or generate a new one, but DO NOT run this script.
-6. load folds, train model, and evaluate in `xvalid.py`
+5. load folds, train model, and evaluate in `xvalid.py`
 
 
 ## Explanation of the yaml meta data
