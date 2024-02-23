@@ -675,7 +675,7 @@ def model_adding(model): # will return the optimizer for keeping all the model s
         
         if method == "L2e2":
             model.add(LSTM(units=8, return_sequences=True, input_shape=(16, 1024), activation="tanh"))  # Add LSTM layer with 256 units
-            model.add(Dense(8, activation="relu", kernel_regularizer=l2(0.01), bias_regularizer=l2(0.01)))
+            model.add(Dense(8, activation="relu", kernel_regularizer=l2(0.01)))
             model.add(LSTM(units=6, activation="tanh"))
             model.add(Dense(units=1, activation='sigmoid'))  # Add a dense output layer with sigmoid activation for binary classification
             optim = 'adam'
@@ -683,7 +683,7 @@ def model_adding(model): # will return the optimizer for keeping all the model s
         if method == "drop0.3+L2e2":
             model.add(LSTM(units=8, return_sequences=True, input_shape=(16, 1024), activation="tanh"))  # Add LSTM layer with 256 units
             model.add(Dropout(0.3))
-            model.add(Dense(8, activation="relu", kernel_regularizer=l2(0.01), bias_regularizer=l2(0.01)))
+            model.add(Dense(8, activation="relu", kernel_regularizer=l2(0.01)))
             model.add(LSTM(units=6, activation="tanh"))
             model.add(Dropout(0.3))
             model.add(Dense(units=1, activation='sigmoid'))  # Add a dense output layer with sigmoid activation for binary classification
@@ -755,18 +755,8 @@ def model_adding(model): # will return the optimizer for keeping all the model s
         if method == "L2e2":
             model.add(tf.keras.Input(shape=(math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])))
             model.add(Bidirectional(LSTM(8, return_sequences=True)))
-            model.add(Dense(8, activation="relu", kernel_regularizer=l2(0.01), bias_regularizer=l2(0.01)))
+            model.add(Dense(8, activation="relu", kernel_regularizer=l2(0.01)))
             model.add(Bidirectional(LSTM(8, return_sequences=False)))
-            model.add(Dense(hyperparams["output_size"], activation="sigmoid"))
-            optim = 'adam'
-
-        if method == "drop0.2":
-            model.add(tf.keras.Input(shape=(math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])))
-            model.add(Bidirectional(LSTM(8, return_sequences=True)))
-            model.add(Dropout(0.2))
-            model.add(Dense(8, activation="relu"))
-            model.add(Bidirectional(LSTM(8, return_sequences=False)))
-            model.add(Dropout(0.2))
             model.add(Dense(hyperparams["output_size"], activation="sigmoid"))
             optim = 'adam'
         
@@ -780,21 +770,11 @@ def model_adding(model): # will return the optimizer for keeping all the model s
             model.add(Dense(hyperparams["output_size"], activation="sigmoid"))
             optim = 'adam'
         
-        if method == "drop0.2+L2e2":
-            model.add(tf.keras.Input(shape=(math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])))
-            model.add(Bidirectional(LSTM(8, return_sequences=True)))
-            model.add(Dropout(0.2))
-            model.add(Dense(8, activation="relu", kernel_regularizer=l2(0.01), bias_regularizer=l2(0.01)))
-            model.add(Bidirectional(LSTM(8, return_sequences=False)))
-            model.add(Dropout(0.2))
-            model.add(Dense(hyperparams["output_size"], activation="sigmoid"))
-            optim = 'adam'
-        
         if method == "drop0.3+L2e2":
             model.add(tf.keras.Input(shape=(math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])))
             model.add(Bidirectional(LSTM(8, return_sequences=True)))
             model.add(Dropout(0.3))
-            model.add(Dense(8, activation="relu", kernel_regularizer=l2(0.01), bias_regularizer=l2(0.01)))
+            model.add(Dense(8, activation="relu", kernel_regularizer=l2(0.01)))
             model.add(Bidirectional(LSTM(8, return_sequences=False)))
             model.add(Dropout(0.3))
             model.add(Dense(hyperparams["output_size"], activation="sigmoid"))
