@@ -8,6 +8,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 from datetime import datetime
+import random
 
 import tensorflow as tf
 from tensorflow.keras.callbacks import TensorBoard
@@ -173,9 +174,12 @@ def voting(prediction_list):
         else:
             raise Exception("voting error: prediction is not 0 or 1")
     if positive_votes > negative_votes:
-        return 1
-    else:
-        return 0
+        return 1, False
+    elif positive_votes < negative_votes:
+        return 0, False
+    elif positive_votes == negative_votes:
+        # if the votes are equal, return a random value between 0 and 1
+        return random.randint(0, 1), True
 
 ###### archive functions ######
 # def ybatch2list(batched_data):
@@ -245,6 +249,8 @@ folds_pattern:
      4: [[1, 2, 3, 4], [5]]}
 '''
 def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
+    overall_random_pick_times = 0
+    overall_voting_times = 0
     scores_segment_list = []
     scores_recording_list = []
     scores_song_list = []
@@ -382,7 +388,13 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
                 # 1. append the whole recording prediction to the song prediction list
                 this_song_prediction.append(this_recording_prediction)
                 # 2. vote for recording level prediction and create ture value for recording level
-                y_pred_fold_recording.append(voting(this_recording_prediction))
+                voting_result, if_random = voting(this_recording_prediction)
+                
+                overall_voting_times += 1
+                if if_random == True:
+                    overall_random_pick_times += 1
+                
+                y_pred_fold_recording.append(voting_result)
                 y_true_fold_recording.append(int(single_segment_y.numpy()[0]))
                 '''
                 # this_song_prediction is a nested list, each element is a numpy array. If we look into it:
@@ -398,7 +410,13 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
                 # 0 (but we will do song voting after evaluate all the recordings in this song)
                 '''
             # song evaluation, voting on song level, aka the very outsite level, so we need to flatten the list
-            song_pred_y = voting(flatten_nested_list(this_song_prediction))
+            voting_result, if_random = voting(flatten_nested_list(this_song_prediction))
+            
+            overall_voting_times += 1
+            if if_random == True:
+                overall_random_pick_times += 1
+            
+            song_pred_y = voting_result
             song_true_y = int(single_segment_y.numpy()[0])
             y_pred_fold_song.append(song_pred_y)
             y_true_fold_song.append(song_true_y)
@@ -499,6 +517,13 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
     save_normed_conf_matrix(conf_matrix_song, './cfMatrix_song_normed.png')
     save_conf_matrix(conf_matrix_recording, './cfMatrix_recor.png')
     save_normed_conf_matrix(conf_matrix_recording, './cfMatrix_recor_normed.png')
+
+    random_pick_rate = round2(overall_random_pick_times/overall_voting_times)
+    random_pick_print_string = str(overall_random_pick_times) + " times out of " + str(overall_voting_times) + ", the percentage is " + str(random_pick_rate)
+    if NEPTUNE_SWITCH == 1:
+        runtime["info/random vote"] = random_pick_print_string
+    else:
+        print("random vote", random_pick_print_string)
 
 
 def print_running_information():
@@ -663,6 +688,29 @@ def model_adding(model): # will return the optimizer for keeping all the model s
             model.add(Dropout(0.3))
             model.add(Dense(units=1, activation='sigmoid'))  # Add a dense output layer with sigmoid activation for binary classification
             optim = 'adam'
+    
+    if MODEL == "LSTM1":
+        if method == "drop0.3":
+            model.add(LSTM(units=8, return_sequences=True, input_shape=(16, 1024), activation="tanh"))  # Add LSTM layer with 256 units
+            model.add(Dropout(0.3))
+            model.add(LSTM(units=6, activation="tanh"))
+            model.add(Dropout(0.3))
+            model.add(Dense(units=1, activation='sigmoid'))  # Add a dense output layer with sigmoid activation for binary classification
+            optim = 'adam'
+        
+        if method == "L2e2":
+            model.add(LSTM(units=8, return_sequences=True, input_shape=(16, 1024), activation="tanh"))  # Add LSTM layer with 256 units
+            model.add(LSTM(units=6, activation="tanh"))
+            model.add(Dense(units=1, activation='sigmoid', kernel_regularizer=l2(0.01)))  # Add a dense output layer with sigmoid activation for binary classification
+            optim = 'adam'
+        
+        if method == "drop0.3+L2e2":
+            model.add(LSTM(units=8, return_sequences=True, input_shape=(16, 1024), activation="tanh"))  # Add LSTM layer with 256 units
+            model.add(Dropout(0.3))
+            model.add(LSTM(units=6, activation="tanh"))
+            model.add(Dropout(0.3))
+            model.add(Dense(units=1, activation='sigmoid', kernel_regularizer=l2(0.01)))  # Add a dense output layer with sigmoid activation for binary classification
+            optim = 'adam'
 
 
     if MODEL == "Bi_LSTM":
@@ -806,6 +854,32 @@ def model_adding(model): # will return the optimizer for keeping all the model s
         #     model.add(Dense(hyperparams["output_size"], activation="softmax", kernel_regularizer=l2(1e-3), bias_regularizer=l2(1e-3)))
         #     optim = tf.keras.optimizers.RMSprop(learning_rate=1e-4, momentum=0.99)
 
+    if MODEL == "Bi_LSTM1":
+
+        if method == "L2e2":
+            model.add(tf.keras.Input(shape=(math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])))
+            model.add(Bidirectional(LSTM(8, return_sequences=True)))
+            model.add(Bidirectional(LSTM(8, return_sequences=False)))
+            model.add(Dense(hyperparams["output_size"], activation="sigmoid", kernel_regularizer=tf.keras.regularizers.l2(0.01)))
+            optim = 'adam'
+        
+        if method == "drop0.3":
+            model.add(tf.keras.Input(shape=(math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])))
+            model.add(Bidirectional(LSTM(8, return_sequences=True)))
+            model.add(Dropout(0.3))
+            model.add(Bidirectional(LSTM(8, return_sequences=False)))
+            model.add(Dropout(0.3))
+            model.add(Dense(hyperparams["output_size"], activation="sigmoid"))
+            optim = 'adam'
+        
+        if method == "drop0.3+L2e2":
+            model.add(tf.keras.Input(shape=(math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])))
+            model.add(Bidirectional(LSTM(8, return_sequences=True)))
+            model.add(Dropout(0.3))
+            model.add(Bidirectional(LSTM(8, return_sequences=False)))
+            model.add(Dropout(0.3))
+            model.add(Dense(hyperparams["output_size"], activation="sigmoid", kernel_regularizer=tf.keras.regularizers.l2(0.01)))
+            optim = 'adam'
 
     if MODEL == "Bi_LSTM2":
 
@@ -852,7 +926,6 @@ def model_adding(model): # will return the optimizer for keeping all the model s
 
 
 if __name__ == "__main__":
-
     print_running_information()
     # change model structure in model_adding function
     folds_pattern = get_folds_pattern(fold_count)
