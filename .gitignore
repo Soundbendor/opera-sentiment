@@ -38,6 +38,7 @@ trimmed_*/
 
 # trash files (contains some non-opera data)
 /TRASH
+.nfs*
 
 # saved variables
 /variable
@@ -46,6 +47,7 @@ trimmed_*/
 test.py
 tools_archive_DONOT_run_again/
 test/
+ENV_TEST.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
