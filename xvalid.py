@@ -29,7 +29,6 @@ from ENV import target_second as piece_size
 # HOW to get folds? go to "xvalid_load.py" to load or create new ones
 
 from ENV import fold_count
-from ENV import evaluation_method
 from ENV import target_class, target_class_dictionary
 
 '''Don't Change Here, if change needed, go back to xvalid_load.py to change these
@@ -95,7 +94,6 @@ if NEPTUNE_SWITCH == 1:
     runtime["sys/tags"].add([str(hyperparams['epochs'])+"epochs", MODEL, str(method)])
     runtime["sys/tags"].add(str(piece_size)+"s_"+segment_method)
     runtime["sys/tags"].add(str(hyperparams["batch_size"])+"batch_size")
-    runtime["sys/tags"].add(evaluation_method)
     runtime["sys/tags"].add(target_class_dictionary[target_class])
     
     runtime["info/size of folds"] = folds_size
@@ -271,18 +269,15 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
             data_index_curr = train_index[j]
             dataset_train = dataset_train.concatenate(dataset_of_folds_dictionary[data_index_curr].train)
         dataset_test = dataset_of_folds_dictionary[test_index[0]].train
-        print("after concatenate:")
-        print(dataset_train)
+        # print("after concatenate:")
+        # print(dataset_train)
         
         # shuffle and batch train and test data
         dataset_train = shuffle_and_batch(dataset_train)
         dataset_test = shuffle_and_batch(dataset_test)
-        print("after batch and shuffle:")
-        print(dataset_train)
-        if evaluation_method == "segment_evaluation":
-            print(dataset_test)
-        else:
-            print("test dataset will be generated seperatly later.")
+        # print("after batch and shuffle:")
+        # print(dataset_train)
+        # print(dataset_test)
         
         # #####TESTING: check batched data size
         # for batch_x, batch_y in dataset_train:
