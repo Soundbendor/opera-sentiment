@@ -517,6 +517,7 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
     random_pick_print_string = str(overall_random_pick_times) + " times out of " + str(overall_voting_times) + ", the percentage is " + str(random_pick_rate)
     if NEPTUNE_SWITCH == 1:
         runtime["info/random vote"] = random_pick_print_string
+        runtime["info/random pick rate"] = random_pick_rate
     else:
         print("random vote", random_pick_print_string)
 
