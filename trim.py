@@ -164,12 +164,12 @@ if __name__ == '__main__':
     src_directory = Unified_PATH
     dest_directory = Trimmed_PATH
     
-    '''pretrim block'''
-    # pretrim the data
-    print("pretrimming the data ... ... do not interrupt!")
-    pre_trim(src_directory)
-    print("pretrimming done")
-    '''pretrim block'''
+    # '''pretrim block'''
+    # # pretrim the data
+    # print("pretrimming the data ... ... do not interrupt!")
+    # pre_trim(src_directory)
+    # print("pretrimming done")
+    # '''pretrim block'''
 
     '''trimming block'''
     # created the trimmed directory, if already exist, do nothing
