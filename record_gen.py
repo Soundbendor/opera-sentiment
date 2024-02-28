@@ -1,7 +1,7 @@
 import os
 import shutil
 from dataprofile import Profiler
-from ENV import target_second, target_class
+from ENV import target_second, target_class, Trimmed_PATH
 from yamlhelp import safe_update_yaml, safe_read_yaml
 import sys
 # generate record for the whole dataset, no matter ch or we
@@ -112,9 +112,7 @@ def generate_csv_and_index(path):
                 yaml_dict = safe_read_yaml(yaml_path)
                 label = yaml_dict['emotion_binary']
                 if label != 0 and label != 1:
-                    print("wrong label found in yaml file: ", yaml_path)
-                    return
-                csv_text = pure_name + ',' + str(label) + '\n'
+                    raise Exception("wrong label found in yaml file: ", yaml_path)
             
             elif target_class == 'bio_gender':
                 wav_id = pure_name.split("_")[0] # eg: wav06
@@ -125,10 +123,26 @@ def generate_csv_and_index(path):
                 elif label == 'fem':
                     label = 0
                 elif label != 'mal' and label != 'fem':
-                    print("wrong label found in yaml file: ", yaml_path)
-                    return
-                csv_text = pure_name + ',' + str(label) + '\n'
+                    raise Exception("wrong label found in yaml file: ", yaml_path)     
             
+            elif target_class == 'level':
+                wav_id = pure_name.split("_")[0] # eg: wav06
+                yaml_dict = safe_read_yaml(yaml_path)
+                label = yaml_dict['files'][wav_id]['singer']['level']
+                if label == 'professional':
+                    label = 1
+                elif label == 'mixed':
+                    label = 1
+                elif label == 'amateur':
+                    label = 0
+                elif label != 'pro' and label != 'amateur' and label != 'mixed':
+                    raise Exception("wrong label found in yaml file: ", yaml_path)
+            else:
+                print("wrong target_class or did not implement yet: ", target_class)
+                return
+
+            csv_text = pure_name + ',' + str(label) + '\n'
+
             if not DEBUGMODE:
                 text.write(csv_text)
             else:
@@ -212,8 +226,6 @@ if __name__ == "__main__":
         print("DEBUG MODE, no record is being generated, no csv or index will be created. Result will be printed out.")
     else:
         from dataset import SimpleAudioClassificationDataset
-    
-    from ENV import Trimmed_PATH
     
     # add in forlder for a brand new trimmed data folder
     add_in_folder(Trimmed_PATH)
