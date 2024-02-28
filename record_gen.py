@@ -107,6 +107,7 @@ def generate_csv_and_index(path):
             song_dir = os.path.dirname(path_curr)
             yaml_path = os.path.join(song_dir, 'metadata.yaml')
             pure_name = name.split('/')[-1] # eg: wav06_002.wav
+            
             if target_class == 'emotion_binary':
                 # get class label from yaml file
                 yaml_dict = safe_read_yaml(yaml_path)
@@ -137,9 +138,44 @@ def generate_csv_and_index(path):
                     label = 0
                 elif label != 'pro' and label != 'amateur' and label != 'mixed':
                     raise Exception("wrong label found in yaml file: ", yaml_path)
+            
+            elif target_class == 'role':
+                yaml_dict = safe_read_yaml(yaml_path)
+                label = yaml_dict["singing_type"]['role']
+                if label == "sheng":
+                    label = 1
+                elif label == "dan":
+                    label = 0
+                elif label != "sheng" and label != "dan":
+                    # don't raise exception if its a western song
+                    # only raise exceptino if its a chinese song
+                    if name.split('/')[1] == 'ch':
+                        raise Exception("wrong label found in yaml file: ", yaml_path)
+                    else:
+                        label = -1 # work as a flag to indicate that this is a western song
+                        print("WARNING: generating role class for western songs, they are not ready for training")
+
+            elif target_class == "acappella":
+                wav_id = pure_name.split("_")[0] # eg: wav06
+                yaml_dict = safe_read_yaml(yaml_path)
+                label = yaml_dict['files'][wav_id]['info']['if_a_cappella']
+                if label == True:
+                    label = 1
+                elif label == False:
+                    label = 0
+                elif type(label) != bool:
+                    raise Exception("wrong label found in yaml file: ", yaml_path)
+
+            elif target_class == "jingju":
+                yaml_dict = safe_read_yaml(yaml_path)
+                label = yaml_dict["singing_type"]['singing']
+                if label == "jingju":
+                    label = 1
+                else:
+                    label = 0
+
             else:
-                print("wrong target_class or did not implement yet: ", target_class)
-                return
+                raise Exception("wrong target_class or did not implement yet: ", target_class)
 
             csv_text = pure_name + ',' + str(label) + '\n'
 
