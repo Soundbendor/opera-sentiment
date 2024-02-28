@@ -57,9 +57,8 @@ from ENV import segment_method
 # hyperparams['epochs'] = 5
 
 
-NEPTUNE_SWITCH = 1
+from ENV import NEPTUNE_SWITCH, Evaluate_Frequency
 TEST_ON = 0 # 0 means using cross validation, 1-5 means the only fold to test on
-SAVE_MODEL = 1
 
 print("MODEL: ", MODEL)
 print("epochs: ", hyperparams['epochs'])
@@ -247,6 +246,7 @@ folds_pattern:
      4: [[1, 2, 3, 4], [5]]}
 '''
 def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
+    from evaluator import Evaluator_Segment, Evaluator_Recording_Song
     overall_random_pick_times = 0
     overall_voting_times = 0
     scores_segment_list = []
@@ -299,134 +299,62 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
             model.summary()
         
         # print(np.shape(dataset_train))
-        
-        ###### HARD CODE part
-        if hyperparams['epochs'] == 1000:
-            model_name = MODEL+"_"+method+"_by500_"+str(i)+".h5"
 
+        os.remove('models/')
+        os.mkdir('models/')
+        checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(filepath='models/model_weights.h5', 
+                                                                save_weights_only=True, 
+                                                                save_best_only=False,
+                                                                verbose=1,
+                                                                period=Evaluate_Frequency)  # Save every 5 epochs
 
         print("****** training on folds partern", i,"******")
         if NEPTUNE_SWITCH ==1:
-          model.fit(dataset_train, epochs = hyperparams['epochs'], callbacks=[neptune_cbk, tensorboard_callback, ModelVisualizationCallback(log_dir)])
+          model.fit(dataset_train, epochs = hyperparams['epochs'], callbacks=[neptune_cbk, 
+                                                                              tensorboard_callback, ModelVisualizationCallback(log_dir), 
+                                                                              checkpoint_callback])
         else:
           model.fit(dataset_train, epochs = hyperparams['epochs'])
         
-        epochs_str = str(hyperparams['epochs'])
-        model_name = MODEL+"_"+method+"_by"+epochs_str+"_"+str(i)+".h5"
-            #  model_name method_name  by epochs     fold number 0-4
-        # Bi_LSTM_oldl2e2_by100_0.h5 => means using oldl2e2 method, model trained by 100 epochs on the fold 0 (first fold)
-        if SAVE_MODEL==1:
-            model.save("models/"+model_name)
+
+        ## evaluate on each __Evaluate_Frequency__ epochs
+        model.load_weights('models/model_weights.h5')
 
         print("****** validating on fold", test_index,"******")
         
         ############################# ############################# ############################# #############################
 
         # segment evaluation
-        if NEPTUNE_SWITCH ==1:
-            score_segment = round2(model.evaluate(dataset_test, callbacks=[neptune_cbk])[1])
-        else:
-            score_segment = round2(model.evaluate(dataset_test)[1])
-    
+        evaluator_segment = Evaluator_Segment(model, dataset_test, neptune_cbk)
+        score_segment = evaluator_segment.get_score()
+        
         scores_segment_list.append(score_segment)
-        
-        '''get whole dataset evaluation by adding all the fold's prediction and true value together'''
-        # we should have a whole y_real_whole and y_predict_whole for making confusion matrix
-        y_true_fold_segment = []
-        y_pred_fold_segment = []
-        for batch_x, batch_y in dataset_test:
-            # Make predictions on the batch of data
-            batch_y_pred = model.predict(batch_x)
-            # Threshold the predicted probabilities to obtain predicted labels
-            batch_y_pred = (batch_y_pred > 0.5).astype(int)
-            # Append the true and predicted labels to the lists for the current fold
-            y_true_fold_segment.append(batch_y.numpy())
-            y_pred_fold_segment.append(batch_y_pred) #batch_y_pred is already a numpy array
-        
-        # Convert the lists of true and predicted labels for the current fold to numpy arrays
-        y_true_fold_segment = np.concatenate(y_true_fold_segment, axis=0)
-        y_pred_fold_segment = np.concatenate(y_pred_fold_segment, axis=0)
 
-        y_true_fold_segment = flatten_nested_list(y_true_fold_segment)
-        y_pred_fold_segment = flatten_nested_list(y_pred_fold_segment)
+        y_true_fold_segment, y_pred_fold_segment = evaluator_segment.get_Y_labels()
+        
         # extend the true and predicted labels for the current fold to the overall lists
         y_true_all_segment.extend(y_true_fold_segment)
         y_pred_all_segment.extend(y_pred_fold_segment)
-        print(y_true_all_segment)
-        print(y_pred_all_segment)
-        print("******* segment level above ***************")
-        print("******* song level below ***************")
+        # print(y_true_all_segment)
+        # print(y_pred_all_segment)
+        # print("******* segment level above ***************")
+        # print("******* song level below ***************")
         
         ############################# ############################# ############################# #############################
 
         # song evaluation and recording evaluation (voting in different level)
         test_fold = test_index[0]
-        y_true_fold_song = []
-        y_pred_fold_song = []
-        y_true_fold_recording = []
-        y_pred_fold_recording = []
-        for song_id in dataset_of_folds_song_level_dictionary[test_fold].keys():
-            # all data below belongs to one song
-            this_song_prediction = []
-            for one_recording_data in dataset_of_folds_song_level_dictionary[test_fold][song_id]:
-                this_recording_prediction = []
-                for single_segment_data in one_recording_data.train.take(100):
-                    single_segment_x = single_segment_data[0]
-                    single_segment_y = single_segment_data[1]
-                    single_segment_x = tf.expand_dims(single_segment_x, axis=0)
-                    single_segment_y_pred = model.predict(single_segment_x)
-                    single_segment_y_pred = (single_segment_y_pred > 0.5).astype(int)
-                    single_segment_y_pred = int(single_segment_y_pred[0, 0]) # convert numpy array to int
-                    this_recording_prediction.append(single_segment_y_pred)
-                
-                # one recording prediction is done, so do two things
-                # 1. append the whole recording prediction to the song prediction list
-                this_song_prediction.append(this_recording_prediction)
-                # 2. vote for recording level prediction and create ture value for recording level
-                voting_result, if_random = voting(this_recording_prediction)
-                
-                overall_voting_times += 1
-                if if_random == True:
-                    overall_random_pick_times += 1
-                
-                y_pred_fold_recording.append(voting_result)
-                y_true_fold_recording.append(int(single_segment_y.numpy()[0]))
-                '''
-                # this_song_prediction is a nested list, each element is a numpy array. If we look into it:
-                # eg: 
-                # [[0, 0], [0, 0], [1, 0, 0, 1, 1], [0, 0, 1, 0, 1], [0, 0, 0]]
-                # There are three level in this nested list:
-                # The very outside represents the whole song (includes multiple recordings)
-                # The next level, inner list, represents the recording
-                # The smallest single element represents the segment
-                # so: after voting for recording level, the result will be:
-                # y_pred_fold_recording = [0, 0, 1, 0, 0]
-                # after voting for song level, the result will be:
-                # 0 (but we will do song voting after evaluate all the recordings in this song)
-                '''
-            # song evaluation, voting on song level, aka the very outsite level, so we need to flatten the list
-            voting_result, if_random = voting(flatten_nested_list(this_song_prediction))
-            
-            overall_voting_times += 1
-            if if_random == True:
-                overall_random_pick_times += 1
-            
-            song_pred_y = voting_result
-            song_true_y = int(single_segment_y.numpy()[0])
-            y_pred_fold_song.append(song_pred_y)
-            y_true_fold_song.append(song_true_y)
-            # print("check if song level still works")
-            # print("y_pred_fold_song:", y_pred_fold_song)
-            # print("y_true_fold_song:", y_true_fold_song)
-            # print("check the format for recording level")
-            # print("y_pred_fold_recording:", y_pred_fold_recording)
-            # print("y_true_fold_recording:", y_true_fold_recording)
-       
-        print("after the whole evaluation:")
-        print("y_true_fold_song: ", y_true_fold_song)
-        print("y_pred_fold_song: ", y_pred_fold_song)
-        print("y_true_fold_recording: ", y_true_fold_recording)
-        print("y_pred_fold_recording: ", y_pred_fold_recording)
+        evaluator_recording_song = Evaluator_Recording_Song(model, dataset_of_folds_song_level_dictionary[test_fold], neptune_cbk)
+
+        recording_Y, song_Y = evaluator_recording_song.get_Y_labels()
+
+        y_true_fold_recording, y_pred_fold_recording = recording_Y
+        y_true_fold_song, y_pred_fold_song = song_Y
+        # print("after the whole evaluation:")
+        # print("y_true_fold_song: ", y_true_fold_song)
+        # print("y_pred_fold_song: ", y_pred_fold_song)
+        # print("y_true_fold_recording: ", y_true_fold_recording)
+        # print("y_pred_fold_recording: ", y_pred_fold_recording)
 
         scores_song_list.append(round2(accuracy_score(y_true_fold_song, y_pred_fold_song)))
         
@@ -442,9 +370,6 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
         # print(y_pred_all_song)
     
         ############################# ############################# ############################# #############################
-
-        # recording evaluation
-            # is just song level evaluaion with a different voting position
         
     y_true_all_segment = [int(i) for i in y_true_all_segment]
     

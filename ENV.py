@@ -1,3 +1,5 @@
+NEPTUNE_SWITCH = 1
+Evaluate_Frequency = 1
 ### No need to change this part
 ### unless you want to change the dataset name or for other custom purpose
 # the original dataset name
