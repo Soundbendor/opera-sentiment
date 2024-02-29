@@ -160,40 +160,18 @@ def flatten_nested_list(nested_list):
         temp_list.extend(sublist)
     return temp_list
 
-def voting(prediction_list):
-    positive_votes = 0
-    negative_votes = 0
-    for prediction in prediction_list:
-        if prediction == 1:
-            positive_votes += 1
-        elif prediction == 0:
-            negative_votes += 1
-        else:
-            raise Exception("voting error: prediction is not 0 or 1")
-    if positive_votes > negative_votes:
-        return 1, False
-    elif positive_votes < negative_votes:
-        return 0, False
-    elif positive_votes == negative_votes:
-        # if the votes are equal, return a random value between 0 and 1
-        return random.randint(0, 1), True
-
-###### archive functions ######
-# def ybatch2list(batched_data):
-#     batched_data = batched_data.numpy()
-#     batched_data.reshape(np.shape(batched_data)[0],)
-#     batched_data = batched_data.tolist()
-#     y_value_list = [item for sublist in batched_data for item in sublist]
-#     return y_value_list
-
-# def bin_prediction(prediction_list):
-#     for i in range(len(prediction_list)):
-#       if prediction_list[i] >= 0.5:
-#         prediction_list[i] = 1.0
-#       elif prediction_list[i] < 0.5:
-#         prediction_list[i] = 0.0
-#     return prediction_list
-###### archive functions ######
+def get_checkpoints_list(name, epoch = hyperparams['epochs'], period = Evaluate_Frequency):
+    if epoch < period:
+        print("WARNING: epoch is less than period, no checkpoints will be generated")
+        return []
+    epoch_list = [epoch for epoch in range(1, epoch + 1) if epoch % period == 0]
+    # Add the last epoch if it's not already included
+    if epoch % period != 0:
+        epoch_list.append(epoch)
+    output = []
+    for num in epoch_list:
+        output.append(name + "_" + str(num) + ".h5")
+    return output
 
 # save confusion matrix as a file
 def save_conf_matrix(conf_matrix, file_name):
@@ -258,6 +236,11 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
     y_pred_all_recording = []
     y_true_all_song = []
     y_pred_all_song = []
+
+    score_segment_validation_epoch = []
+    score_recording_validation_epoch = []
+    score_song_validation_epoch = []
+
     # each loop is one fold validation
     if test_on in range(1,fold_count+1):
         folds_pattern = {test_on-1: folds_pattern[test_on-1]}
@@ -300,9 +283,16 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
         
         # print(np.shape(dataset_train))
 
-        os.remove('models/')
-        os.mkdir('models/')
-        checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(filepath='models/model_weights.h5', 
+        # remove everything in 'models/' folder if it exists, otherwise create a empty one
+        if not os.path.exists('models'):
+            os.makedirs('models')
+        else:
+            filelist = [ f for f in os.listdir('models') ]
+            for f in filelist:
+                os.remove(os.path.join('models', f))
+
+        checkpoint_name = 'models/model_weights'
+        checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_name+"_{epoch}.h5", 
                                                                 save_weights_only=True, 
                                                                 save_best_only=False,
                                                                 verbose=1,
@@ -317,10 +307,26 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
           model.fit(dataset_train, epochs = hyperparams['epochs'])
         
 
-        ## evaluate on each __Evaluate_Frequency__ epochs
-        model.load_weights('models/model_weights.h5')
+        ## evaluate on each __Evaluate_Frequency__ epochs besides the last one/final one
+        checkpoints_list = get_checkpoints_list(checkpoint_name)
+        for checkpoint in checkpoints_list[0:-1]:
+            # checkpoint eg: 'models/model_weights_5.h5'
+            model.load_weights(checkpoint)
+            # this model becomes the model at this checkpoint, now we need to evaluate it using my own evaluator
+            # later we will use this to replace the build in validation accuracy plot
+            evaluator_segment = Evaluator_Segment(model, dataset_test, neptune_cbk)
+            score_segment = evaluator_segment.get_score()
+            evalauator_recording_song = Evaluator_Recording_Song(model, dataset_of_folds_song_level_dictionary[test_index[0]], neptune_cbk)
+            score_recording, score_song = evalauator_recording_song.get_score()
+            score_segment_validation_epoch.append(score_segment)
+            score_recording_validation_epoch.append(score_recording)
+            score_song_validation_epoch.append(score_song)
+        
+        # load back the final model
+        final_checkpoint = checkpoints_list[-1]
+        model.load_weights(final_checkpoint)
 
-        print("****** validating on fold", test_index,"******")
+        print("****** final validating on fold", test_index,"******")
         
         ############################# ############################# ############################# #############################
 
@@ -329,6 +335,7 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
         score_segment = evaluator_segment.get_score()
         
         scores_segment_list.append(score_segment)
+        score_segment_validation_epoch.append(score_segment) # append the final score to the epoch list
 
         y_true_fold_segment, y_pred_fold_segment = evaluator_segment.get_Y_labels()
         
@@ -355,10 +362,14 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
         # print("y_pred_fold_song: ", y_pred_fold_song)
         # print("y_true_fold_recording: ", y_true_fold_recording)
         # print("y_pred_fold_recording: ", y_pred_fold_recording)
+        score_song = round2(accuracy_score(y_true_fold_song, y_pred_fold_song))
+        scores_song_list.append(score_song)
+        score_song_validation_epoch.append(score_song) # append the final score to the epoch list
 
-        scores_song_list.append(round2(accuracy_score(y_true_fold_song, y_pred_fold_song)))
+        score_recording = round2(accuracy_score(y_true_fold_recording, y_pred_fold_recording))
+        scores_recording_list.append(score_recording)
+        score_recording_validation_epoch.append(score_recording) # append the final score to the epoch list
         
-        scores_recording_list.append(round2(accuracy_score(y_true_fold_recording, y_pred_fold_recording)))
         # # extend the true and predicted labels for the current fold to the overall lists
         # print("**********************") 
         y_true_all_song.extend(y_true_fold_song)
@@ -370,7 +381,12 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
         # print(y_pred_all_song)
     
         ############################# ############################# ############################# #############################
-        
+    
+    # take a look of the epoch validation list
+    print("score_segment_validation_epoch: \n", score_segment_validation_epoch)
+    print("score_recording_validation_epoch: \n", score_recording_validation_epoch)
+    print("score_song_validation_epoch: \n", score_song_validation_epoch)
+
     y_true_all_segment = [int(i) for i in y_true_all_segment]
     
     # print("after the whole xvalidation:")
@@ -417,18 +433,33 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
         runtime["info/seg/precision"] = precision_segment
         runtime["info/seg/recall"] = recall_segment
         runtime["info/seg/F1"] = F1_segment
+        for i in range(len(score_segment_validation_epoch)):
+            runtime["info/seg/validation_epoch"].append(
+                value = score_segment_validation_epoch[i],
+                step = i*Evaluate_Frequency
+            )
         
         runtime["info/song/scores per folds"] = str(scores_song_list)
         runtime["info/song/accuracy"] = aggregate_accuracy_song
         runtime["info/song/precision"] = precision_song
         runtime["info/song/recall"] = recall_song
         runtime["info/song/F1"] = F1_song
+        for i in range(len(score_song_validation_epoch)):
+            runtime["info/song/validation_epoch"].append(
+                value = score_song_validation_epoch[i],
+                step = i*Evaluate_Frequency
+            )
 
         runtime["info/recor/scores per folds"] = str(scores_recording_list)
         runtime["info/recor/accuracy"] = aggregate_accuracy_recording
         runtime["info/recor/precision"] = precision_recording
         runtime["info/recor/recall"] = recall_recording
         runtime["info/recor/F1"] = F1_recording
+        for i in range(len(score_recording_validation_epoch)):
+            runtime["info/recor/validation_epoch"].append(
+                value = score_recording_validation_epoch[i],
+                step = i*Evaluate_Frequency
+            )
 
     # save confusion matrix
     save_conf_matrix(conf_matrix_segment, './cfMatrix_seg.png')
@@ -438,14 +469,13 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
     save_conf_matrix(conf_matrix_recording, './cfMatrix_recor.png')
     save_normed_conf_matrix(conf_matrix_recording, './cfMatrix_recor_normed.png')
 
-    random_pick_rate = round2(overall_random_pick_times/overall_voting_times)
+    random_pick_rate = round2(overall_random_pick_times/overall_voting_times) if overall_voting_times != 0 else 0
     random_pick_print_string = str(overall_random_pick_times) + " times out of " + str(overall_voting_times) + ", the percentage is " + str(random_pick_rate)
     if NEPTUNE_SWITCH == 1:
         runtime["info/random vote"] = random_pick_print_string
         runtime["info/random pick rate"] = random_pick_rate
     else:
         print("random vote", random_pick_print_string)
-
 
 def print_running_information():
     print("running information:")
