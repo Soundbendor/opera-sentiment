@@ -280,18 +280,17 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
         # since all the models are the same, we only need to print the summary once
         if i == 0: 
             model.summary()
-        
-        # print(np.shape(dataset_train))
 
         # remove everything in 'models/' folder if it exists, otherwise create a empty one
-        if not os.path.exists('models'):
-            os.makedirs('models')
+        models_folder = "models/"+MODEL+"_"+method+"/" # eg: models/LSTM_drop0.3/
+        if not os.path.exists(models_folder):
+            os.makedirs(models_folder)
         else:
-            filelist = [ f for f in os.listdir('models') ]
+            filelist = [ f for f in os.listdir(models_folder) ]
             for f in filelist:
-                os.remove(os.path.join('models', f))
+                os.remove(os.path.join(models_folder, f))
 
-        checkpoint_name = 'models/model_weights'
+        checkpoint_name = models_folder+'model_weights' # eg: models/LSTM_drop0.3/model_weights
         checkpoint_callback = tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_name+"_{epoch}.h5", 
                                                                 save_weights_only=True, 
                                                                 save_best_only=False,
@@ -338,6 +337,11 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
         score_segment_validation_epoch.append(score_segment) # append the final score to the epoch list
 
         y_true_fold_segment, y_pred_fold_segment = evaluator_segment.get_Y_labels()
+        if len(y_true_fold_segment) != len(y_pred_fold_segment):
+            print("y_true and y_pred are not the same length")
+            print(len(y_true_fold_segment))
+            print(len(y_pred_fold_segment))
+            raise ValueError("y_true and y_pred are not the same length")
         
         # extend the true and predicted labels for the current fold to the overall lists
         y_true_all_segment.extend(y_true_fold_segment)
@@ -388,17 +392,24 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
     print("score_song_validation_epoch: \n", score_song_validation_epoch)
 
     y_true_all_segment = [int(i) for i in y_true_all_segment]
+    y_pred_all_segment = [int(i) for i in y_pred_all_segment]
     
-    # print("after the whole xvalidation:")
-    # print("y_true_all_segment: ", y_true_all_segment)
-    # print("y_pred_all_segment: ", y_pred_all_segment)
-    # print("y_true_all_recording: ", y_true_all_recording)
-    # print("y_pred_all_recording: ", y_pred_all_recording)
-    # print("y_true_all_song: ", y_true_all_song)
-    # print("y_pred_all_song: ", y_pred_all_song)
-    
-    # print(y_true_all_song)
-    # print(y_pred_all_song)
+    print("after the whole xvalidation:")
+    print("y_true_all_segment: ", y_true_all_segment)
+    print("y_pred_all_segment: ", y_pred_all_segment)
+    print("y_true_all_recording: ", y_true_all_recording)
+    print("y_pred_all_recording: ", y_pred_all_recording)
+    print("y_true_all_song: ", y_true_all_song)
+    print("y_pred_all_song: ", y_pred_all_song)
+    # print their size too
+    print("size of y_true_all_segment: ", len(y_true_all_segment))
+    print("size of y_pred_all_segment: ", len(y_pred_all_segment))
+    print("size of y_true_all_recording: ", len(y_true_all_recording))
+    print("size of y_pred_all_recording: ", len(y_pred_all_recording))
+    print("size of y_true_all_song: ", len(y_true_all_song))
+    print("size of y_pred_all_song: ", len(y_pred_all_song))
+          
+
     print("Xvalidation scores for segment level are:", scores_segment_list)
     
     print("Xvalidation scores for song level are:", scores_song_list)
@@ -507,6 +518,15 @@ def model_adding(model): # will return the optimizer for keeping all the model s
         optim = 'SGD'
         ##### simple model area done ######
     
+    if MODEL == "MLP":
+        ### MLP
+        model.add(tf.keras.Input(shape=(math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])))
+        model.add(Flatten())
+        model.add(Dense(8, activation='relu'))
+        model.add(Dense(6, activation='relu'))
+        model.add(Dense(1, activation='sigmoid'))
+        optim = 'adam'
+
     if MODEL == "CNN":
         if method == "none":
             model.add(tf.keras.Input(shape=(math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])))
