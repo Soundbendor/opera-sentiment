@@ -2,6 +2,7 @@ from ENV import NEPTUNE_SWITCH
 import numpy as np
 import tensorflow as tf
 import random
+from sklearn.metrics import accuracy_score
 
 # round number to 2 digits
 def round2(num):
@@ -66,9 +67,8 @@ class Evaluator_Segment:
     
 
 class Evaluator_Recording_Song:
-    def __init__(self, model, data, dataset_of_folds_song_level_dictionary_on_test_fold, neptune_cbk=None):
+    def __init__(self, model, dataset_of_folds_song_level_dictionary_on_test_fold, neptune_cbk=None):
         self.model = model
-        self.data = data
         self.dataset_of_folds_song_level_dictionary_on_test_fold = dataset_of_folds_song_level_dictionary_on_test_fold
         self.neptune_cbk = neptune_cbk
     
@@ -129,3 +129,11 @@ class Evaluator_Recording_Song:
         recording_Y = [y_true_fold_recording, y_pred_fold_recording]
         song_Y = [y_true_fold_song, y_pred_fold_song]
         return recording_Y, song_Y
+    
+    def get_score(self):
+        recording_Y, song_Y = self.get_Y_labels()
+        y_true_fold_recording, y_pred_fold_recording = recording_Y
+        y_true_fold_song, y_pred_fold_song = song_Y
+        score_recording = round2(accuracy_score(y_true_fold_recording, y_pred_fold_recording))
+        score_song = round2(accuracy_score(y_true_fold_song, y_pred_fold_song))
+        return score_recording, score_song
