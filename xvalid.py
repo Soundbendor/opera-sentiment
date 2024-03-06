@@ -248,6 +248,7 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
     for i, (train_index, test_index) in folds_pattern.items():
         # merge the training data:
         dataset_train = dataset_of_folds_dictionary[train_index[0]].train
+        
         for j in range(1,len(train_index)):
             data_index_curr = train_index[j]
             dataset_train = dataset_train.concatenate(dataset_of_folds_dictionary[data_index_curr].train)
@@ -444,11 +445,12 @@ def my_x_validation(dataset_of_folds_dictionary,folds_pattern, test_on = 0):
         runtime["info/seg/precision"] = precision_segment
         runtime["info/seg/recall"] = recall_segment
         runtime["info/seg/F1"] = F1_segment
-        for i in range(len(score_segment_validation_epoch)):
-            runtime["info/seg/validation_epoch"].append(
-                value = score_segment_validation_epoch[i],
-                step = i*Evaluate_Frequency
-            )
+        # no need to do segment because it is already being evaluate when getting the score
+        # for i in range(len(score_segment_validation_epoch)):
+        #     runtime["info/seg/validation_epoch"].append(
+        #         value = score_segment_validation_epoch[i],
+        #         step = i*Evaluate_Frequency
+        #     )
         
         runtime["info/song/scores per folds"] = str(scores_song_list)
         runtime["info/song/accuracy"] = aggregate_accuracy_song
@@ -528,16 +530,13 @@ def model_adding(model): # will return the optimizer for keeping all the model s
         optim = 'adam'
 
     if MODEL == "CNN":
-        if method == "none":
+        if method == "pool64":
             model.add(tf.keras.Input(shape=(math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])))
             model.add(tf.keras.layers.Reshape((math.ceil(hyperparams["input_length"]/hyperparams["input_size"])*hyperparams["input_size"],1)))
             model.add(Conv1D(filters=8, kernel_size=64, activation='relu'))
             model.add(MaxPooling1D(pool_size=64,strides=8))
-            
-            model.add(Dense(16, activation='sigmoid'))
-            model.add(Conv1D(filters=8, kernel_size=64, activation='relu'))
+            model.add(Conv1D(filters=6, kernel_size=64, activation='relu'))
             model.add(MaxPooling1D(pool_size=64,strides=8))
-            
             model.add(Flatten())
             model.add(Dense(1, activation='sigmoid'))
             optim = 'adam'
@@ -636,7 +635,8 @@ def model_adding(model): # will return the optimizer for keeping all the model s
 
     if MODEL == "LSTM":
         if method == "drop0.3":
-            model.add(LSTM(units=8, return_sequences=True, input_shape=(16, 1024), activation="tanh"))  # Add LSTM layer with 256 units
+            model.add(tf.keras.Input(shape=(math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])))
+            model.add(LSTM(units=8, return_sequences=True, activation="tanh"))  # Add LSTM layer with 256 units
             model.add(Dropout(0.3))
             model.add(Dense(8, activation="relu"))
             model.add(LSTM(units=6, activation="tanh"))
@@ -662,7 +662,8 @@ def model_adding(model): # will return the optimizer for keeping all the model s
     
     if MODEL == "LSTM1":
         if method == "drop0.3":
-            model.add(LSTM(units=8, return_sequences=True, input_shape=(16, 1024), activation="tanh"))  # Add LSTM layer with 256 units
+            _input_shape=(math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])
+            model.add(LSTM(units=8, return_sequences=True, input_shape=_input_shape, activation="tanh"))  # Add LSTM layer with 8 units
             model.add(Dropout(0.3))
             model.add(LSTM(units=6, activation="tanh"))
             model.add(Dropout(0.3))
