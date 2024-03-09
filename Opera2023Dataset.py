@@ -5,9 +5,9 @@ import os
 from torch.nn import functional as F
 
 class Opera2023Dataset(Dataset):
-    def __init__(self, csv_file, file_dir, target_class, input_size = -1):
-        self._csv = pd.read_csv(csv_file)
-        self._dir = file_dir
+    def __init__(self, csv_fir, data_dir, target_class, input_size = -1):
+        self._csv = pd.read_csv(csv_fir)
+        self._dir = data_dir
         self._input_size = input_size
         self._target_class = target_class
 
@@ -44,7 +44,7 @@ if __name__ == '__main__':
 
     csv_file2 = 'trimmed_30_Padding-S_Emo/ch/9/wav01/ch_9_wav01.csv'
     file_dir2 = 'trimmed_30_Padding-S_Emo/ch/9/wav01'
-    dataset2 = Opera2023Dataset(csv_file2, file_dir2,target_class, 1024)
+    dataset2 = Opera2023Dataset(csv_file2, file_dir2, target_class, 1024)
     # print(dataset[0][0].shape)
     # data_loader = DataLoader(dataset, batch_size=2, shuffle=True)
     # print(data_loader)
