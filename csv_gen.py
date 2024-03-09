@@ -88,9 +88,6 @@ def generate_csv_and_index(path):
         if os.path.exists(index_file):
             os.remove(index_file)
         
-        filelist = os.listdir(path_curr)
-        
-        # making csv file, but we need creat a txt to write first, so we "pretend" to create a index txt file first, then rename it
         if DEBUGMODE:
             print("making csv file: ", csv_file)
         
