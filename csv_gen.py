@@ -39,6 +39,8 @@ def move_to_in(path):
         # only do it if the file already is not in "in"
         if not os.path.exists(os.path.join(IN_path, os.path.basename(wav_path))):
             shutil.move(wav_path, IN_path)
+        else:
+            print("file already exists in in folder: ", wav_path)
 
 def get_wavlist(path): # get .wav files list from any folder
     wavelist = []
@@ -78,10 +80,10 @@ def generate_csv_and_index(path):
         if len(wavelist) == 0:
             print(dataset_name, 'is EMPTY')
             return
-
+        
         csv_file = os.path.join(path_curr,(dataset_name+'.csv'))
         index_file = os.path.join(path_curr,(dataset_name+'.txt'))
-        # clear old csv and index
+        
         if os.path.exists(csv_file):
             os.remove(csv_file)
     
@@ -208,36 +210,17 @@ def generate_csv_and_index(path):
         else:
             print("writing: ", index_text)
 
-def clear_records_only(path):
-    real_path = []
-    g = os.walk(path)
-    for path_cur, dir_list, file_list in g:
-        for file_name in file_list:
-            if file_name.endswith('wav'):
-                father_path = path_cur.replace('/in','')
-                real_path.append(father_path)
-                break
-
-    for path_curr in real_path:
-        filelist = os.listdir(path_curr)
-        for item in filelist:
-            # clear old tfrecord
-            if item.endswith('.tfrecord'):
-                print("find",item)
-                os.remove(os.path.join(path_curr,item))
-                print("remove", item)
-
-
-def get_datainfo(dataset_path): # get matching data_path and data_name in the dataset path
-    data_info_dict = {} # data_path: data_name
-    g = os.walk(dataset_path)
-    for path_cur, dir_list, file_list in g:
-        for folder_name in dir_list:
-            if folder_name == 'in':
-                data_path = path_cur
-                data_name = get_audio_name(path_cur, dataset_path)
-                data_info_dict[data_path] = data_name
-    return data_info_dict
+# this function looks like useless, delete it later if it is true
+# def get_datainfo(dataset_path): # get matching data_path and data_name in the dataset path
+#     data_info_dict = {} # data_path: data_name
+#     g = os.walk(dataset_path)
+#     for path_cur, dir_list, file_list in g:
+#         for folder_name in dir_list:
+#             if folder_name == 'in':
+#                 data_path = path_cur
+#                 data_name = get_audio_name(path_cur, dataset_path)
+#                 data_info_dict[data_path] = data_name
+#     return data_info_dict
 
 if __name__ == "__main__":
     if DEBUGMODE:
@@ -251,6 +234,3 @@ if __name__ == "__main__":
     
     # generate/regenerate csv and index files (dataset and dataset.txt), and clear old tf records
     generate_csv_and_index(Trimmed_PATH)
-
-    # # clear old tf records ONLY
-    # clear_records_only(Trimmed_PATH)
