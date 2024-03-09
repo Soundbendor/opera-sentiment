@@ -26,5 +26,5 @@ target_class_dictionary = {
 target_class_short = target_class_dictionary[target_class]
 
 ### !!! MUST NOT Change this part !!!
-Trimmed_PATH = Trimmed_PATH + "_" + str(target_second) + "_" +segment_method+ "_" + target_class_short
+Trimmed_PATH = Trimmed_PATH + "_" + str(target_second) + "_" +segment_method
 ### !!! MUST NOT Change this part !!!
