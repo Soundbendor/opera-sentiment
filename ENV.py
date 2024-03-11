@@ -3,9 +3,10 @@ Evaluate_Frequency = 1
 ### No need to change this part
 ### unless you want to change the dataset name or for other custom purpose
 # the original dataset name
-Data_PATH = "operadataset2023"
-Unified_PATH = 'unified'
-Trimmed_PATH = 'trimmed'
+Root_PATH = "/nfs/guille/eecs_research/soundbendor/shengxuan/opera2324/opera-singing-dataset/"
+Data_PATH = Root_PATH + "operadataset2023"
+Unified_PATH = Root_PATH + 'unified'
+Trimmed_PATH = Root_PATH + 'trimmed'
 
 ### hyperparameters related to Machine Learning
 ### keep them consistent during EVERY workflow steps (from data preprocessing to evaluation)

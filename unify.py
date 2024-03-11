@@ -2,7 +2,7 @@ import os
 import shutil
 import subprocess
 from ENV import Data_PATH, Unified_PATH
-from dataprofile import Profiler
+from Profiler import Profiler
 import soxtool as st
 import yaml
 

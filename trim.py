@@ -3,7 +3,7 @@ from ENV import Unified_PATH, target_second, Trimmed_PATH, segment_method
 
 import shutil
 import subprocess
-from dataprofile import Profiler
+from Profiler import Profiler
 import sox
 from pretrim import pre_trim
 

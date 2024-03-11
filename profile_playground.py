@@ -1,4 +1,4 @@
-from dataprofile import Profiler
+from Profiler import Profiler
 from ENV import Data_PATH, Unified_PATH, Trimmed_PATH
 
 # using_PATH = Data_PATH

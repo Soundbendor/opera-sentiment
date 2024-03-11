@@ -19,7 +19,7 @@ from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import SimpleRNN, Conv1D, MaxPooling1D, Flatten, Dropout, BatchNormalization
 
 from sklearn.metrics import confusion_matrix, accuracy_score
-from xvalid_load import folds, folds_size, data_full_dictionary, dataset_of_folds_dictionary, dataset_of_folds_song_level_dictionary, hyperparams
+from xvalid_load import folds, folds_size, data_full_dictionary, dataset_of_folds_dictionary, dataset_of_folds_song_level_dictionary
 
 from dataset import SimpleAudioClassificationDataset
 
@@ -31,18 +31,7 @@ from ENV import target_second as piece_size
 from ENV import fold_count
 from ENV import target_class, target_class_dictionary
 
-'''Don't Change Here, if change needed, go back to xvalid_load.py to change these
-hyperparams['input_size'] = 1024
-hyperparams['batch_size'] = 32
-hyperparams['output_size'] = 1
-'''
-
-# hyperparams['activation'] = "softmax"
-hyperparams['dense_units'] = hyperparams['output_size']
-hyperparams['dropout'] = 0.3
-hyperparams['lr'] = 0.001
-hyperparams["loss"] = 'binary_crossentropy' #'categorical_crossentropy'
-hyperparams['input_length'] = 16000*piece_size
+from HYPERPARAMS import hyperparams
 
 import sys
 MODEL = sys.argv[1]

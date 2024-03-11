@@ -1,6 +1,6 @@
 import os
 import shutil
-from dataprofile import Profiler
+from Profiler import Profiler
 from ENV import target_second, target_class, Trimmed_PATH
 from yamlhelp import safe_update_yaml, safe_read_yaml
 import sys
