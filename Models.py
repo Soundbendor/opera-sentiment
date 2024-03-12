@@ -84,9 +84,20 @@ if __name__ == "__main__":
 
     EPOCHS = 1
 
-    train(net, train_loader, loss_fn, optimiser, device, EPOCHS)
+    # train(net, train_loader, loss_fn, optimiser, device, EPOCHS)
 
-    evaluator_segment = Evaluator(net,loss_fn, device)
-    segment_accuracy = evaluator_segment.evaluate_segment(test_loader)
-    print(evaluator_segment.predictions_seg)
-    print(evaluator_segment.targets_seg)
+    evaluator = Evaluator(net,loss_fn, device)
+    accuracy_rec, accuracy_song = evaluator.evaluate_recording_and_song(dataset_of_folds_song_level_dictionary[1])
+    print(evaluator.predictions_rec)
+    print(evaluator.targets_rec)
+    print(evaluator.predictions_song)
+    print(evaluator.targets_song)
+    print(accuracy_rec)
+    print(accuracy_song)
+
+
+
+
+    # segment_accuracy = evaluator_segment.evaluate_segment(test_loader)
+    # print(evaluator_segment.predictions_seg)
+    # print(evaluator_segment.targets_seg)

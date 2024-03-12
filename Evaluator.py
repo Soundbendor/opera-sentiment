@@ -1,5 +1,7 @@
 import torch
 from HYPERPARAMS import hyperparams
+from torch.utils.data import DataLoader
+import random
 # three-way evaluator
 def flatten_and_int_list(nested_list):
     temp_list = []
@@ -7,6 +9,24 @@ def flatten_and_int_list(nested_list):
         temp_list.extend(sublist)
     int_list = [int(x) for x in temp_list]
     return int_list
+
+def voting(prediction_list):
+    positive_votes = 0
+    negative_votes = 0
+    for prediction in prediction_list:
+        if prediction == 1:
+            positive_votes += 1
+        elif prediction == 0:
+            negative_votes += 1
+        else:
+            raise Exception("voting error: prediction is not 0 or 1")
+    if positive_votes > negative_votes:
+        return 1, False
+    elif positive_votes < negative_votes:
+        return 0, False
+    elif positive_votes == negative_votes:
+        # if the votes are equal, return a random value between 0 and 1
+        return random.randint(0, 1), True
 
 class Evaluator:
     def __init__(self, model, loss_fn, device, run=None, npt_logger=None):
@@ -23,6 +43,7 @@ class Evaluator:
         self.model.eval()
         total_correct = 0
         for inputs, targets in data_loader:
+            # each loop is a batch
             inputs, targets = inputs.to(self.device), targets.to(self.device)
             
             self.targets_seg.extend(targets.cpu().detach().numpy().tolist())
@@ -40,14 +61,53 @@ class Evaluator:
                 self.run[self.npt_logger.base_namespace]["eval/loss_seg"].append(loss.item())
                 self.run[self.npt_logger.base_namespace]["eval/acc_seg"].append(acc)
 
-        avg_accuracy = total_correct / len(data_loader.dataset)
+        # accuracy of the entire dataset
+        accuracy_all = total_correct / len(data_loader.dataset)
         
         self.predictions_seg = flatten_and_int_list(self.predictions_seg)
 
-        return avg_accuracy
+        return accuracy_all
     
-    def evaluate_recording(self, data_index):
-        pass
+    def evaluate_recording_and_song(self, data_dict):
+        self.predictions_rec = []
+        self.targets_rec = []
+        self.predictions_song = []
+        self.targets_song = []
 
-    def evaluate_song(self, data_index):
-        pass
+        self.model.eval()
+        for song_id in data_dict.keys():
+            # all data below belongs to one song
+            this_song_predictions = []
+            for one_recording_data in data_dict[song_id]:
+                this_recording_predictions = []
+                # one_recording_data is the data before putting into data loader
+                one_recording_loader = DataLoader(one_recording_data, batch_size=1, shuffle=False)
+                                                                    # batch size is 1 because we want to evaluate one piece at a time
+                                                                    # shuffle is False because we want to keep the order of the pieces
+                for inputs, targets in one_recording_loader:
+                    # each loop is a segment
+                    inputs, targets = inputs.to(self.device), targets.to(self.device)
+                    predictions = self.model(inputs)
+                    rounded_predictions = torch.round(predictions)
+                    this_recording_predictions.extend(rounded_predictions.cpu().detach().numpy().tolist())
+                    this_song_predictions.extend(rounded_predictions.cpu().detach().numpy().tolist())
+                    
+                this_recording_predictions = flatten_and_int_list(this_recording_predictions)
+                voting_recording, is_random = voting(this_recording_predictions)
+                self.predictions_rec.append(voting_recording)
+                
+                # append the last target to list
+                self.targets_rec.append(targets.cpu().detach().numpy().tolist())
+            this_song_predictions = flatten_and_int_list(this_song_predictions)
+            voting_song, is_random = voting(this_song_predictions)
+            self.predictions_song.append(voting_song)
+            self.targets_song.append(targets.cpu().detach().numpy().tolist())
+            
+        self.targets_rec = flatten_and_int_list(self.targets_rec)
+        self.targets_song = flatten_and_int_list(self.targets_song)
+
+
+        accuracy_rec = sum([1 for i in range(len(self.predictions_rec)) if self.predictions_rec[i] == self.targets_rec[i]]) / len(self.predictions_rec)
+        accuracy_song = sum([1 for i in range(len(self.predictions_song)) if self.predictions_song[i] == self.targets_song[i]]) / len(self.predictions_song)
+
+        return accuracy_rec, accuracy_song

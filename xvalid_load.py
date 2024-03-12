@@ -92,16 +92,12 @@ for fold_n, paths in path_folds.items():
 
 '''
 dataset_of_folds_song_level_dictionary will look like:
-{fold#: {song_id: [dataset, dataset (pieces before being batched)], 
+{fold#: {song_id: [dataset, dataset (each dataset is a recording)], 
         song_id: [dataset, dataset,...]},
 fold#: {song_id: [dataset, dataset,...},...}
-'''
-'''
-maybe better to make it like:
-{fold#: {song_id: {path: [dataset, dataset, ...], path: [dataset, dataset, ...], ...},
-        song_id: {path: [dataset, dataset, ...], path: [dataset, dataset, ...], ...},
-        ...},
-fold#: {song_id: {path: [dataset, dataset, ...], path: [dataset, dataset, ...], ...}, ...}
+
+The inner dictionary level with song_id as kay is the song level
+The inner list level is the recording level
 '''
 dataset_of_folds_song_level_dictionary = {} # for evaluation one by one
 
@@ -131,4 +127,9 @@ if __name__ == "__main__":
     
     # i = how_many_in_dataset(dataset_of_folds_song_level_dictionary[1][20]['trimmed_30_Padding/ch/20/wav00'])
     # print("there are ", i, " pieces of data in this dataset")
+    # print(dataset_of_folds_song_level_dictionary)
+    # print("for example, the first fold looks like:")
+    # print(dataset_of_folds_song_level_dictionary[1])
+    # print("for example, the first song in the first fold looks like:")
+    # print(dataset_of_folds_song_level_dictionary[1][11])
     print("Data loaded successfully!")
