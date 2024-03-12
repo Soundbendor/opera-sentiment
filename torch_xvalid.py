@@ -11,6 +11,8 @@ from torch import nn
 from torch.utils.data import DataLoader
 from torch.utils.data import ConcatDataset
 
+from torchinfo import summary
+
 from training_time import train
 from Evaluator import Evaluator
 
@@ -162,11 +164,14 @@ def my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count
     folds_pattern = get_folds_pattern(fold_count)
 
     model = model_class("Dropout03").to(device)
+    input_size = (1, math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])
+    model_summary = summary(model, input_size, device=device)
 
     if NEPTUNE_SWITCH == 1:
         npt_logger = NeptuneLogger(
         run, model=model, log_model_diagram=True, log_gradients=True, log_parameters=True, log_freq=30
         )
+        run["model_summary"] = str(model_summary)
 
     # if test on is on one fold, then only test on that fold
     if test_on in range(1,fold_count+1):
