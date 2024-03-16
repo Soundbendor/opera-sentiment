@@ -11,6 +11,10 @@ neptune.ini
 # tenforflow logs
 logs/
 
+# torchviz logs
+model_torchview
+model_torchviz
+
 # server output
 /output
 /output_archive

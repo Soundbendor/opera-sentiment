@@ -13,6 +13,9 @@ from torch.utils.data import ConcatDataset
 
 from torchinfo import summary
 
+from torchviz import make_dot
+from torchview import draw_graph
+
 from training_time import train
 from Evaluator import Evaluator
 
@@ -166,12 +169,26 @@ def my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count
     model = model_class("Dropout03").to(device)
     input_size = (1, math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])
     model_summary = summary(model, input_size, device=device)
+    
+    dummy_data = torch.randn(input_size).to(device)
+    
+    y = model(dummy_data)
+    image_name_tv = "model_torchviz"
+    image_formate = "png"
+    image_path_tv = image_name_tv + "." + image_formate
+    make_dot(y, params=dict(model.named_parameters())).render(image_name_tv, format=image_formate)
+
+    image_name_torchview = "model_torchview"
+    image_path_torchview = image_name_torchview + "." + image_formate
+    draw_graph(model = model, input_size = input_size, device=device, save_graph=True, filename=image_name_torchview, roll=False)
 
     if NEPTUNE_SWITCH == 1:
         npt_logger = NeptuneLogger(
         run, model=model, log_model_diagram=True, log_gradients=True, log_parameters=True, log_freq=30
         )
         run["model_summary"] = str(model_summary)
+        run[image_path_tv].upload(File(image_path_tv))
+        run[image_path_torchview].upload(File(image_path_torchview))
 
     # if test on is on one fold, then only test on that fold
     if test_on in range(1,fold_count+1):
@@ -283,7 +300,7 @@ if __name__ == "__main__":
         device = "cpu"
     
     from Models import DummyModel, LSTM
-    model_class = DummyModel
+    model_class = LSTM
 
     my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count, TEST_ON)
                                                                 # 0 means using cross validation
