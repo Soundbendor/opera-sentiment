@@ -37,7 +37,7 @@ import sys
 # method = sys.argv[2]
 
 # hyperparams['epochs'] = int(sys.argv[3])
-hyperparams['epochs'] = 1
+hyperparams['epochs'] = 2
 from ENV import segment_method
 
 from ENV import NEPTUNE_SWITCH, Evaluate_Frequency
@@ -112,6 +112,19 @@ def flatten_nested_list(nested_list):
         temp_list.extend(sublist)
     return temp_list
 
+def get_checkpoints_list(name, epoch = hyperparams['epochs'], period = Evaluate_Frequency):
+    if epoch < period:
+        print("WARNING: epoch is less than period, no checkpoints will be generated")
+        return []
+    epoch_list = [epoch for epoch in range(1, epoch + 1) if epoch % period == 0]
+    # Add the last epoch if it's not already included
+    if epoch % period != 0:
+        epoch_list.append(epoch)
+    output = []
+    for num in epoch_list:
+        output.append(name + "_" + str(num) + ".pt")
+    return output
+
 def get_metrics(confusion_matrix):
     TN = confusion_matrix[0][0]
     FP = confusion_matrix[0][1]
@@ -184,7 +197,7 @@ def my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count
 
     if NEPTUNE_SWITCH == 1:
         npt_logger = NeptuneLogger(
-        run, model=model, log_model_diagram=True, log_gradients=True, log_parameters=True, log_freq=30
+        run, model=model, log_model_diagram=True, log_gradients=True, log_parameters=True
         )
         run["model_summary"] = str(model_summary)
         run[image_path_tv].upload(File(image_path_tv))
@@ -206,10 +219,12 @@ def my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count
         # every fold needs to have a new model
         model = model_class("Dropout03").to(device)
         
+        # get training set
         dataset_train_list = []
         for j in range(len(train_index)):
             dataset_train_list.append(dataset_of_folds_dictionary[train_index[j]])
         dataset_train = ConcatDataset(dataset_train_list)
+        # get test set
         dataset_test = dataset_of_folds_dictionary[test_index[0]]
 
         train_loader = DataLoader(dataset_train, batch_size=hyperparams['batch_size'], shuffle=True)
@@ -222,7 +237,38 @@ def my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count
         
         optimizer = torch.optim.Adam(model.parameters(), lr=hyperparams['lr'])
 
-        train(model, train_loader, loss_function, optimizer, device, hyperparams['epochs'], run, npt_logger)
+
+        # ====== prepare model folder ======
+        # remove everything in 'models/MODEL-method' folder if it exists, otherwise create a empty one
+        models_folder = "models/"+MODEL+"_"+method+"/" # eg: models/LSTM_drop0.3/
+        if not os.path.exists(models_folder):
+            os.makedirs(models_folder)
+        else:
+            filelist = [ f for f in os.listdir(models_folder) ]
+            for f in filelist:
+                os.remove(os.path.join(models_folder, f))
+        
+        checkpoint_name = models_folder+'model_weights' # eg: models/LSTM_drop0.3/model_weights
+
+        train(model, train_loader, loss_function, optimizer, device, hyperparams['epochs'], run, npt_logger, 
+              checkpoint_name = checkpoint_name, 
+              evaluate_frequency = Evaluate_Frequency)
+        
+        checkpoints_list = get_checkpoints_list(checkpoint_name, hyperparams['epochs'], Evaluate_Frequency)
+
+        # evaluate on each checkpoint
+        for checkpoint in checkpoints_list[0:-1]:
+            print("evaluating on checkpoint:", checkpoint)
+            model.load_state_dict(torch.load(checkpoint))
+            evaluator_epochly = Evaluator(model, loss_function, device, run, npt_logger)
+            acc_seg = evaluator_epochly.evaluate_segment(test_loader)
+            acc_rec, acc_song = evaluator_epochly.evaluate_recording_and_song(dataset_of_folds_song_level_dictionary[test_index[0]])
+            
+        # load back the final model
+        final_checkpoint = checkpoints_list[-1]
+        model.load_state_dict(torch.load(final_checkpoint))
+
+        print("****** final validating on fold", test_index,"******")
 
         evaluator = Evaluator(model, loss_function, device, run, npt_logger)
         acc_seg = evaluator.evaluate_segment(test_loader)
@@ -300,7 +346,7 @@ if __name__ == "__main__":
         device = "cpu"
     
     from Models import DummyModel, LSTM
-    model_class = LSTM
+    model_class = DummyModel
 
     my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count, TEST_ON)
                                                                 # 0 means using cross validation

@@ -48,7 +48,8 @@ class Evaluator:
             
             self.targets_seg.extend(targets.cpu().detach().numpy().tolist())
             targets = targets.unsqueeze(1)
-            predictions = self.model(inputs)
+            with torch.no_grad():
+                predictions = self.model(inputs)
             rounded_predictions = torch.round(predictions)
             
             self.predictions_seg.extend(rounded_predictions.cpu().detach().numpy().tolist())
@@ -57,12 +58,11 @@ class Evaluator:
             loss = self.loss_fn(predictions, targets.float())
             acc = correct / len(targets)
 
-            if not self.run is None and not self.npt_logger is None:
-                self.run[self.npt_logger.base_namespace]["eval/loss_seg"].append(loss.item())
-                self.run[self.npt_logger.base_namespace]["eval/acc_seg"].append(acc)
-
         # accuracy of the entire dataset
         accuracy_all = total_correct / len(data_loader.dataset)
+        if not self.run is None and not self.npt_logger is None:
+            self.run["result/seg/loss_eval"].append(loss.item())
+            self.run["result/seg/acc_eval"].append(acc)
         
         self.predictions_seg = flatten_and_int_list(self.predictions_seg)
 
@@ -87,7 +87,8 @@ class Evaluator:
                 for inputs, targets in one_recording_loader:
                     # each loop is a segment
                     inputs, targets = inputs.to(self.device), targets.to(self.device)
-                    predictions = self.model(inputs)
+                    with torch.no_grad():
+                        predictions = self.model(inputs)
                     rounded_predictions = torch.round(predictions)
                     this_recording_predictions.extend(rounded_predictions.cpu().detach().numpy().tolist())
                     this_song_predictions.extend(rounded_predictions.cpu().detach().numpy().tolist())
@@ -109,5 +110,9 @@ class Evaluator:
 
         accuracy_rec = sum([1 for i in range(len(self.predictions_rec)) if self.predictions_rec[i] == self.targets_rec[i]]) / len(self.predictions_rec)
         accuracy_song = sum([1 for i in range(len(self.predictions_song)) if self.predictions_song[i] == self.targets_song[i]]) / len(self.predictions_song)
-
+        
+        if not self.run is None and not self.npt_logger is None:
+            self.run["result/rec/acc_eval"].append(accuracy_rec)
+            self.run["result/song/acc_eval"].append(accuracy_song)
+        
         return accuracy_rec, accuracy_song
