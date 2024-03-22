@@ -8,9 +8,10 @@ from xvalid_load import folds, folds_size, data_full_dictionary, dataset_of_fold
 class DummyModel(nn.Module):
     def __init__(self, Method="None"):
         super().__init__()
+        _input_size = hyperparams["flatten_size"]
+        
         self.flatten = nn.Flatten()
-        input_size = (math.ceil(hyperparams["input_length"]/hyperparams["input_size"])*hyperparams["input_size"])
-        self.dense = nn.Linear(input_size, 1)
+        self.dense = nn.Linear(_input_size, 1)
         self.relu = nn.ReLU()
         self.output = nn.Linear(1, 1)
         self.softmax = nn.Sigmoid()
@@ -27,15 +28,17 @@ class LSTM(nn.Module):
     def __init__(self, Method="None"):
         super().__init__()
         _input_size = hyperparams["input_size"]
+        
         self._method = Method
+        
         self.lstm1 = nn.LSTM(_input_size, 8, batch_first=True)
         self.tanh1 = nn.Tanh()
-        if Method == "Dropout03":
+        if self._method == "Dropout03":
             self.dropout1 = nn.Dropout(0.3)
         
         self.lstm2 = nn.LSTM(8, 6, batch_first=True)
         self.tanh2 = nn.Tanh()
-        if Method == "Dropout03":
+        if self._method == "Dropout03":
             self.dropout2 = nn.Dropout(0.3)
 
         self.fc = nn.Linear(6, 1)
@@ -59,12 +62,53 @@ class LSTM(nn.Module):
         out = self.sigmoid(out)
         return out
 
+class CNN(nn.Module):
+    def __init__(self, Method="None", cov_kernal = 64, mp_kernal = 32, mp_stride = 8):
+        super().__init__()
+        _input_size = hyperparams["input_size"]
+        self._method = Method
+        
+        self.conv1 = nn.Conv1d(in_channels=hyperparams["channel_size"], out_channels=8, kernel_size=cov_kernal)
+        _last_layer_size = _input_size-cov_kernal+1
+        self.relu1 = nn.ReLU()
+        if Method == "maxpooling":
+            self.pool1 = nn.MaxPool1d(kernel_size = mp_kernal, stride= mp_stride)
+            _last_layer_size = math.ceil((_last_layer_size-mp_kernal)/mp_stride)
+        
+        self.conv2 = nn.Conv1d(in_channels=8, out_channels=6, kernel_size=cov_kernal)
+        _last_layer_size = _last_layer_size-cov_kernal+1
+        self.relu2 = nn.ReLU()
+        if Method == "maxpooling":
+            self.pool2 = nn.MaxPool1d(kernel_size=mp_kernal, stride=mp_stride)
+            _last_layer_size = math.ceil((_last_layer_size-mp_kernal)/mp_stride)
+        
+        self.flatten = nn.Flatten()
+        self.fc = nn.Linear(6*_last_layer_size, 1)
+        self.sigmoid = nn.Sigmoid()
 
-from training_time import train
-from Evaluator import Evaluator
+    def forward(self, x):
+        x = self.conv1(x)
+        x = self.relu1(x)
+        if self._method == "pool64":
+            x = self.pool1(x)
+
+        x = self.conv2(x)
+        x = self.relu2(x)
+        if self._method == "pool64":
+            x = self.pool2(x)
+
+        x = self.flatten(x)
+        x = self.fc(x)
+
+        x = self.sigmoid(x)
+        return x
+
 
 
 if __name__ == "__main__":
+    
+    from training_time import train
+    from Evaluator import Evaluator
     dataset_fold1 = dataset_of_folds_dictionary[1]
     dataset_fold2 = dataset_of_folds_dictionary[2]
 
@@ -77,7 +121,7 @@ if __name__ == "__main__":
         device = "cpu"
 
     print(f"Using {device}")
-    net = DummyModel("Dropout03").to(device)
+    net = CNN("maxpooling").to(device)
     loss_fn = nn.BCELoss()
     optimiser = torch.optim.Adam(net.parameters(),
                                 lr = hyperparams["lr"])
@@ -94,10 +138,3 @@ if __name__ == "__main__":
     print(evaluator.targets_song)
     print(accuracy_rec)
     print(accuracy_song)
-
-
-
-
-    # segment_accuracy = evaluator_segment.evaluate_segment(test_loader)
-    # print(evaluator_segment.predictions_seg)
-    # print(evaluator_segment.targets_seg)

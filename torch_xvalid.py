@@ -33,20 +33,24 @@ from ENV import target_class, target_class_dictionary
 
 from HYPERPARAMS import hyperparams
 import sys
-# MODEL = sys.argv[1]
-# method = sys.argv[2]
 
-# hyperparams['epochs'] = int(sys.argv[3])
-hyperparams['epochs'] = 2
+if len(sys.argv) != 4:
+    MODEL = "DummyModel"
+    METHOD = "None"
+    hyperparams['epochs'] = 2
+else:
+    MODEL = sys.argv[1]
+    METHOD = sys.argv[2]
+    hyperparams['epochs'] = int(sys.argv[3])
+
 from ENV import segment_method
 
 from ENV import NEPTUNE_SWITCH, Evaluate_Frequency
 TEST_ON = 0 # 0 means using cross validation, 1-5 means the only fold to test on
 
-MODEL = "DummyModel"
+
 print("MODEL: ", MODEL)
-method = "None"
-print("method: ", method)
+print("method: ", METHOD)
 
 if NEPTUNE_SWITCH == 1:
     import neptune
@@ -68,13 +72,13 @@ if NEPTUNE_SWITCH == 1:
     )
 
     run["hyperparams"] = stringify_unsupported(hyperparams)
-    run["sys/tags"].add([str(hyperparams['epochs'])+"epochs", MODEL, str(method)])
+    run["sys/tags"].add([str(hyperparams['epochs'])+"epochs", MODEL, str(METHOD)])
     run["sys/tags"].add(str(piece_size)+"s_"+segment_method)
     run["sys/tags"].add(str(hyperparams["batch_size"])+"batch_size")
     run["sys/tags"].add(target_class_dictionary[target_class])
 
     run["info/size of folds"] = folds_size
-    run["info/model method"] = method
+    run["info/model method"] = METHOD
     run["target class"] = target_class_dictionary[target_class]
 
 
@@ -179,8 +183,8 @@ def save_normed_conf_matrix(cm, file_name):
 def my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count, test_on = 0):
     folds_pattern = get_folds_pattern(fold_count)
 
-    model = model_class("Dropout03").to(device)
-    input_size = (1, math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])
+    model = model_class(METHOD).to(device)
+    input_size = (hyperparams["batch_size"], math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])
     model_summary = summary(model, input_size, device=device)
     
     dummy_data = torch.randn(input_size).to(device)
@@ -217,7 +221,7 @@ def my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count
     # each loop is one fold validation
     for i, (train_index, test_index) in folds_pattern.items():
         # every fold needs to have a new model
-        model = model_class("Dropout03").to(device)
+        model = model_class(METHOD).to(device)
         
         # get training set
         dataset_train_list = []
@@ -240,7 +244,7 @@ def my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count
 
         # ====== prepare model folder ======
         # remove everything in 'models/MODEL-method' folder if it exists, otherwise create a empty one
-        models_folder = "models/"+MODEL+"_"+method+"/" # eg: models/LSTM_drop0.3/
+        models_folder = "models/"+MODEL+"_"+METHOD+"/" # eg: models/LSTM_drop0.3/
         if not os.path.exists(models_folder):
             os.makedirs(models_folder)
         else:
@@ -284,7 +288,7 @@ def my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count
         predictions_full_song.extend(evaluator.predictions_song)
 
         # reset model
-        model = model_class("Dropout03").to(device)
+        model = model_class(METHOD).to(device)
     
     # calculate the aggregate average accuracy
     acc_seg_avg = sum([1 if targets_full_seg[i] == predictions_full_seg[i] else 0 for i in range(len(targets_full_seg))]) / len(targets_full_seg)
@@ -345,8 +349,8 @@ if __name__ == "__main__":
     else:
         device = "cpu"
     
-    from Models import DummyModel, LSTM
-    model_class = DummyModel
+    from Models import LSTM, DummyModel
+    model_class = locals()[MODEL]
 
     my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count, TEST_ON)
                                                                 # 0 means using cross validation
