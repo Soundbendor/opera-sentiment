@@ -6,42 +6,56 @@ import math
 from xvalid_load import folds, folds_size, data_full_dictionary, dataset_of_folds_dictionary, dataset_of_folds_song_level_dictionary
 
 class DummyModel(nn.Module):
-    def __init__(self, Method="None"):
+    def __init__(self):
         super().__init__()
         _input_size = hyperparams["flatten_size"]
         
         self.flatten = nn.Flatten()
-        self.dense = nn.Linear(_input_size, 1)
-        self.relu = nn.ReLU()
-        self.output = nn.Linear(1, 1)
+        self.output = nn.Linear(_input_size, 1)
         self.softmax = nn.Sigmoid()
 
     def forward(self, x):
         x = self.flatten(x)
-        x = self.dense(x)
-        x = self.relu(x)
         x = self.output(x)
         predictions = self.softmax(x)
         return predictions
-    
+
+class MLP(nn.Module):
+    def __init__(self):
+        super().__init__()
+        self.flatten = nn.Flatten()
+        self.linear_relu_stack = nn.Sequential(
+            nn.Linear(hyperparams['flatten_size'], 8),
+            nn.ReLU(),
+            nn.Linear(8, 6),
+            nn.ReLU(),
+            nn.Linear(6, 1),
+            nn.Sigmoid()
+        )
+
+    def forward(self, x):
+        x = self.flatten(x)
+        logits = self.linear_relu_stack(x)
+        return logits
+
 class LSTM(nn.Module):
-    def __init__(self, Method="None"):
+    def __init__(self, Method="None", Bidirectional=False):
         super().__init__()
         _input_size = hyperparams["input_size"]
         
         self._method = Method
         
-        self.lstm1 = nn.LSTM(_input_size, 8, batch_first=True)
+        self.lstm1 = nn.LSTM(_input_size, 8, batch_first=True, bidirectional=Bidirectional)
         self.tanh1 = nn.Tanh()
         if self._method == "Dropout03":
             self.dropout1 = nn.Dropout(0.3)
         
-        self.lstm2 = nn.LSTM(8, 6, batch_first=True)
+        self.lstm2 = nn.LSTM(8*2 if Bidirectional else 8, 6, batch_first=True, bidirectional=Bidirectional)
         self.tanh2 = nn.Tanh()
         if self._method == "Dropout03":
             self.dropout2 = nn.Dropout(0.3)
 
-        self.fc = nn.Linear(6, 1)
+        self.fc = nn.Linear(6*2 if Bidirectional else 6, 1)
         self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):
@@ -103,6 +117,9 @@ class CNN(nn.Module):
         x = self.sigmoid(x)
         return x
 
+class BiLSTM(LSTM):
+    def __init__(self, Method="None"):
+        super().__init__(Method, Bidirectional=True)
 
 
 if __name__ == "__main__":
@@ -121,7 +138,7 @@ if __name__ == "__main__":
         device = "cpu"
 
     print(f"Using {device}")
-    net = CNN("maxpooling").to(device)
+    net = BiLSTM().to(device)
     loss_fn = nn.BCELoss()
     optimiser = torch.optim.Adam(net.parameters(),
                                 lr = hyperparams["lr"])
