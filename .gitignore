@@ -10,6 +10,7 @@ neptune.ini
 
 # tenforflow logs
 logs/
+_tf_archive/
 
 # torchviz logs
 model_torchview
