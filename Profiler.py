@@ -45,15 +45,13 @@ class Profiler:
                 # we only need to get info from yaml files
                 if file.endswith(".yaml"):
                     yaml_path = os.path.join(root, file)
-                    if "ch" in yaml_path:
-                        lan = "ch"
-                        self.song_count["ch"]+=1
-                    else:
-                        lan = "we"
-                        self.song_count["we"]+=1
+                    
                     with open(yaml_path,"r") as f:
                         meta = yaml.safe_load(f)
                     
+                    lan = meta["language"]
+                    self.song_count[lan] += 1
+
                     emotion_type = meta["emotion_binary"]
                     self.emotion_types[lan][emotion_type] = self.emotion_types[lan].get(emotion_type, 0) + 1
 
