@@ -30,7 +30,7 @@ from ENV import target_second as piece_size
 
 from ENV import fold_count
 from ENV import target_class, target_class_dictionary
-
+from ENV import REPRESENTATION
 from HYPERPARAMS import hyperparams
 import sys
 
@@ -183,8 +183,16 @@ def save_normed_conf_matrix(cm, file_name):
 def my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count, test_on = 0):
     folds_pattern = get_folds_pattern(fold_count)
 
-    model = model_class(METHOD).to(device)
-    input_size = (hyperparams["batch_size"], math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])
+    if REPRESENTATION == "raw":
+        input_size = (hyperparams["batch_size"], math.ceil(hyperparams["input_length"]/hyperparams["input_size"]), hyperparams["input_size"])
+    elif REPRESENTATION == "mel":
+        input_size = (hyperparams["batch_size"], 1, 64, 938)
+    elif REPRESENTATION == "mfcc":
+        input_size = (hyperparams["batch_size"], 1, 20, 2401)
+
+    print("input size:", input_size)
+    model = model_class(input_size = input_size, Method = METHOD).to(device)
+    
     model_summary = summary(model, input_size, device=device)
     
     dummy_data = torch.randn(input_size).to(device)
@@ -221,7 +229,7 @@ def my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count
     # each loop is one fold validation
     for i, (train_index, test_index) in folds_pattern.items():
         # every fold needs to have a new model
-        model = model_class(METHOD).to(device)
+        model = model_class(input_size = input_size, Method = METHOD).to(device)
         
         # get training set
         dataset_train_list = []
@@ -349,7 +357,7 @@ if __name__ == "__main__":
     else:
         device = "cpu"
     
-    from Models import LSTM, DummyModel
+    from Models import LSTM, DummyModel, CNN1D_raw, CNN2D
     model_class = locals()[MODEL]
 
     my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count, TEST_ON)

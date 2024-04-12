@@ -5,7 +5,7 @@ import pandas as pd
 import os
 import numpy as np
 import copy
-from Opera2023Dataset import Opera2023Dataset
+from Opera2023Dataset import Opera2023Dataset, Opera2023Dataset_MelSpec, Opera2023Dataset_MFCC
 from HYPERPARAMS import hyperparams
 from torch.utils.data import ConcatDataset
 
@@ -14,6 +14,8 @@ from ENV import Trimmed_PATH as mother_path
 
 # fold related parameters
 from ENV import target_second as piece_size
+# 
+from ENV import REPRESENTATION
 # usually no need to change this
 from ENV import fold_count, target_class
 lan = "ch"
@@ -57,7 +59,6 @@ song_id_path_folds = get_song_id_path_folds(mother_path, lan, folds) # convert f
 data_full_dictionary = {}
 
 # making data_full_dictionary
-'''using load params'''
 for root, dirs, files in os.walk(mother_path):
     for dir in dirs:
         if "wav" in dir: # trimmed_30/ch/9/wav00/
@@ -66,7 +67,17 @@ for root, dirs, files in os.walk(mother_path):
                 data_dir = os.path.join(root,dir)
                 csv_name = get_audio_name(data_dir, mother_path)+".csv"
                 csv_dir = os.path.join(data_dir, csv_name)
-                dataset = Opera2023Dataset(csv_dir, data_dir, target_class, hyperparams["input_size"])
+                if REPRESENTATION == "raw":
+                    # generate raw waveform
+                    dataset = Opera2023Dataset(csv_dir, data_dir, target_class, hyperparams["input_size"])
+                elif REPRESENTATION == "mel":
+                    # generate mel spectrogram
+                    dataset = Opera2023Dataset_MelSpec(csv_dir, data_dir, target_class)
+                elif REPRESENTATION == "mfcc":
+                    # generate mfcc
+                    dataset = Opera2023Dataset_MFCC(csv_dir, data_dir, target_class)
+                else:
+                    raise ValueError("REPRESENTATION not supported")
                 data_full_dictionary[data_dir] = dataset
             else:
                 pass
@@ -112,24 +123,11 @@ for fold_id, folds_distri in folds.items():
             # dataset_of_folds_song_level_dictionary[fold_id][song_id][single_path] = data_full_dictionary[single_path]
 
 if __name__ == "__main__":
-    # print(data_full_dictionary)
-    # print(dataset_of_folds_dictionary)
-    # dataset = dataset_of_folds_dictionary[1] # get fold_1
-    # for batch in dataset.train.take(1):
-    #     print(batch[0])
-    #     print(batch[1])
-    
-    # print("***** ***** *****")
-    # print(dataset_of_folds_song_level_dictionary)
-    # print(dataset_of_folds_song_level_dictionary[1])
-    # print(dataset_of_folds_song_level_dictionary[1][20])
-    # print(dataset_of_folds_song_level_dictionary[1][20]['trimmed_30_Padding/ch/20/wav00'].train)
-    
-    # i = how_many_in_dataset(dataset_of_folds_song_level_dictionary[1][20]['trimmed_30_Padding/ch/20/wav00'])
-    # print("there are ", i, " pieces of data in this dataset")
-    # print(dataset_of_folds_song_level_dictionary)
-    # print("for example, the first fold looks like:")
-    # print(dataset_of_folds_song_level_dictionary[1])
-    # print("for example, the first song in the first fold looks like:")
-    # print(dataset_of_folds_song_level_dictionary[1][11])
+    print(data_full_dictionary)
+    print(dataset_of_folds_dictionary)
+    dataset = dataset_of_folds_dictionary[1] # get fold_1
+    print(len(dataset))
+    print(dataset[0])
+    print(dataset[0][0].shape)
+
     print("Data loaded successfully!")

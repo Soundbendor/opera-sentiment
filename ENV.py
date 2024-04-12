@@ -1,3 +1,6 @@
+SAMPLE_RATE = 16000
+REPRESENTATION = "mfcc"
+
 NEPTUNE_SWITCH = 1
 Evaluate_Frequency = 1
 ### No need to change this part
