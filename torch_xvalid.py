@@ -296,7 +296,7 @@ def my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count
         predictions_full_song.extend(evaluator.predictions_song)
 
         # reset model
-        model = model_class(METHOD).to(device)
+        model = model_class(input_size = input_size, Method = METHOD).to(device)
     
     # calculate the aggregate average accuracy
     acc_seg_avg = sum([1 if targets_full_seg[i] == predictions_full_seg[i] else 0 for i in range(len(targets_full_seg))]) / len(targets_full_seg)

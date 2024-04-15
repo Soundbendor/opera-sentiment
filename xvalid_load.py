@@ -5,7 +5,7 @@ import pandas as pd
 import os
 import numpy as np
 import copy
-from Opera2023Dataset import Opera2023Dataset, Opera2023Dataset_MelSpec, Opera2023Dataset_MFCC
+from Opera2023Dataset import Opera2023Dataset, Opera2023Dataset_Spec
 from HYPERPARAMS import hyperparams
 from torch.utils.data import ConcatDataset
 
@@ -70,12 +70,9 @@ for root, dirs, files in os.walk(mother_path):
                 if REPRESENTATION == "raw":
                     # generate raw waveform
                     dataset = Opera2023Dataset(csv_dir, data_dir, target_class, hyperparams["input_size"])
-                elif REPRESENTATION == "mel":
-                    # generate mel spectrogram
-                    dataset = Opera2023Dataset_MelSpec(csv_dir, data_dir, target_class)
-                elif REPRESENTATION == "mfcc":
-                    # generate mfcc
-                    dataset = Opera2023Dataset_MFCC(csv_dir, data_dir, target_class)
+                elif REPRESENTATION == "mel" or "mfcc":
+                    # generate mel spectrogram or mfcc
+                    dataset = Opera2023Dataset_Spec(csv_dir, data_dir, target_class, REPRESENTATION)
                 else:
                     raise ValueError("REPRESENTATION not supported")
                 data_full_dictionary[data_dir] = dataset

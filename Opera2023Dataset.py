@@ -33,19 +33,26 @@ class Opera2023Dataset(Dataset):
     def _get_label(self, idx):
         return self._csv.loc[idx, self._target_class]
 
-class Opera2023Dataset_MelSpec(Dataset):
-    def __init__(self, csv_fir, data_dir, target_class):
+class Opera2023Dataset_Spec(Dataset):
+    def __init__(self, csv_fir, data_dir, target_class, spectrogram_type):
         from ENV import SAMPLE_RATE
         self._csv = pd.read_csv(csv_fir)
         self._dir = data_dir
         self._target_class = target_class
         
-        self._transformation = torchaudio.transforms.MelSpectrogram(
-            sample_rate=SAMPLE_RATE,
-            n_fft=1024,
-            hop_length=512,
-            n_mels=64
-        )
+        if spectrogram_type == "mel":
+            self._transformation = torchaudio.transforms.MelSpectrogram(
+                sample_rate=SAMPLE_RATE,
+                n_fft=1024,
+                hop_length=512,
+                n_mels=64
+            )
+        elif spectrogram_type == "mfcc":
+            self._transformation = torchaudio.transforms.MFCC(
+                sample_rate=SAMPLE_RATE,
+                n_mfcc=20,
+                melkwargs={"n_mels": 64}
+            )
     
     def __len__(self):
         return len(self._csv)
@@ -53,45 +60,18 @@ class Opera2023Dataset_MelSpec(Dataset):
     def __getitem__(self, idx):
         file_path = os.path.join(self._dir, "in", self._csv.iloc[idx, 0])
         waveform, _ = torchaudio.load(file_path)
-        mel = self._transformation(waveform) # this is assuming all the audio is mono and has the same sample rate, 
+        signal = self._transformation(waveform) # this is assuming all the audio is mono and has the same sample rate, 
                                                 # which we already did in the preprocessing
                                                 # so no need to resample or convert to mono here
         label = self._get_label(idx)
-        return mel, label
-    
-    def _get_label(self, idx):
-        return self._csv.loc[idx, self._target_class]
-
-class Opera2023Dataset_MFCC(Dataset):
-    def __init__(self, csv_fir, data_dir, target_class):
-        from ENV import SAMPLE_RATE
-        self._csv = pd.read_csv(csv_fir)
-        self._dir = data_dir
-        self._target_class = target_class
-        
-        self._transformation = torchaudio.transforms.MFCC(
-            sample_rate=SAMPLE_RATE,
-            n_mfcc=20,
-            melkwargs={"n_mels": 64}
-        )
-    
-    def __len__(self):
-        return len(self._csv)
-    
-    def __getitem__(self, idx):
-        file_path = os.path.join(self._dir, "in", self._csv.iloc[idx, 0])
-        waveform, _ = torchaudio.load(file_path)
-        mfcc = self._transformation(waveform) # this is assuming all the audio is mono and has the same sample rate, 
-                                                # which we already did in the preprocessing
-                                                # so no need to resample or convert to mono here
-        label = self._get_label(idx)
-        return mfcc, label
+        return signal, label
     
     def _get_label(self, idx):
         return self._csv.loc[idx, self._target_class]
 
 if __name__ == '__main__':
     from HYPERPARAMS import hyperparams
+    from ENV import REPRESENTATION
 
     target_class = "emotion_binary"
 
@@ -120,7 +100,7 @@ if __name__ == '__main__':
     # ======= Test MelSpec Dataset =========
 
     # dataset1 = Opera2023Dataset_MelSpec(csv_file1, file_dir1, target_class)
-    dataset1 = Opera2023Dataset_MFCC(csv_file1, file_dir1, target_class)
+    dataset1 = Opera2023Dataset_Spec(csv_file1, file_dir1, target_class, REPRESENTATION)
     for data in dataset1:
         print(data[0].shape)
     print("load in batch")
