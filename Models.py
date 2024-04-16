@@ -77,44 +77,189 @@ class LSTM(nn.Module):
         return out
 
 class CNN1D_raw(nn.Module):
-    def __init__(self, input_size, Method="None", cov_kernal = 64, mp_kernal = 32, mp_stride = 8):
+    def __init__(self, input_size, Method="None", network_size=4, cov_kernal = 3, mp_kernal = 2):
         super().__init__()
+        if network_size < 1 or network_size > 4:
+            raise ValueError("Network size must be between 1 and 4")
         _input_size = hyperparams["input_size"]
-        self._method = Method
+        self._last_layer_size = _input_size
+        self._network_size = network_size
+        def conv1d_with_pooling(in_channels, out_channels):
+            self._last_layer_size = (self._last_layer_size-cov_kernal+1)//mp_kernal
+            return nn.Sequential(
+                nn.Conv1d(in_channels, out_channels, cov_kernal),
+                nn.ReLU(),
+                nn.MaxPool1d(kernel_size=mp_kernal)
+            )
         
-        self.conv1 = nn.Conv1d(in_channels=hyperparams["channel_size"], out_channels=8, kernel_size=cov_kernal)
-        _last_layer_size = _input_size-cov_kernal+1
-        self.relu1 = nn.ReLU()
-        if Method == "maxpooling":
-            self.pool1 = nn.MaxPool1d(kernel_size = mp_kernal, stride= mp_stride)
-            _last_layer_size = math.ceil((_last_layer_size-mp_kernal)/mp_stride)
-        
-        self.conv2 = nn.Conv1d(in_channels=8, out_channels=6, kernel_size=cov_kernal)
-        _last_layer_size = _last_layer_size-cov_kernal+1
-        self.relu2 = nn.ReLU()
-        if Method == "maxpooling":
-            self.pool2 = nn.MaxPool1d(kernel_size=mp_kernal, stride=mp_stride)
-            _last_layer_size = math.ceil((_last_layer_size-mp_kernal)/mp_stride)
-        
+        out_channels = 32
+        self.cwp1 = conv1d_with_pooling(hyperparams["channel_size"], out_channels) # cwp stands for conv1d with pooling
+        network_size -= 1
+        if network_size > 0:
+            out_channels = out_channels*2
+            self.cwp2 = conv1d_with_pooling(32, out_channels)
+            network_size -= 1
+        if network_size > 0:
+            out_channels = out_channels*2
+            self.cwp3 = conv1d_with_pooling(64, out_channels)
+            network_size -= 1
+        if network_size > 0:
+            out_channels = out_channels*2
+            self.cwp4 = conv1d_with_pooling(128, out_channels)
+            network_size -= 1
+        print("out_channels is", out_channels)
         self.flatten = nn.Flatten()
-        self.fc = nn.Linear(6*_last_layer_size, 1)
+        self.fc = nn.Linear(out_channels*self._last_layer_size, 1)
         self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):
-        x = self.conv1(x)
-        x = self.relu1(x)
-        if self._method == "maxpooling":
-            x = self.pool1(x)
-
-        x = self.conv2(x)
-        x = self.relu2(x)
-        if self._method == "maxpooling":
-            x = self.pool2(x)
-
+        x = self.cwp1(x)
+        if self._network_size > 1:
+            x = self.cwp2(x)
+        if self._network_size > 2:
+            x = self.cwp3(x)
+        if self._network_size > 3:
+            x = self.cwp4(x)
         x = self.flatten(x)
         x = self.fc(x)
-
         x = self.sigmoid(x)
+        return x
+        
+
+class MobileNet1DV1(nn.Module):
+    def __init__(self, input_size, Method="None"):
+        super().__init__()
+        input_channel = input_size[1]
+
+        def conv_bn(inp, oup, stride):
+            return nn.Sequential(
+                nn.Conv1d(inp, oup, 3, stride, 1, bias=False),
+                nn.BatchNorm1d(oup),
+                nn.ReLU(inplace=True)
+                )
+
+        def conv_dw(inp, oup, stride):
+            return nn.Sequential(
+                # dw
+                nn.Conv1d(inp, inp, 3, stride, 1, groups=inp, bias=False),
+                nn.BatchNorm1d(inp),
+                nn.ReLU(inplace=True),
+
+                # pw
+                nn.Conv1d(inp, oup, 1, 1, 0, bias=False),
+                nn.BatchNorm1d(oup),
+                nn.ReLU(inplace=True),
+                )
+    
+        self.model = nn.Sequential(
+                conv_bn(input_channel, 32, 2),
+                conv_dw(32, 64, 1),
+                conv_dw(64, 128, 2),
+                conv_dw(128, 128, 1),
+                conv_dw(128, 256, 2),
+                conv_dw(256, 256, 1),
+                conv_dw(256, 512, 2),
+                conv_dw(512, 512, 1),
+                conv_dw(512, 512, 1),
+                conv_dw(512, 512, 1),
+                conv_dw(512, 512, 1),
+                conv_dw(512, 512, 1),
+                conv_dw(512, 1024, 2),
+                conv_dw(1024, 1024, 1),
+                nn.AdaptiveAvgPool1d(1)
+            )
+        self.fc = nn.Linear(1024, 1)
+        self.sigmoid = nn.Sigmoid()
+    
+    def forward(self, x):
+        print(x.shape)
+        x = self.model(x)
+        print(x.shape)
+        x = x.view(-1, 1024)
+        print(x.shape)
+        x = self.fc(x)
+        print(x.shape)
+        x = self.sigmoid(x)
+        print(x.shape)
+        print("*****done*****")
+        return x
+
+class MobileNet1Dsimple(nn.Module):
+    def __init__(self, input_size, Method="None"):
+        super().__init__()
+        input_channel = input_size[1]
+
+        def conv_bn(inp, oup, stride):
+            return nn.Sequential(
+                nn.Conv1d(inp, oup, 3, stride, 1, bias=False),
+                nn.BatchNorm1d(oup),
+                nn.ReLU(inplace=True)
+                )
+
+        def conv_dw(inp, oup, stride):
+            return nn.Sequential(
+                # dw
+                nn.Conv1d(inp, inp, 3, stride, 1, groups=inp, bias=False),
+                nn.BatchNorm1d(inp),
+                nn.ReLU(inplace=True),
+
+                # pw
+                nn.Conv1d(inp, oup, 1, 1, 0, bias=False),
+                nn.BatchNorm1d(oup),
+                nn.ReLU(inplace=True),
+                )
+
+        if Method == "none":
+            self.model = nn.Sequential(
+                    conv_bn(input_channel, 32, 2),
+                    conv_dw(32, 64, 1),
+                    conv_dw(64, 128, 2),
+
+                    conv_dw(128, 128, 1),
+                    conv_dw(128, 256, 2),
+
+                    conv_dw(256, 256, 1),
+                    conv_dw(256, 512, 2),
+                    
+                    conv_dw(512, 512, 1),
+                    conv_dw(512, 1024, 2),
+
+                    conv_dw(1024, 1024, 1),
+                    
+                    nn.AdaptiveAvgPool1d(1)
+                )
+            self.fc = nn.Linear(1024, 1)
+        
+        elif Method == "smaller":
+            self.model = nn.Sequential(
+                    conv_bn(input_channel, 32, 2),
+                    conv_dw(32, 64, 1),
+                    conv_dw(64, 128, 2),
+
+                    conv_dw(128, 128, 1),
+                    conv_dw(128, 256, 2),
+
+                    conv_dw(256, 256, 1),
+                    
+                    nn.AdaptiveAvgPool1d(1)
+                )
+            self.fc = nn.Linear(256, 1)
+        else:
+            raise ValueError("Method not found")
+        
+        self.sigmoid = nn.Sigmoid()
+    
+    def forward(self, x):
+        print(x.shape)
+        x = self.model(x)
+        print(x.shape)
+        x = x.view(-1, 256)
+        print(x.shape)
+        x = self.fc(x)
+        print(x.shape)
+        x = self.sigmoid(x)
+        print(x.shape)
+        print("*****done*****")
         return x
 
 class CNN2D(nn.Module):
@@ -190,13 +335,21 @@ class CNN2D(nn.Module):
         self.sigmoid = nn.Sigmoid()
     
     def forward(self, x):
+        print(x.shape)
         x = self.conv1(x)
+        print(x.shape)
         x = self.conv2(x)
+        print(x.shape)
         x = self.conv3(x)
+        print(x.shape)
         x = self.conv4(x)
+        print(x.shape)
         x = self.flatten(x)
+        print(x.shape)
         x = self.fc(x)
+        print(x.shape)
         x = self.sigmoid(x)
+        print(x.shape)
         return x
 
 class BiLSTM(LSTM):
@@ -209,6 +362,7 @@ if __name__ == "__main__":
     from training_time import train
     from Evaluator import Evaluator
     from ENV import REPRESENTATION
+    from torchinfo import summary
     dataset_fold1 = dataset_of_folds_dictionary[1]
     dataset_fold2 = dataset_of_folds_dictionary[2]
 
@@ -221,18 +375,27 @@ if __name__ == "__main__":
         device = "cpu"
 
     print(f"Using {device}")
-    MEL_input_size = (-1, 1, 64, 938)
-    MFCC_input_size = (-1, 1, 20, 2401)
+    raw_input_size = (hyperparams["batch_size"], 469, 1024)
+    MEL_input_size = (hyperparams["batch_size"], 1, 64, 938)
+    MFCC_input_size = (hyperparams["batch_size"], 1, 20, 2401)
 
+    net_raw = CNN1D_raw(input_size=hyperparams["input_size"], network_size=2).to(device)
+    # net_raw = MobileNet1DV1(input_size=raw_input_size).to(device)
     net_mel = CNN2D(input_size=MEL_input_size).to(device)
     net_mfcc = CNN2D(input_size=MFCC_input_size).to(device)
-    
-    
-    if REPRESENTATION == "mel":
+
+    if REPRESENTATION == "raw":
+        net = net_raw
+        input_size = raw_input_size
+    elif REPRESENTATION == "mel":
         net = net_mel
+        input_size = MEL_input_size
     elif REPRESENTATION == "mfcc":
         net = net_mfcc
+        intput_size = MFCC_input_size
     
+    model_summary = summary(net, input_size, device=device)
+
     loss_fn = nn.BCELoss()
     optimiser = torch.optim.Adam(net.parameters(),
                                 lr = hyperparams["lr"])

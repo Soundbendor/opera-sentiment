@@ -1,5 +1,5 @@
 SAMPLE_RATE = 16000
-REPRESENTATION = "mfcc"
+REPRESENTATION = "raw"
 
 NEPTUNE_SWITCH = 1
 Evaluate_Frequency = 1

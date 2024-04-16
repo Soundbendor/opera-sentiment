@@ -53,6 +53,8 @@ class Opera2023Dataset_Spec(Dataset):
                 n_mfcc=20,
                 melkwargs={"n_mels": 64}
             )
+        else:
+            raise ValueError("Invalid spectrogram type")
     
     def __len__(self):
         return len(self._csv)
@@ -100,7 +102,12 @@ if __name__ == '__main__':
     # ======= Test MelSpec Dataset =========
 
     # dataset1 = Opera2023Dataset_MelSpec(csv_file1, file_dir1, target_class)
-    dataset1 = Opera2023Dataset_Spec(csv_file1, file_dir1, target_class, REPRESENTATION)
+    dataset_raw = Opera2023Dataset(csv_file1, file_dir1, target_class, hyperparams['input_size'])
+    dataset_spec = Opera2023Dataset_Spec(csv_file1, file_dir1, target_class, REPRESENTATION)
+    if REPRESENTATION == "raw":
+        dataset1 = dataset_raw
+    else:
+        dataset1 = dataset_spec
     for data in dataset1:
         print(data[0].shape)
     print("load in batch")

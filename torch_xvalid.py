@@ -357,7 +357,7 @@ if __name__ == "__main__":
     else:
         device = "cpu"
     
-    from Models import LSTM, DummyModel, CNN1D_raw, CNN2D
+    from Models import LSTM, DummyModel, CNN1D_raw, CNN2D, MobileNet1DV1, MobileNet1Dsimple
     model_class = locals()[MODEL]
 
     my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count, TEST_ON)
