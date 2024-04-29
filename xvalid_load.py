@@ -5,7 +5,7 @@ import pandas as pd
 import os
 import numpy as np
 import copy
-from Opera2023Dataset import Opera2023Dataset, Opera2023Dataset_Spec
+from Opera2023Dataset import Opera2023Dataset, Opera2023Dataset_Spec, Opera2023DatasetMelody
 from HYPERPARAMS import hyperparams
 from torch.utils.data import ConcatDataset
 
@@ -34,7 +34,7 @@ print("the size of each fold are:")
 folds_size = get_folds_to_size(folds, lan)
 print(folds_size)
 print("***** ***** *****")
-
+print("the representation we are using is: ", REPRESENTATION)
 ''' explaination for path_fold, folds_pattern, dataset_of_folds_dictionary
     path_folds: fold#: file_path
     {1:[path_list], 2: [path_list], 3:[path_list]. 4:[path_list]}
@@ -70,9 +70,11 @@ for root, dirs, files in os.walk(mother_path):
                 if REPRESENTATION == "raw":
                     # generate raw waveform
                     dataset = Opera2023Dataset(csv_dir, data_dir, target_class, hyperparams["input_size"])
-                elif REPRESENTATION == "mel" or "mfcc":
+                elif REPRESENTATION in ["mel", "mfcc"]:
                     # generate mel spectrogram or mfcc
                     dataset = Opera2023Dataset_Spec(csv_dir, data_dir, target_class, REPRESENTATION)
+                elif REPRESENTATION == "melody":
+                    dataset = Opera2023DatasetMelody(csv_dir, data_dir, target_class, hyperparams["input_size"])
                 else:
                     raise ValueError("REPRESENTATION not supported")
                 data_full_dictionary[data_dir] = dataset
@@ -124,7 +126,7 @@ if __name__ == "__main__":
     print(dataset_of_folds_dictionary)
     dataset = dataset_of_folds_dictionary[1] # get fold_1
     print(len(dataset))
-    print(dataset[0])
+    print(dataset[0][0])
     print(dataset[0][0].shape)
 
     print("Data loaded successfully!")

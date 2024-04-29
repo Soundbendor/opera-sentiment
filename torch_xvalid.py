@@ -51,6 +51,7 @@ TEST_ON = 0 # 0 means using cross validation, 1-5 means the only fold to test on
 
 print("MODEL: ", MODEL)
 print("method: ", METHOD)
+print("representaion: ", REPRESENTATION)
 
 if NEPTUNE_SWITCH == 1:
     import neptune
@@ -76,6 +77,7 @@ if NEPTUNE_SWITCH == 1:
     run["sys/tags"].add(str(piece_size)+"s_"+segment_method)
     run["sys/tags"].add(str(hyperparams["batch_size"])+"batch_size")
     run["sys/tags"].add(target_class_dictionary[target_class])
+    run["sys/tags"].add(REPRESENTATION)
 
     run["info/size of folds"] = folds_size
     run["info/model method"] = METHOD
@@ -189,6 +191,8 @@ def my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count
         input_size = (hyperparams["batch_size"], 1, 64, 938)
     elif REPRESENTATION == "mfcc":
         input_size = (hyperparams["batch_size"], 1, 20, 2401)
+    elif REPRESENTATION == "melody":
+        input_size = (hyperparams["batch_size"], 6, hyperparams["input_size"])
 
     print("input size:", input_size)
     model = model_class(input_size = input_size, Method = METHOD).to(device)

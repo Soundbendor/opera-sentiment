@@ -1,5 +1,5 @@
 SAMPLE_RATE = 16000
-REPRESENTATION = "raw"
+REPRESENTATION = "melody" # raw, mel, mfcc, melody
 
 NEPTUNE_SWITCH = 1
 Evaluate_Frequency = 1
@@ -32,3 +32,6 @@ target_class_short = target_class_dictionary[target_class]
 ### !!! MUST NOT Change this part !!!
 Trimmed_PATH = Trimmed_PATH + "_" + str(target_second) + "_" +segment_method
 ### !!! MUST NOT Change this part !!!
+
+## melody extraction part
+pretrained_models = "/nfs/guille/eecs_research/soundbendor/models/Melody-extraction-with-melodic-segnet/pretrain_model/"
