@@ -17,11 +17,11 @@ files:
 language: ch
 lyric:
   english: ''
-  original: ''
+  original: 一碗泪换来了一碗饭 为的是老公爹长寿百年 先敬婆我的老婆婆后敬爹 苗郎不见 柳迎春我苦上加苦 难上添难 去了愁眉强装笑脸 我的苗郎儿呀 儿咽肚里边
   phonetic: ''
 scene:
   english: ''
-  original: ''
+  original: 一碗泪换来了一碗饭
   phonetic: ''
 singing_type:
   role: dan
@@ -31,6 +31,6 @@ song_id: 52
 song_size: 1
 title:
   english: ''
-  original: "\u4E00\u7897\u6CEA\u6362\u6765\u4E00\u7897\u996D"
-  phonetic: Yi wan lei huan lai yi wan fan
+  original: 卖苗郎
+  phonetic: ''
 wiki: ''

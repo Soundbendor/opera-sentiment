@@ -1,6 +1,6 @@
 emotion:
-- yearning
-- wistful
+- compassion
+- piety
 emotion_binary: 1
 files:
   wav00:
@@ -19,7 +19,7 @@ files:
 language: ch
 lyric:
   english: ''
-  original: ''
+  original: 昔日有个目莲僧 救母亲临地狱门
   phonetic: ''
 scene:
   english: ''

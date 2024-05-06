@@ -1,5 +1,6 @@
 emotion:
 - content
+- pride
 emotion_binary: 1
 files:
   wav00:
@@ -31,7 +32,7 @@ files:
 language: ch
 lyric:
   english: ''
-  original: ''
+  original: 我本是卧龙岗散淡的人 凭阴阳如反掌博古通今 先帝爷下南阳御驾三请 算就了汉家的业鼎足三分 官封到武乡侯执掌帅印 东西战南北剿保定乾坤 周文王访姜尚周室大振 汉诸葛怎比得前辈的先生 闲无事在敌楼我亮一亮琴音 我面前缺少个知音的人
   phonetic: ''
 scene:
   english: ''
