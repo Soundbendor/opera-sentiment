@@ -1,4 +1,5 @@
-emotion: []
+emotion:
+- narrating
 emotion_binary: 1
 files:
   wav00:
@@ -17,7 +18,7 @@ files:
 language: ch
 lyric:
   english: ''
-  original: ''
+  original: 昔日梁鸿配孟光
   phonetic: ''
 scene:
   english: ''

@@ -1,5 +1,5 @@
 emotion: []
-emotion_binary: 1
+emotion_binary: 0
 files:
   wav00:
     file_dir: ch/72/wav00.wav
@@ -17,7 +17,7 @@ files:
 language: ch
 lyric:
   english: ''
-  original: ''
+  original: 杨四郎心中似刀裁 舍不得老娘年高迈 舍不得六贤弟将英才 舍不得二贤妹未出闺门外 实难舍结发的夫妻两分开 罢 杨四郎把心肠改 急回番营莫迟挨 狠心肠一家人推帐外
   phonetic: ''
 scene:
   english: ''

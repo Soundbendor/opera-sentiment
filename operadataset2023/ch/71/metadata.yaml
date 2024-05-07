@@ -19,7 +19,7 @@ files:
 language: ch
 lyric:
   english: ''
-  original: ''
+  original: 我红娘将说是一声请 他就想今日做新人 夫人名亚赛过将军令 又好比君命诏不俟驾而行 我从来是心硬 今日一见也同情
   phonetic: ''
 scene:
   english: ''
@@ -36,3 +36,4 @@ title:
   original: "\u7EA2\u5A18-\u6094\u5A5A"
   phonetic: hong niang-hui hun
 wiki: ''
+note: there are some talking in the end, need to be trimmed permanently

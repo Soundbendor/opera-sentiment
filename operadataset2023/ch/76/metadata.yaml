@@ -1,5 +1,5 @@
 emotion: []
-emotion_binary: 1
+emotion_binary: 0
 files:
   wav00:
     file_dir: ch/76/wav00.wav
@@ -17,7 +17,7 @@ files:
 language: ch
 lyric:
   english: ''
-  original: ''
+  original: 独守空帷暗长叹 芳心寂寞有谁怜 孀居愁苦泪洗面 为避狂徒到此间
   phonetic: ''
 scene:
   english: ''
