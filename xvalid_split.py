@@ -20,7 +20,7 @@ import math
 import copy
 import numpy as np
 import os
-from yamlhelp import safe_read_yaml
+from utilities.yamlhelp import safe_read_yaml
 
 # Step 1: Split according to song id
 def init_folds(fold_count, lan):

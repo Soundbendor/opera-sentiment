@@ -1,6 +1,6 @@
 import os
 import yaml
-import soxtool as st
+import utilities.soxtool as st
 import sys
 
 # When you want to add a new recording to a song:

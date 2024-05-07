@@ -1,5 +1,4 @@
 import torch
-from HYPERPARAMS import hyperparams
 def train_one_epoch(model, data_loader, loss_fn, optimizer, device, run=None, npt_logger=None):
     total_correct = 0
     for inputs, targets in data_loader:

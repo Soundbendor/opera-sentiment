@@ -16,8 +16,8 @@ from torchinfo import summary
 from torchviz import make_dot
 from torchview import draw_graph
 
-from training_time import train
-from Evaluator import Evaluator
+from TorchPipeline.training_time import train
+from TorchPipeline.Evaluator import Evaluator
 
 from sklearn.metrics import confusion_matrix
 

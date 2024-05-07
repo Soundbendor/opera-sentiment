@@ -359,8 +359,8 @@ class BiLSTM(LSTM):
 
 if __name__ == "__main__":
     
-    from training_time import train
-    from Evaluator import Evaluator
+    from TorchPipeline.training_time import train
+    from TorchPipeline.Evaluator import Evaluator
     from ENV import REPRESENTATION
     from torchinfo import summary
     dataset_fold1 = dataset_of_folds_dictionary[1]

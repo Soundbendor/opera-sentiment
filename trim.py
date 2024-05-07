@@ -3,9 +3,9 @@ from ENV import Unified_PATH, target_second, Trimmed_PATH, segment_method
 
 import shutil
 import subprocess
-from Profiler import Profiler
+from utilities.Profiler import Profiler
 import sox
-from pretrim import pre_trim
+from utilities.pretrim import pre_trim
 
 # create a new directory for the trimmed data
 def create_trimmed_directory(src, dest):
@@ -164,12 +164,12 @@ if __name__ == '__main__':
     src_directory = Unified_PATH
     dest_directory = Trimmed_PATH
     
-    # '''pretrim block'''
-    # # pretrim the data
+    '''pretrim block'''
+    # # pretrim the data - trim the begining and ending silence
     # print("pretrimming the data ... ... do not interrupt!")
     # pre_trim(src_directory)
     # print("pretrimming done")
-    # '''pretrim block'''
+    '''pretrim block'''
 
     '''trimming block'''
     # created the trimmed directory, if already exist, do nothing

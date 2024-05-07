@@ -1,5 +1,4 @@
 import torch
-from HYPERPARAMS import hyperparams
 from torch.utils.data import DataLoader
 import random
 # three-way evaluator
