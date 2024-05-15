@@ -57,9 +57,10 @@ files:
       name: Bidong Guo
 language: ch
 lyric:
-  english: ''
+  english: It is indeed tragic to see how the Yang family has exerted every effort for the Song emperor. Generals Jiao Zan and Meng Liang have unfortunately perished in the enemy's camp. Zongbao, the child, supports his father to lie on a soft couch with a pillow behind his head, but he fears that his father may not survive this fleeting time.
   original: 叹杨家投宋主心血用尽 真可惨焦孟将命丧番营 宗保儿搀为父软榻靠枕 怕只怕熬不过尺寸光阴
   phonetic: ''
+  translate: 感叹杨家对宋朝的君主竭尽心力，真的非常悲惨，焦赞和孟良两位将领竟然在敌营中丧命。宗保这孩子搀扶着他父亲，让他能躺在软榻上靠着枕头，但只怕他父亲熬不过这短暂的光阴了。
 scene:
   english: ''
   original: "\u53F9\u6768\u5BB6\u6295\u5B8B\u4E3B\u5FC3\u8840\u7528\u5C3D"
@@ -75,3 +76,4 @@ title:
   original: "\u6D2A\u7F8A\u6D1E"
   phonetic: hong yang dong
 wiki: ''
+note: ''

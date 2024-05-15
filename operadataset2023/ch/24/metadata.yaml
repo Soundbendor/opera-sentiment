@@ -32,9 +32,10 @@ files:
       name: Kathy Hall
 language: ch
 lyric:
-  english: ''
+  english: Over there is the lakeside mountain and rock area, while here is the Peony Pavilion. The peonies in the carved balustrade have just sprouted, barely noticeable. The wisps of willows hang down like threads, and the tiny pods of elm trees are as big as copper coins. These willow threads and elm pods, like messengers of spring, slowly bring in the breath of spring.
   original: 那一答可是湖山石边 这一答是牡丹亭畔 嵌雕栏芍药芽儿浅 一丝丝垂杨线 一丢丢榆荚钱 线儿春甚金钱吊转
   phonetic: ''
+  translate: 那里是湖山石边，这里是牡丹亭畔，雕花的栏杆里芍药刚刚发芽，浅浅的。一丝丝杨柳垂下，像一条条垂杨线，一丢丢榆树的荚子像铜钱一般大小。这些垂杨线和榆荚，就像是春天的使者，把春天的气息一点点地吊转过来。
 scene:
   english: ''
   original: "\u5FD2\u5FD2\u4EE4"
@@ -50,3 +51,4 @@ title:
   original: 牡丹亭-寻梦
   phonetic: mu dan ting-xun meng
 wiki: ''
+note: ''

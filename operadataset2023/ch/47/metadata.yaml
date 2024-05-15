@@ -31,9 +31,10 @@ files:
       name: Zeng
 language: ch
 lyric:
-  english: ''
+  english: The bright moonlight shines through the window, and I, full of sorrow in my heart, feel as if I've been pierced by an arrow. I had originally hoped to borrow troops from the Kingdom of Wu and return, but who knows that I encountered obstacles at Zhaoguan. Fortunately, I met Donggaogong, who did me a great favor and hid me in his backyard garden. For several days, I had furrowed brows and could hardly sleep at night. I felt like a homeless dog, with a belly full of grievances, but who could I tell? I felt like a mournful wild goose in the vast sky, a dragon swimming in shallow sands, a fish swallowed by a hook, and a boat without a rudder in the waves. After much deliberation, my heart was torn apart, and I wondered how I could survive through the night to see the next day.
   original: 一轮明月照窗前 愁人心中似箭穿 实指望到吴国借兵回转 谁知昭关有阻拦 幸遇那东皋公行方便 他将我隐藏在后花园 一连几天我的眉不展 夜夜何曾得安眠 俺伍员好一似丧家犬 满腹的含冤我向谁言 我好比哀哀长空雁 我好比龙游在浅沙滩 我好比鱼儿吞了钩线 我好比波浪中失舵的舟船 思来想去我的肝肠断 今夜晚怎能够盼到明天
   phonetic: ''
+  translate: 明亮的月光照在窗前，我这个心中充满忧愁的人仿佛被箭射穿一般痛苦。我原本希望到吴国借兵回转，但谁知道在昭关遇到了阻碍。幸运的是，我遇到了东皋公，他帮了我大忙，将我隐藏在他的后花园里。一连几天，我都眉头紧锁，夜夜难以安眠。我就像是一只无家可归的狗，满腹的冤屈向谁诉说呢？我就像那哀鸣的长空雁，又像龙游在浅浅的沙滩上，还像鱼儿被钩子吞了进去，又像是在波浪中失去了舵的舟船。我思前想后，肝肠寸断，今晚我怎么能熬到明天呢？
 scene:
   english: ''
   original: "\u4E00\u8F6E\u660E\u6708\u7167\u7A97\u524D"
@@ -49,3 +50,4 @@ title:
   original: "\u6587\u662D\u5173"
   phonetic: wen zhao guan
 wiki: ''
+note: ''

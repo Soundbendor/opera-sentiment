@@ -31,8 +31,9 @@ files:
 language: ch
 lyric:
   english: ''
-  original: "?"
+  original: NOT-FOUND
   phonetic: ''
+  translate: ''
 scene:
   english: ''
   original: ''
@@ -48,3 +49,4 @@ title:
   original: ''
   phonetic: Jiang xiang he
 wiki: ''
+note: ''

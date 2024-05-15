@@ -42,9 +42,10 @@ files:
       name: Tony Haogong
 language: ch
 lyric:
-  english: ''
+  english: Outside the Spring and Autumn Pavilion, the wind and rain raged, and the sound of sobbing broke the silence. Through the curtain, I could only see a wedding sedan chair, presumably the newlyweds were walking on the Magpie Bridge of marriage. On such an auspicious day, it should have been filled with laughter, but why were tears like pearls being shed? At this moment, I suddenly realized that not everyone in the world is wealthy; there are also those who endure hunger, cold, and sorrow, as well as those who weep bitterly when disappointed. The person inside the sedan chair was playing a different tune, and there must be unspeakable secrets in their heart.
   original: 春秋亭外风雨暴 何处悲声破寂寥 隔帘只见一花轿 想必是新婚度鹊桥 吉日良辰当欢笑 为什么鲛珠化泪抛 此时却又明白了 世上何尝尽富豪 也有饥寒悲怀抱 也有失意痛哭嚎啕 轿内的人儿弹别调 必有隐情在心潮
   phonetic: ''
+  translate: 在春秋亭外，风雨肆虐，寂静中何处传来的悲泣声打破了沉默。我隔着帘子只能看到一顶花轿，想必是新人正踏上婚姻的鹊桥。在这样一个吉祥的日子，本应该是欢笑满堂，但为何却有鲛珠般的泪水被抛洒？此刻，我恍然大悟，世上并非尽是富豪，也有那些忍受着饥寒和悲伤的人，也有那些失意时痛哭流涕的人。轿内的人弹奏着别样的曲调，必定心中有着难以言说的隐情。
 scene:
   english: ''
   original: "\u6625\u79CB\u4EAD\u5916\u98CE\u96E8\u66B4"
@@ -60,3 +61,4 @@ title:
   original: "\u9501\u9E9F\u56CA"
   phonetic: suo lin nang
 wiki: ''
+note: ''

@@ -16,9 +16,10 @@ files:
       name: Tony Haogong
 language: ch
 lyric:
-  english: ''
+  english: In another courtyard, the sound of sheng (a traditional Chinese wind instrument) and singing echoed, audible due to the transmission of the wind.
   original: 别院中起笙歌因风送听
   phonetic: ''
+  translate: 在另外的庭院里响起了笙歌，因为风的传送而听得见。
 scene:
   english: ''
   original: "\u522B\u9662\u4E2D\u8D77\u7B19\u6B4C\u56E0\u98CE\u9001\u542C"

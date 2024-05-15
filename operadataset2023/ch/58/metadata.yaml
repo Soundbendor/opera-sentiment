@@ -16,9 +16,10 @@ files:
       name: Tony Haogong
 language: ch
 lyric:
-  english: ''
+  english: Unexpectedly, I was subjected to punishment and suffered such a great disaster.
   original: 没来由遭刑宪受此大难
   phonetic: ''
+  translate: 无缘无故地遭受刑罚，遭受了如此大的灾难
 scene:
   english: ''
   original: "\u6CA1\u6765\u7531\u906D\u5211\u5BAA\u53D7\u6B64\u5927\u96BE"
@@ -34,3 +35,4 @@ title:
   original: "\u516D\u6708\u96EA"
   phonetic: liu yue xue
 wiki: ''
+note: ''

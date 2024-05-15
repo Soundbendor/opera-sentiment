@@ -18,9 +18,10 @@ files:
       name: Bai jin
 language: ch
 lyric:
-  english: ''
+  english: Early in the morning, I hurriedly got up to wash and dress, learned sewing skills, fed the rooster, and relied on each other as mother and daughter.
   original: 清早起我这里急忙梳洗 习针黹喂雄鸡母女相依
   phonetic: ''
+  translate: 清晨，我匆忙起床梳洗打扮，学习针线活，喂养公鸡，我们母女两人相依为命。
 scene:
   english: ''
   original: "\u6E05\u65E9\u8D77\u6211\u8FD9\u91CC\u6025\u5FD9\u68B3\u6D17"
@@ -36,3 +37,4 @@ title:
   original: "\u62FE\u7389\u956F"
   phonetic: shi yu zhuo
 wiki: ''
+note: ''

@@ -30,9 +30,10 @@ files:
       name: Wang Xinnong
 language: ch
 lyric:
-  english: ''
+  english: Within the deep palace, petals float everywhere; after a life half spent in war, you now deserve a beautiful woman. From morning to night, you are filled with joy and carefree, without any worries; the hustle and bustle of the flute and singing music fills your ears, making it lively and festive.
   original: 深宫无处不飞花 半生戎马配娇娃 朝欢暮乐无牵挂 耳听笙歌闹喧哗
   phonetic: ''
+  translate: 深宫之中，处处都飘飞着花瓣；半生戎马生涯，如今配得上娇美的佳人。从早到晚，欢乐无忧，没有任何牵挂；耳边传来笙歌的喧闹声，热闹非常。
 scene:
   english: ''
   original: "\u6DF1\u5BAB\u65E0\u5904\u4E0D\u98DE\u82B1"
@@ -48,3 +49,4 @@ title:
   original: "\u7518\u9732\u5BFA"
   phonetic: gan lu si
 wiki: ''
+note: ''

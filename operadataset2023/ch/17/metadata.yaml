@@ -70,9 +70,10 @@ files:
       name: mixed level group
 language: ch
 lyric:
-  english: ''
+  english: The moon on the island just started to rise, and I saw the moon rising early in the east. As the moon moved further away from the island, the distinction between heaven and earth became clearer. The bright moonlight enveloped the earth, just like Chang'e leaving the Moon Palace, and I felt as if I was Chang'e leaving the Moon Palace.
   original: 海岛冰轮初转腾 见玉兔 玉兔又早东升 那冰轮离海岛 乾坤分外明 皓月当空 恰便似嫦娥离月宫 奴似嫦娥离月宫
   phonetic: ''
+  translate: 海岛上的月亮刚开始升起，我看到月亮又早早地升上东方。月亮离海岛越远，天地就越分明。明亮的月光笼罩大地，就像嫦娥离开了月宫一样，我也好像嫦娥离开了月宫。
 scene:
   english: ''
   original: "\u6D77\u5C9B\u51B0\u8F6E\u521D\u8F6C\u817E"
@@ -88,3 +89,4 @@ title:
   original: "\u8D35\u5983\u9189\u9152"
   phonetic: gui fei zui jiu
 wiki: ''
+note: ''

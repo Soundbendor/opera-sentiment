@@ -16,9 +16,10 @@ files:
       name: mixed level group
 language: ch
 lyric:
-  english: ''
+  english: Alone, I sit before the empty curtain, sighing deeply in solitude. Who would pity my loneliness and desolation? As a widow, I am overwhelmed by sorrow and tears, and I came to this place to escape from those reckless men.
   original: 独守空帷暗长叹 芳心寂寞有谁怜 孀居愁苦泪洗面 为避狂徒到此间
   phonetic: ''
+  translate: 独自一人守着空荡荡的帷帐，暗自长长地叹息，内心的孤独和寂寞又有谁会来怜惜呢？作为一个寡妇，我因为愁苦而泪流满面，为了躲避那些狂妄之徒才来到这个地方。
 scene:
   english: ''
   original: "\u72EC\u5B88\u7A7A\u5E37\u6697\u957F\u53F9"
@@ -34,3 +35,4 @@ title:
   original: "\u671B\u6C5F\u4EAD"
   phonetic: wang jiang ting
 wiki: ''
+note: ''

@@ -29,9 +29,10 @@ files:
       name: Tony Haogong
 language: ch
 lyric:
-  english: ''
+  english: He has aspirations and ambitions throughout his life, but his luck has not yet prevailed, just like a dragon trapped in shallow water. But one day, the spring thunder will roll.
   original: 平生志气运未通 似蛟龙困在浅水中 有朝一日春雷动
   phonetic: ''
+  translate: 他一生都有壮志和抱负，但运势尚未通达，就像蛟龙被困在浅水中一样。但总有一天，春天的雷声会响起。
 scene:
   english: ''
   original: "\u5E73\u751F\u5FD7\u6C14\u8FD0\u672A\u901A"
@@ -47,3 +48,4 @@ title:
   original: "\u51FB\u9F13\u9A82\u66F9"
   phonetic: ji gu ma cao
 wiki: ''
+note: ''

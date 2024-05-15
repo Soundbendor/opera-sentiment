@@ -16,9 +16,10 @@ files:
       name: Tony Haogong
 language: ch
 lyric:
-  english: ''
+  english: In a flash, all emotions were gone. As I profoundly grasped the bitterness and sorrow of life, tears couldn't help but wet my clothes.
   original: 一霎时把七情俱已昧尽 参透了酸辛处泪湿衣襟
   phonetic: ''
+  translate: 一刹那间，所有的七情六欲都已消失殆尽，当我深刻领悟了生活的辛酸与苦涩，泪水不禁打湿了衣襟。
 scene:
   english: ''
   original: "\u4E00\u970E\u65F6\u628A\u4E03\u60C5\u4FF1\u5DF2\u6627\u5C3D"
@@ -34,3 +35,4 @@ title:
   original: "\u9501\u9E9F\u56CA"
   phonetic: suo lin nang
 wiki: ''
+note: ''

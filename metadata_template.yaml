@@ -36,6 +36,7 @@ scene:
   english: ''
   original: ''
   phonetic: ''
+  translate: ''
 singing_type:
   role: ''
   singing: ''
@@ -47,3 +48,4 @@ title:
   original: ''
   phonetic: ''
 wiki: ''
+note: ''

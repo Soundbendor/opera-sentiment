@@ -29,9 +29,10 @@ files:
       name: Tony Haogong
 language: ch
 lyric:
-  english: ''
+  english: When two countries clash, it is like a fight between a dragon and a tiger, each leading a valiant army for their respective monarchs and countries. As the commander of the army, one must be lenient and kind when managing and commanding the three armies. When it comes to rewards and punishments, one must be fair and just, without acting capriciously or arbitrarily.
   original: 两国交锋龙虎斗 各为其主统貔貅 管带三军要宽厚 赏罚中公平莫要自由
   phonetic: ''
+  translate: 当两个国家交锋，就像龙和虎之间的争斗，各自都是为了自己的君主和国家统率着勇猛的军队。作为军队的指挥官，管理统领三军时必须要宽厚，在赏罚上要做到公正公平，不要随心所欲，任意妄为。
 scene:
   english: ''
   original: "\u4E24\u56FD\u4EA4\u950B\u9F99\u864E\u6597"
@@ -47,3 +48,4 @@ title:
   original: "\u5931\u8857\u4EAD"
   phonetic: shi jie ting
 wiki: ''
+note: ''

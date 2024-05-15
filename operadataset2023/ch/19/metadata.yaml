@@ -96,9 +96,10 @@ files:
       name: Zhang Shuo
 language: ch
 lyric:
-  english: ''
+  english: Hide under the chessboard, Zhang Sheng. As I step closer, you can crawl out gradually. Be bold, hold your breath, and don't make a sound or be afraid. This matter has left me in a state of confusion, but it can also be considered as a romantic tale. Follow my instructions and don't disturb her.
   original: 叫张生隐藏在棋盘之下 我步步行来你步步爬 放大胆忍气吞声休害怕 这件事倒叫我乱如麻 可算得是一段风流佳话 听号令且莫要惊动了她
   phonetic: ''
+  translate: 让张生你藏在棋盘下面，我一步步走近你便一步步地爬出来。你要大胆点，忍住气不要出声也别害怕，这件事倒是让我心乱如麻，不过也可以算作是一段风流佳话了。听我号令，且不要惊动了她。
 scene:
   english: ''
   original: "\u53EB\u5F20\u751F\u9690\u85CF\u5728\u68CB\u76D8\u4E4B\u4E0B"
@@ -114,3 +115,4 @@ title:
   original: "\u7EA2\u5A18-\u903E\u5899"
   phonetic: hong niang-yu qiang
 wiki: ''
+note: ''

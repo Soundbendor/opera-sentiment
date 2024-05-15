@@ -84,9 +84,10 @@ files:
       name: mixed level group
 language: ch
 lyric:
-  english: ''
+  english: As I arrived at the bustling intersection, I would like to tell you all the story from the beginning. I am neither a robber nor a thief, nor am I a bad person sneaking into the city. I got into a fight with Yang Lin, and that's why I was exiled to Dengzhou. I cannot bear to part with my master's kindness, nor can I leave behind the officers and my fellow comrades. I am truly reluctant to bid farewell to my neighbors and good friends. What hurts the most is the thought of my mother, whose hair has turned white. As a mother and son, our hearts are connected. She worries whenever I travel far away. It's hard for me to kneel before her and express my gratitude, while she sheds tears whenever she thinks of me. As I see the red sun setting behind the western mountains, I call out to the escort and ask to find a place to rest.
   original: 将身儿来至在大街口 尊一声列位宾朋听从头 一不是响马并贼寇 二不是歹人把城偷 杨林与我来争斗 因此上发配到登洲 舍不得老爷的恩情有 舍不得衙役们众班头 实难舍街坊四邻与我的好朋友 舍不得老娘白了头 娘生儿连心肉 儿行千里母担忧 儿想娘亲难叩首 娘想儿来泪双流 眼见得红日坠落在西山后 叫一声解差把店投
   phonetic: ''
+  translate: 我走到了这繁华的大街上，各位来宾朋友请听我从头说起：我既不是响马也不是贼寇，更不是歹人偷偷进了城。我和杨林发生了争斗，因此被发配到登洲。我舍不得老爷的恩情，舍不得那些衙役和众班头，也舍不得街坊四邻和我的好朋友们。我更是舍不得我那头发已经花白的母亲。娘生了我，我们母子连心，我远行千里母亲总是担忧。我想念母亲却难以向她叩首行礼，而母亲思念我时则泪水直流。眼看着红日已经西沉，我喊一声解差，我们去投宿吧。
 scene:
   english: ''
   original: "\u5C06\u8EAB\u513F\u6765\u81F3\u5728\u5927\u8857\u53E3"
@@ -102,3 +103,4 @@ title:
   original: "\u4E09\u5BB6\u5E97"
   phonetic: san jia dian
 wiki: ''
+note: ''

@@ -16,9 +16,10 @@ files:
       name: mixed level group
 language: ch
 lyric:
-  english: ''
+  english: The morning glow reflects on Yangcheng Lake, with reeds swaying, rice paddies fragrant, and willows lining the shore. All these beautiful landscapes are created by the laboring people with their hands, and they have painted the fish-and-rice land of the splendid Jiangnan region. The magnificent mountains and rivers of our country, every inch of land, should not be given to others. How can we tolerate the rampage of Japanese invaders here?
   original: 朝霞映在阳澄湖上 芦花放稻谷香岸柳成行 全凭着劳动人民一双手 画出了锦绣江南鱼米乡 祖国的好山河寸土不让 岂容日寇逞凶狂
   phonetic: ''
+  translate: 朝霞映照在阳澄湖上，芦花摇曳，稻谷飘香，岸边的柳树排列成行。这一切美景都是劳动人民用他们的双手创造出来的，他们绘制出了锦绣江南的鱼米之乡。祖国的壮丽山河，每一寸土地都不能让给别人，怎能容忍日本侵略者在此猖獗作乱。
 scene:
   english: ''
   original: "\u671D\u971E\u6620\u5728\u9633\u6F84\u6E56\u4E0A"
@@ -34,3 +35,4 @@ title:
   original: "\u6C99\u5BB6\u6D5C"
   phonetic: sha jia bin
 wiki: ''
+note: ''

@@ -17,9 +17,10 @@ files:
       name: Tony Haogong
 language: ch
 lyric:
-  english: ''
+  english: In the past, Liang Hong married Meng Guang.
   original: 昔日梁鸿配孟光
   phonetic: ''
+  translate: 过去梁鸿配娶了孟光。
 scene:
   english: ''
   original: "\u6614\u65E5\u6881\u9E3F\u914D\u5B5F\u5149"
@@ -35,3 +36,4 @@ title:
   original: "\u9F99\u51E4\u5448\u7965"
   phonetic: long feng cheng xiang
 wiki: ''
+note: ''

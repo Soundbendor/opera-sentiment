@@ -42,9 +42,10 @@ files:
       name: Tony Haogong
 language: ch
 lyric:
-  english: ''
+  english: Seeing the king sleeping soundly in the tent with his clothes on, I stepped out to dispel the melancholy in my heart. I moved forward slowly, stopped in the wilderness ahead, and looked up suddenly, only to see the azure sky washed clean and the moon shining brightly.
   original: 看大王在帐中和衣睡稳 我这里出帐外且散愁情 轻移步走向前荒郊站定 猛抬头见碧落月色清明
   phonetic: ''
+  translate: 看大王在帐篷中穿着衣服安稳地睡着，我这便走出帐篷去排解心中的愁绪。我轻轻地移动脚步，走到前面的荒野停下，猛然抬头，只见碧空如洗，月色清明。
 scene:
   english: ''
   original: "\u770B\u5927\u738B\u5728\u5E10\u4E2D\u548C\u8863\u7761\u7A33"
@@ -60,3 +61,4 @@ title:
   original: "\u9738\u738B\u522B\u59EC"
   phonetic: ba wang bie ji
 wiki: ''
+note: ''

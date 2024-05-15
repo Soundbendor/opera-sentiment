@@ -30,9 +30,10 @@ files:
       name: Zhang Shuo
 language: ch
 lyric:
-  english: ''
+  english: The blue sky and white clouds set off the yellow flowers all over the ground, while the west wind blew strongly and the wild geese flew south from the north. Who dyed the frost-covered leaves of the woods red in the morning? It was all the tears of the parting lovers, streaming down in thousands of lines.
   original: 碧云天 黄花地 西风紧 北雁南翔 问晓来谁染得霜林绛 总是离人泪千行
   phonetic: ''
+  translate: 蓝天白云映衬着黄花满地，西风阵阵紧，大雁从北方飞往南方。请问清晨是谁将树林的霜叶染得通红？全都是离别人的眼泪千行。
 scene:
   english: ''
   original: "\u78A7\u4E91\u5929\u9EC4\u82B1\u5730\u897F\u98CE\u7D27"
@@ -48,3 +49,4 @@ title:
   original: "\u897F\u53A2\u8BB0"
   phonetic: xi xiang ji
 wiki: ''
+note: ''

@@ -69,9 +69,10 @@ files:
       name: mixed level group
 language: ch
 lyric:
-  english: ''
+  english: In serving the country, I have never had a moment of leisure. I have conquered the northern and western frontiers, and risen to the position of military governor, deeply favored by the emperor. However, when I am not feeling well, I feel sleepy and groggy beyond my control.
   original: 为国家哪何曾半日闲空 我也曾征服了塞北西东 官封到节度使皇王恩重 身不爽不由人瞌睡朦胧
   phonetic: ''
+  translate: 为国家效力，我何曾有过半日的空闲。我也曾征服了塞北和西东各地，官至节度使，皇上的恩宠深厚。然而身体不舒服时，也不由自主地感到困倦和模糊。
 scene:
   english: ''
   original: "\u4E3A\u56FD\u5BB6\u54EA\u4F55\u66FE\u534A\u65E5\u95F2\u7A7A"
@@ -87,3 +88,4 @@ title:
   original: "\u6D2A\u7F8A\u6D1E"
   phonetic: hong yang dong
 wiki: ''
+note: ''

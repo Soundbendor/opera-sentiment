@@ -110,9 +110,10 @@ files:
       name: mixed level group
 language: ch
 lyric:
-  english: ''
+  english: Suddenly, the sound of drums and horns echoed loudly, awakening my determination to break through Tianmen Mountain with soaring ambitions. Looking back on the past, I rode on a peach blossom horse, majestic and powerful, with the enemy's blood splashing on my pomegranate skirt. As long as I am alive, I should fulfill my duty, even if an inch of land cannot belong to others. The kings of those small countries and clown-like enemies are not worth mentioning. I can resist a million troops with just one sword.
   original: 猛听的金鼓响画角声震 唤起我破天门壮志凌云 想当年桃花马上威风凛凛 敌血飞溅石榴裙 有生之日责当尽 寸土怎能属他人 番王小丑何足论 我一剑能挡百万兵
   phonetic: ''
+  translate: 突然听到金鼓声和画角声震天动地，这唤醒了我攻破天门山、壮志凌云的决心。回想起当年，我骑在桃花色的马上，威风凛凛，敌人的鲜血飞溅在我的石榴裙上。只要我还活着，就应当尽到我的责任，哪怕一寸土地也不能属于别人。那些小国的国王和小丑般的敌人根本不值一提，我一剑就能抵挡百万大军。
 scene:
   english: ''
   original: "\u731B\u542C\u5F97\u91D1\u9F13\u54CD\u753B\u89D2\u58F0\u9707"
@@ -128,3 +129,4 @@ title:
   original: "\u7A46\u6842\u82F1\u6302\u5E05"
   phonetic: mu gui ying gua shuai
 wiki: ''
+note: ''

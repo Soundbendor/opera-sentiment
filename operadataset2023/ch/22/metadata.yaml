@@ -31,9 +31,10 @@ files:
       name: Kathy Hall
 language: ch
 lyric:
-  english: ''
+  english: Occasionally, my heart seems to be tethered, beside the plum tree. Like this, flowers and grasses are loved by anyone, life and death are subject to one's wishes, and even with some sorrow and distress, there is no one to complain. When the fragrant soul dissipates into pieces, during the rainy plum rains, ah, my beloved, I will stand firm here until I meet the roots of the plum tree.
   original: 偶然间心似缱 在梅树边 似这等花花草草由人恋 生生死死随人愿 便酸酸楚楚无人怨 待打并香魂一片 阴雨梅天 阿呀人儿吓 守的个梅根相见
   phonetic: ''
+  translate: 偶然间，我的心好像被牵绊住了，在梅树的旁边。像这样，花花草草任人爱恋，生与死都随人愿，即便有些酸楚和苦闷，也无人抱怨。等到香魂飘散成一片，在阴雨绵绵的梅雨时节，哎呀，我的心上人呀，我会坚守在这里，直到与梅树的根相见。
 scene:
   english: ''
   original: "\u6C5F\u513F\u6C34"
@@ -49,3 +50,4 @@ title:
   original: 牡丹亭-寻梦
   phonetic: mu dan ting-xun meng
 wiki: ''
+note: ''

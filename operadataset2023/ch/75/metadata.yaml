@@ -16,9 +16,10 @@ files:
       name: mixed level group
 language: ch
 lyric:
-  english: ''
+  english: The wind blew rustlingly, and the mist spread everywhere, dimming the starlight. People shouted, and the sound of the Hu Jia flute echoed through the valleys, creating a deafening noise with the cries of battle. As I traveled along, the sky darkened, and before I knew it, the moon had risen over the eastern mountains. The wind blew sand in my face, and the withered grass under the mist stretched endlessly. I forged ahead, cutting through thorns and briars, heading southeast.
   original: 风萧萧 雾漫漫 星光惨淡 人呐喊 胡笳喧 山鸣谷动 杀声震天 一路行来天色晚 不觉得月上东山 风吹惊沙扑人面 雾述衰草不着边 披荆斩棘东南走
   phonetic: ''
+  translate: 风声萧萧，雾气弥漫，星光显得黯淡，人们在呐喊，胡笳的声音喧嚣，山谷回声震天，杀声此起彼伏。一路行来天色已晚，不知不觉间月亮已经升上东山。风吹起沙砾，迎面扑来，雾气笼罩下的枯草无边无际。我披荆斩棘，一路向东南方向走去。
 scene:
   english: ''
   original: "\u98CE\u8427\u8427\u96FE\u6F2B\u6F2B\u661F\u5149\u60E8\u6DE1"
@@ -34,3 +35,4 @@ title:
   original: "\u6768\u95E8\u5973\u5C06"
   phonetic: yang men nv jiang
 wiki: ''
+note: ''

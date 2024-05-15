@@ -16,9 +16,10 @@ files:
       name: Tony Haogong
 language: ch
 lyric:
-  english: ''
+  english: With Empress Hehou shouting loudly in the Golden Hall
   original: 有贺后在金殿一声高骂
   phonetic: ''
+  translate: 有贺后在金殿上高声责骂
 scene:
   english: ''
   original: "\u6709\u8D3A\u540E\u5728\u91D1\u6BBF\u4E00\u58F0\u9AD8\u9A82"
@@ -34,3 +35,4 @@ title:
   original: "\u8D3A\u540E\u9A82\u6BBF"
   phonetic: he hou ma dian
 wiki: ''
+note: ''
