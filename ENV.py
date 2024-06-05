@@ -1,14 +1,15 @@
 SAMPLE_RATE = 16000
-REPRESENTATION = "melody" # raw, mel, mfcc, melody
+REPRESENTATION = "lyrics" # raw, mel, mfcc, melody, lyrics
 
 NEPTUNE_SWITCH = 1
 Evaluate_Frequency = 1
 ### No need to change this part
 ### unless you want to change the dataset name or for other custom purpose
 # the original dataset name
-Root_PATH = "/nfs/guille/eecs_research/soundbendor/shengxuan/opera2324/opera-singing-dataset/"
-Data_PATH = Root_PATH + "operadataset2023"
-Unified_PATH = Root_PATH + 'unified'
+# Root_PATH = "/nfs/guille/eecs_research/soundbendor/shengxuan/opera2324/opera-singing-dataset/"
+Root_PATH = ""
+Data_PATH = Root_PATH + "operadataset2023/"
+Unified_PATH = Root_PATH + 'unified/'
 Trimmed_PATH = Root_PATH + 'trimmed'
 
 ### hyperparameters related to Machine Learning

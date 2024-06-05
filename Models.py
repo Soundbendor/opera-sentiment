@@ -12,12 +12,28 @@ class DummyModel(nn.Module):
         
         self.flatten = nn.Flatten()
         self.output = nn.Linear(_input_size, 1)
-        self.softmax = nn.Sigmoid()
+        self.sigmoid = nn.Sigmoid()
 
     def forward(self, x):
         x = self.flatten(x)
         x = self.output(x)
-        predictions = self.softmax(x)
+        predictions = self.sigmoid(x)
+        return predictions
+
+class FC_for_bert(nn.Module):
+    def __init__(self, input_size, Method="None"):
+        super().__init__()
+        self.flatten_size = 1
+        for i in input_size[1:]:
+            self.flatten_size *= i
+        self.flatten = nn.Flatten()
+        self.output = nn.Linear(self.flatten_size, 1)
+        self.sigmoid = nn.Sigmoid()
+    
+    def forward(self, x):
+        x = self.flatten(x)
+        x = self.output(x)
+        predictions = self.sigmoid(x)
         return predictions
 
 class MLP(nn.Module):
@@ -378,6 +394,7 @@ if __name__ == "__main__":
     raw_input_size = (hyperparams["batch_size"], 469, 1024)
     MEL_input_size = (hyperparams["batch_size"], 1, 64, 938)
     MFCC_input_size = (hyperparams["batch_size"], 1, 20, 2401)
+    lyrics_bert_input_size = (hyperparams["batch_size"], 1, 768)
 
     net_raw = CNN1D_raw(input_size=hyperparams["input_size"], network_size=2).to(device)
     # net_raw = MobileNet1DV1(input_size=raw_input_size).to(device)

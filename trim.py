@@ -165,10 +165,10 @@ if __name__ == '__main__':
     dest_directory = Trimmed_PATH
     
     '''pretrim block'''
-    # # pretrim the data - trim the begining and ending silence
-    # print("pretrimming the data ... ... do not interrupt!")
-    # pre_trim(src_directory)
-    # print("pretrimming done")
+    # pretrim the data - trim the begining and ending silence
+    print("pretrimming the data ... ... do not interrupt!")
+    pre_trim(src_directory)
+    print("pretrimming done")
     '''pretrim block'''
 
     '''trimming block'''

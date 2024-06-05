@@ -6,9 +6,13 @@ from torch.nn import functional as F
 from melody_extraction.predict_on_audio import main as get_melody
 import numpy as np
 import torch
+from utilities.yamlhelp import safe_read_yaml
+from transformers import BertTokenizer, BertModel
+
+tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
+model = BertModel.from_pretrained("bert-base-uncased")
 
 class Opera2023DatasetMelody(Dataset):
-    #Todo: add cache because melody extraction is slow
     def __init__(self, csv_fir, data_dir, target_class, input_size = -1):
         self._csv = pd.read_csv(csv_fir)
         self._dir = data_dir
@@ -116,19 +120,49 @@ class Opera2023Dataset_Spec(Dataset):
     def _get_label(self, idx):
         return self._csv.loc[idx, self._target_class]
 
+class Opera2023Dataset_lyrics_bert(Dataset):
+    def __init__(self, csv_fir, data_dir, target_class, input_size = -1):
+        self._csv = pd.read_csv(csv_fir)
+        self._dir = data_dir
+        self._input_size = input_size # not used in this representation
+        self._target_class = target_class
+        def get_lyrics_text(file_path):
+            yaml_file_path = file_path.rsplit('/', 1)[0]+"/metadata.yaml"
+            metadata = safe_read_yaml(yaml_file_path)
+            english_lyrics = metadata['lyric']['english']
+            return english_lyrics
+        
+        self._lyrics = get_lyrics_text(data_dir)
+
+    def __len__(self):
+        return len(self._csv)
+    
+    def _get_label(self, idx):
+        return self._csv.loc[idx, self._target_class]
+    
+    def __getitem__(self, idx):
+        self._csv.iloc[idx, 0] # use this to raise a inner exception if the index is out of range
+        label = self._get_label(idx)
+        text = self._lyrics
+        # Tokenize the text
+        output = tokenizer(text, return_tensors="pt")
+        with torch.no_grad():
+            output = model(**output).pooler_output
+        return output, label
+
 if __name__ == '__main__':
     from HYPERPARAMS import hyperparams
     from ENV import REPRESENTATION
 
     target_class = "emotion_binary"
 
-    csv_file1 = 'trimmed_30_Padding-S/ch/9/wav00/ch_9_wav00.csv'
-    file_dir1 = 'trimmed_30_Padding-S/ch/9/wav00'
+    csv_file1 = 'trimmed_30_Padding-S/ch/10/wav00/ch_10_wav00.csv'
+    file_dir1 = 'trimmed_30_Padding-S/ch/10/wav00'
     # dataset1 = Opera2023Dataset(csv_file1, file_dir1, target_class, hyperparams['input_size'])
 
     csv_file2 = 'trimmed_30_Padding-S/ch/9/wav01/ch_9_wav01.csv'
     file_dir2 = 'trimmed_30_Padding-S/ch/9/wav01'
-    dataset2 = Opera2023Dataset(csv_file2, file_dir2, target_class, hyperparams['input_size'])
+    # dataset2 = Opera2023Dataset(csv_file2, file_dir2, target_class, hyperparams['input_size'])
     # print("initialization done")
     # for data in dataset2:
     #     print(data[0].shape)
@@ -171,13 +205,20 @@ if __name__ == '__main__':
     #     print(data[0].shape)
         
     # ======= Test Melody Dataset =========
-    dataset_melody = Opera2023DatasetMelody(csv_file2, file_dir2, target_class, 1024)
-    # for data in dataset_melody:
-    #     print(data[0])
-    #     print(data[1])
-    data_loader = DataLoader(dataset_melody, batch_size=2, shuffle=True)
-    for batch in data_loader:
-        print(batch[0])
-        print(batch[1])
-        print(batch[0].shape)
-        print(batch[1].shape)
+    # dataset_melody = Opera2023DatasetMelody(csv_file2, file_dir2, target_class, 1024)
+    # # for data in dataset_melody:
+    # #     print(data[0])
+    # #     print(data[1])
+    # data_loader = DataLoader(dataset_melody, batch_size=2, shuffle=True)
+    # for batch in data_loader:
+    #     print(batch[0])
+    #     print(batch[1])
+    #     print(batch[0].shape)
+    #     print(batch[1].shape)
+
+    # ======= Test Lyrics Dataset =========
+    dataset_lyrics = Opera2023Dataset_lyrics_bert(csv_file1, file_dir1, target_class)
+    for data in dataset_lyrics:
+        print(data[0])
+        print(data[1])
+        # pass

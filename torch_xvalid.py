@@ -193,6 +193,8 @@ def my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count
         input_size = (hyperparams["batch_size"], 1, 20, 2401)
     elif REPRESENTATION == "melody":
         input_size = (hyperparams["batch_size"], 6, hyperparams["input_size"])
+    elif REPRESENTATION == "lyrics":
+        input_size = (hyperparams["batch_size"], 1, 768)
 
     print("input size:", input_size)
     model = model_class(input_size = input_size, Method = METHOD).to(device)
@@ -301,6 +303,7 @@ def my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count
 
         # reset model
         model = model_class(input_size = input_size, Method = METHOD).to(device)
+        # raise ValueError("stop here") # <============================ ********************
     
     # calculate the aggregate average accuracy
     acc_seg_avg = sum([1 if targets_full_seg[i] == predictions_full_seg[i] else 0 for i in range(len(targets_full_seg))]) / len(targets_full_seg)
@@ -361,7 +364,7 @@ if __name__ == "__main__":
     else:
         device = "cpu"
     
-    from Models import LSTM, DummyModel, CNN1D_raw, CNN2D, MobileNet1DV1, MobileNet1Dsimple
+    from Models import LSTM, DummyModel, CNN1D_raw, CNN2D, MobileNet1DV1, MobileNet1Dsimple, FC_for_bert
     model_class = locals()[MODEL]
 
     my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count, TEST_ON)
