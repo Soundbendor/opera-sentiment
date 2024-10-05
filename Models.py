@@ -36,6 +36,29 @@ class FC_for_bert(nn.Module):
         predictions = self.sigmoid(x)
         return predictions
 
+class LSTM_fuse_bert(nn.Module):
+    def __init__(self, input_size, Method="None"):
+        super().__init__()
+        self._lstm_input_size = input_size[0][2]
+        self._method = Method
+
+        self.lstm_output = 8
+        
+        self.lstm = nn.LSTM(self._lstm_input_size, self.lstm_output, batch_first=True)
+        self.dropout = nn.Dropout(0.3)
+        self.fc = nn.Linear(469*self.lstm_output+768, 1)
+        self.sigmoid = nn.Sigmoid()
+
+    def forward(self, wave, lyrics_feature):
+        wave_feature, _ = self.lstm(wave)
+        wave_feature = self.dropout(wave_feature) # (batch_size, 469, 64)
+        wave_feature_flat = wave_feature.reshape(-1, 469*self.lstm_output) # (batch_size, 469*64)
+        lyrics_feature = lyrics_feature.squeeze(1) # (batch_size, 768)
+        feature = torch.cat((wave_feature_flat, lyrics_feature), dim=1) # (batch_size, 469*64+768)
+        predictions = self.fc(feature)
+        predictions = self.sigmoid(predictions)
+        return predictions
+
 class MLP(nn.Module):
     def __init__(self, input_size, Method="None"):
         super().__init__()
@@ -141,6 +164,43 @@ class CNN1D_raw(nn.Module):
         x = self.sigmoid(x)
         return x
         
+class CNN1D_mert(nn.Module):
+    def __init__(self, input_size, Method="None"):
+        super().__init__()
+        self.channel_size = input_size[1]
+        self.conv1 = nn.Sequential(
+            nn.Conv1d(self.channel_size, 32, 3),
+            nn.ReLU(),
+            nn.MaxPool1d(kernel_size=2)
+        )
+        self.dropout1 = nn.Dropout(0.3)
+        self.conv2 = nn.Sequential(
+            nn.Conv1d(32, 64, 3),
+            nn.ReLU(),
+            nn.MaxPool1d(kernel_size=2)
+        )
+        self.dropout2 = nn.Dropout(0.3)
+        self.conv3 = nn.Sequential(
+            nn.Conv1d(64, 128, 3),
+            nn.ReLU(),
+            nn.MaxPool1d(kernel_size=2)
+        )
+        self.dropout3 = nn.Dropout(0.3)
+        self.flatten = nn.Flatten()
+        self.fc = nn.Linear(12032, 1) # hard code for now
+        self.sigmoid = nn.Sigmoid()
+
+    def forward(self, x):
+        x = self.conv1(x)
+        x = self.dropout1(x)
+        x = self.conv2(x)
+        x = self.dropout2(x)
+        x = self.conv3(x)
+        x = self.dropout3(x)
+        x = self.flatten(x)
+        x = self.fc(x)
+        x = self.sigmoid(x)
+        return x
 
 class MobileNet1DV1(nn.Module):
     def __init__(self, input_size, Method="None"):
@@ -395,11 +455,13 @@ if __name__ == "__main__":
     MEL_input_size = (hyperparams["batch_size"], 1, 64, 938)
     MFCC_input_size = (hyperparams["batch_size"], 1, 20, 2401)
     lyrics_bert_input_size = (hyperparams["batch_size"], 1, 768)
+    raw_and_lyrics_input_size = [raw_input_size, lyrics_bert_input_size]
 
     net_raw = CNN1D_raw(input_size=hyperparams["input_size"], network_size=2).to(device)
     # net_raw = MobileNet1DV1(input_size=raw_input_size).to(device)
     net_mel = CNN2D(input_size=MEL_input_size).to(device)
     net_mfcc = CNN2D(input_size=MFCC_input_size).to(device)
+    net_fuse = LSTM_fuse_bert(input_size=raw_and_lyrics_input_size).to(device)
 
     if REPRESENTATION == "raw":
         net = net_raw
@@ -410,7 +472,12 @@ if __name__ == "__main__":
     elif REPRESENTATION == "mfcc":
         net = net_mfcc
         intput_size = MFCC_input_size
+    elif REPRESENTATION == "raw+lyrics":
+        net = net_fuse
+        input_size = raw_and_lyrics_input_size
     
+    print(input_size)
+
     model_summary = summary(net, input_size, device=device)
 
     loss_fn = nn.BCELoss()

@@ -1,5 +1,5 @@
 # trimming down the silence parts from the begining and end of the audio files
-# do this after unifying, but before triming!!!
+# do this before or after unifying, but before triming!!!
 
 import sox
 import os
@@ -9,7 +9,7 @@ def single_pre_trim(src, dest):
     # sox in.wav out.wav silence 1 0.1 0.2% reverse silence 1 0.1 0.2% reverse
     CMD_trim_pre = ['sox', src, dest, 'silence', '1', '0.1', '0.2%', 'reverse', 'silence', '1', '0.1', '0.2%', 'reverse']
     subprocess.run(CMD_trim_pre)
-    CMD_rename = ['mv', dest, src]
+    CMD_rename = ['mv', dest, src]  # rename temp.wav to original name (overwrite)
     subprocess.run(CMD_rename)
 
 def pre_trim(src_dir):
@@ -21,5 +21,5 @@ def pre_trim(src_dir):
                 single_pre_trim(src, dest)
 
 if __name__ == '__main__':
-    from ENV import Unified_PATH as src_dir
+    src_dir = "/nfs/guille/eecs_research/soundbendor/shengxuan/opera2324/opera-singing-dataset/operadataset2023"
     pre_trim(src_dir)

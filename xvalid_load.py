@@ -5,7 +5,8 @@ import pandas as pd
 import os
 import numpy as np
 import copy
-from Opera2023Dataset import Opera2023Dataset, Opera2023Dataset_Spec, Opera2023DatasetMelody, Opera2023Dataset_lyrics_bert
+from Opera2023Dataset import Opera2023Dataset, Opera2023Dataset_Spec, Opera2023DatasetMelody, Opera2023Dataset_lyrics_bert, Opera2023RawAndLyrics
+from opera_mert_dataset import opera_mert_dataset
 from HYPERPARAMS import hyperparams
 from torch.utils.data import ConcatDataset
 
@@ -77,6 +78,10 @@ for root, dirs, files in os.walk(mother_path):
                     dataset = Opera2023DatasetMelody(csv_dir, data_dir, target_class, hyperparams["input_size"])
                 elif REPRESENTATION == "lyrics":
                     dataset = Opera2023Dataset_lyrics_bert(csv_dir, data_dir, target_class)
+                elif REPRESENTATION == "raw+lyrics":
+                    dataset = Opera2023RawAndLyrics(csv_dir, data_dir, target_class, hyperparams["input_size"])
+                elif REPRESENTATION == "mert":
+                    dataset = opera_mert_dataset(csv_dir, data_dir, target_class, hyperparams["input_size"])
                 else:
                     raise ValueError("REPRESENTATION not supported")
                 data_full_dictionary[data_dir] = dataset

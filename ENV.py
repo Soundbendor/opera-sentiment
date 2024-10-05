@@ -1,5 +1,5 @@
 SAMPLE_RATE = 16000
-REPRESENTATION = "lyrics" # raw, mel, mfcc, melody, lyrics
+REPRESENTATION = "mert" # raw, mel, mfcc, melody, lyrics, raw+lyrics, mert
 
 NEPTUNE_SWITCH = 1
 Evaluate_Frequency = 1

@@ -1,14 +1,28 @@
 import torch
+from ENV import REPRESENTATION
 def train_one_epoch(model, data_loader, loss_fn, optimizer, device, run=None, npt_logger=None):
     total_correct = 0
-    for inputs, targets in data_loader:
-        inputs, targets = inputs.to(device), targets.to(device)
-        targets = targets.unsqueeze(1)
-        optimizer.zero_grad()
-        predictions = model(inputs)
-        loss = loss_fn(predictions, targets.float())
-        loss.backward()
-        optimizer.step()
+    # if REPRESENTATION == "raw+lyrics":
+    for batch in data_loader:
+        if REPRESENTATION == "raw+lyrics":
+            wave, lyrics, targets = batch
+            wave, lyrics, targets = wave.to(device), lyrics.to(device), targets.to(device)
+            targets = targets.unsqueeze(1)
+            optimizer.zero_grad()
+            predictions = model(wave, lyrics)
+            loss = loss_fn(predictions, targets.float())
+            loss.backward()
+            optimizer.step()
+        else:
+            print("load one batch")
+            inputs, targets = batch
+            inputs, targets = inputs.to(device), targets.to(device)
+            targets = targets.unsqueeze(1)
+            optimizer.zero_grad()
+            predictions = model(inputs)
+            loss = loss_fn(predictions, targets.float())
+            loss.backward()
+            optimizer.step()
 
         rounded_predictions = torch.round(predictions)
         correct = (rounded_predictions == targets).sum().item()

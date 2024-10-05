@@ -1,6 +1,7 @@
 import torch
 from torch.utils.data import DataLoader
 import random
+from ENV import REPRESENTATION
 # three-way evaluator
 def flatten_and_int_list(nested_list):
     temp_list = []
@@ -41,16 +42,26 @@ class Evaluator:
 
         self.model.eval()
         total_correct = 0
-        for inputs, targets in data_loader:
+        for batch in data_loader:
             # each loop is a batch
-            inputs, targets = inputs.to(self.device), targets.to(self.device)
+            if REPRESENTATION == "raw+lyrics":
+                wave, lyrics, targets = batch
+                wave, lyrics, targets = wave.to(self.device), lyrics.to(self.device), targets.to(self.device)
+                
+                self.targets_seg.extend(targets.cpu().detach().numpy().tolist())
+                targets = targets.unsqueeze(1)
+                with torch.no_grad():
+                    predictions = self.model(wave, lyrics)
+            else:
+                inputs, targets = batch
+                inputs, targets = inputs.to(self.device), targets.to(self.device)
+                
+                self.targets_seg.extend(targets.cpu().detach().numpy().tolist())
+                targets = targets.unsqueeze(1)
+                with torch.no_grad():
+                    predictions = self.model(inputs)
             
-            self.targets_seg.extend(targets.cpu().detach().numpy().tolist())
-            targets = targets.unsqueeze(1)
-            with torch.no_grad():
-                predictions = self.model(inputs)
             rounded_predictions = torch.round(predictions)
-            
             self.predictions_seg.extend(rounded_predictions.cpu().detach().numpy().tolist())
             correct = (rounded_predictions == targets).sum().item()
             total_correct += correct
@@ -83,11 +94,19 @@ class Evaluator:
                 one_recording_loader = DataLoader(one_recording_data, batch_size=1, shuffle=False)
                                                                     # batch size is 1 because we want to evaluate one piece at a time
                                                                     # shuffle is False because we want to keep the order of the pieces
-                for inputs, targets in one_recording_loader:
+                for batch in one_recording_loader:
                     # each loop is a segment
-                    inputs, targets = inputs.to(self.device), targets.to(self.device)
-                    with torch.no_grad():
-                        predictions = self.model(inputs)
+                    if REPRESENTATION == "raw+lyrics":
+                        wave, lyrics, targets = batch
+                        wave, lyrics, targets = wave.to(self.device), lyrics.to(self.device), targets.to(self.device)
+                        with torch.no_grad():
+                            predictions = self.model(wave, lyrics)
+                    else:
+                        inputs, targets = batch
+                        inputs, targets = inputs.to(self.device), targets.to(self.device)
+                        with torch.no_grad():
+                            predictions = self.model(inputs)
+                    
                     rounded_predictions = torch.round(predictions)
                     this_recording_predictions.extend(rounded_predictions.cpu().detach().numpy().tolist())
                     this_song_predictions.extend(rounded_predictions.cpu().detach().numpy().tolist())

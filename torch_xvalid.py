@@ -195,15 +195,24 @@ def my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count
         input_size = (hyperparams["batch_size"], 6, hyperparams["input_size"])
     elif REPRESENTATION == "lyrics":
         input_size = (hyperparams["batch_size"], 1, 768)
+    elif REPRESENTATION == "raw+lyrics":
+        input_size = [(hyperparams["batch_size"], 469, 1024), (hyperparams["batch_size"], 1, 768)]
+    elif REPRESENTATION == "mert":
+        input_size = (hyperparams["batch_size"], 13, 768)
+    else:
+        raise ValueError("representation not supported")
 
     print("input size:", input_size)
     model = model_class(input_size = input_size, Method = METHOD).to(device)
     
     model_summary = summary(model, input_size, device=device)
-    
-    dummy_data = torch.randn(input_size).to(device)
-    
-    y = model(dummy_data)
+    if REPRESENTATION == "raw+lyrics":
+        dummy_wav = torch.randn(input_size[0]).to(device)
+        dummy_lyrics = torch.randn(input_size[1]).to(device)
+        y = model(dummy_wav, dummy_lyrics)
+    else:
+        dummy_data = torch.randn(input_size).to(device)
+        y = model(dummy_data)
     image_name_tv = "model_torchviz"
     image_formate = "png"
     image_path_tv = image_name_tv + "." + image_formate
@@ -364,7 +373,7 @@ if __name__ == "__main__":
     else:
         device = "cpu"
     
-    from Models import LSTM, DummyModel, CNN1D_raw, CNN2D, MobileNet1DV1, MobileNet1Dsimple, FC_for_bert
+    from Models import LSTM, DummyModel, CNN1D_raw, CNN2D, MobileNet1DV1, MobileNet1Dsimple, FC_for_bert, LSTM_fuse_bert, CNN1D_mert
     model_class = locals()[MODEL]
 
     my_x_validation(dataset_of_folds_dictionary, model_class, device, fold_count, TEST_ON)

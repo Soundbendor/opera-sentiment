@@ -30,7 +30,7 @@ This data set is a combination of these intelligence contributions:
 - Label corrections
   - Label corrected by Shengxuan Wang ([shawn120](https://github.com/shawn120))
   - Correction rely on the knowledge from Shengxuan Wang, Rong Gong et al. <sup>[2]</sup>, and online searching.
-  - Lyrics labeled by __TODO__
+  - Lyrics labeled by Shengxuan Wang ([shawn120](https://github.com/shawn120))
 - Adding yaml meta data file for each song by Shengxuan Wang ([shawn120](https://github.com/shawn120))
 - Only keep opera data, removed all the non-opera data from previous dataset (e.g. modern songs). 
 - Future TODO: Add in more western opera to balance out the language inbalance.

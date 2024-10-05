@@ -150,6 +150,52 @@ class Opera2023Dataset_lyrics_bert(Dataset):
             output = model(**output).pooler_output
         return output, label
 
+class Opera2023RawAndLyrics(Dataset):
+    def __init__(self, csv_fir, data_dir, target_class, input_size = -1):
+        self._csv = pd.read_csv(csv_fir)
+        self._dir = data_dir
+        self._input_size = input_size
+        self._target_class = target_class
+        def get_lyrics_text(file_path):
+            yaml_file_path = file_path.rsplit('/', 1)[0]+"/metadata.yaml"
+            metadata = safe_read_yaml(yaml_file_path)
+            english_lyrics = metadata['lyric']['english']
+            return english_lyrics
+        
+        self._lyrics = get_lyrics_text(data_dir)
+
+    def __len__(self):
+        return len(self._csv)
+    
+    def __getitem__(self, idx):
+        file_path = os.path.join(self._dir, "in", self._csv.iloc[idx, 0])
+        waveform, _ = torchaudio.load(file_path)
+        # print("load waveform once")
+        label = self._get_label(idx)
+        if self._input_size != -1: # means we need to reshape the waveform tensor
+            total_samples = waveform.shape[1]
+            remainder = total_samples % self._input_size
+            if remainder != 0:
+                pad_length = self._input_size - remainder
+                # Pad the waveform tensor with zeros
+                waveform = F.pad(waveform, (0, pad_length))
+
+            # Reshape the waveform tensor
+            waveform = waveform.view(-1, self._input_size)
+        else:
+            waveform = waveform.permute(1, 0)
+        
+        # Tokenize the text
+        lyrics_token = tokenizer(self._lyrics, return_tensors="pt")
+        with torch.no_grad():
+            lyrics_feature = model(**lyrics_token).pooler_output
+        
+        return waveform, lyrics_feature, label
+    
+    def _get_label(self, idx):
+        return self._csv.loc[idx, self._target_class]
+
+
 if __name__ == '__main__':
     from HYPERPARAMS import hyperparams
     from ENV import REPRESENTATION
@@ -216,9 +262,24 @@ if __name__ == '__main__':
     #     print(batch[0].shape)
     #     print(batch[1].shape)
 
-    # ======= Test Lyrics Dataset =========
-    dataset_lyrics = Opera2023Dataset_lyrics_bert(csv_file1, file_dir1, target_class)
-    for data in dataset_lyrics:
-        print(data[0])
-        print(data[1])
-        # pass
+    # # ======= Test Lyrics Dataset =========
+    # dataset_lyrics = Opera2023Dataset_lyrics_bert(csv_file1, file_dir1, target_class)
+    # for data in dataset_lyrics:
+    #     print(data[0])
+    #     print(data[1])
+    #     # pass
+
+    # test raw and lyrics dataset (multi-modal)
+    dataset_raw_lyrics = Opera2023RawAndLyrics(csv_file1, file_dir1, target_class, hyperparams['input_size'])
+    # for data in dataset_raw_lyrics:
+    #     print(data[0])
+    #     print(data[0].shape)
+    #     print(data[1].shape)
+    #     print(data[2])
+    #     break
+    data_loader = DataLoader(dataset_raw_lyrics, batch_size=2, shuffle=True)
+    for batch in data_loader:
+        print(batch[0].shape)
+        print(batch[1].shape)
+        print(batch[2])
+        break
